@@ -1,0 +1,39 @@
+name: Bug Bounty
+on:
+  workflow_dispatch:
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      
+      - name: Scan bounty platforms
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+          headers = {"User-Agent": "Mozilla/5.0"}
+          results = {}
+          for name, url in [
+              ("hackerone", "https://hackerone.com/hacktivity"),
+              ("bugcrowd", "https://bugcrowd.com/programs"),
+              ("immunefi", "https://immunefi.com/bug-bounty/"),
+              ("openbugbounty", "https://www.openbugbounty.org/"),
+          ]:
+              try:
+                  r = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
+                  amounts = re.findall(r'\$([\d,]+)', r.text)
+                  int_amounts = sorted([int(a.replace(',','')) for a in amounts if int(a.replace(',','')) > 0], reverse=True)[:15]
+                  results[name] = {"status": r.status_code, "top_bounties": int_amounts}
+              except Exception as e:
+                  results[name] = {"error": str(e)[:80]}
+          print(json.dumps(results, indent=2))
+          with open("bb.json", "w") as f:
+              json.dump(results, f, indent=2)
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bb-data
+          path: bb.json
