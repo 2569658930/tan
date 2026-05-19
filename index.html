@@ -1,0 +1,499 @@
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|<title>🎵 Suno Funnel — AI音乐提示词一键生成</title>
+     7|<style>
+     8|* { margin: 0; padding: 0; box-sizing: border-box; }
+     9|body {
+    10|  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    11|  background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 50%, #0d0d35 100%);
+    12|  min-height: 100vh;
+    13|  color: #e0e0ff;
+    14|  padding: 20px;
+    15|}
+    16|.container { max-width: 640px; margin: 0 auto; }
+    17|
+    18|.header {
+    19|  text-align: center;
+    20|  padding: 30px 0 20px;
+    21|}
+    22|.header h1 { font-size: 2em; margin-bottom: 8px; }
+    23|.header p { color: #8888cc; font-size: 0.95em; }
+    24|
+    25|/* Tabs */
+    26|.tabs {
+    27|  display: flex;
+    28|  gap: 2px;
+    29|  background: rgba(255,255,255,0.05);
+    30|  border-radius: 12px;
+    31|  padding: 4px;
+    32|  margin-bottom: 24px;
+    33|}
+    34|.tab {
+    35|  flex: 1;
+    36|  padding: 12px 8px;
+    37|  text-align: center;
+    38|  border-radius: 10px;
+    39|  cursor: pointer;
+    40|  font-size: 0.9em;
+    41|  font-weight: 600;
+    42|  transition: all 0.2s;
+    43|  color: #8888cc;
+    44|  border: none;
+    45|  background: transparent;
+    46|}
+    47|.tab.active { background: rgba(120,120,255,0.2); color: #fff; }
+    48|.tab:hover { background: rgba(120,120,255,0.1); }
+    49|
+    50|/* Form */
+    51|.card {
+    52|  background: rgba(255,255,255,0.04);
+    53|  border: 1px solid rgba(255,255,255,0.08);
+    54|  border-radius: 14px;
+    55|  padding: 24px;
+    56|  margin-bottom: 20px;
+    57|}
+    58|.card h3 { font-size: 1.1em; margin-bottom: 16px; color: #aaaaff; }
+    59|
+    60|.form-group { margin-bottom: 16px; }
+    61|.form-group label {
+    62|  display: block;
+    63|  font-size: 0.85em;
+    64|  color: #8888cc;
+    65|  margin-bottom: 6px;
+    66|  font-weight: 500;
+    67|}
+    68|select, input, textarea {
+    69|  width: 100%;
+    70|  padding: 12px 16px;
+    71|  border-radius: 10px;
+    72|  border: 1px solid rgba(255,255,255,0.12);
+    73|  background: rgba(255,255,255,0.06);
+    74|  color: #fff;
+    75|  font-size: 0.95em;
+    76|  outline: none;
+    77|  transition: border 0.2s;
+    78|}
+    79|select:focus, input:focus, textarea:focus { border-color: #6666ff; }
+    80|select option { background: #1a1a4e; color: #fff; }
+    81|textarea { min-height: 80px; resize: vertical; }
+    82|
+    83|.btn {
+    84|  width: 100%;
+    85|  padding: 14px;
+    86|  border-radius: 12px;
+    87|  border: none;
+    88|  font-size: 1em;
+    89|  font-weight: 600;
+    90|  cursor: pointer;
+    91|  transition: all 0.2s;
+    92|  display: flex;
+    93|  align-items: center;
+    94|  justify-content: center;
+    95|  gap: 8px;
+    96|}
+    97|.btn-primary {
+    98|  background: linear-gradient(135deg, #6666ff, #8844ff);
+    99|  color: #fff;
+   100|  box-shadow: 0 4px 20px rgba(100,100,255,0.3);
+   101|}
+   102|.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(100,100,255,0.4); }
+   103|.btn-copy {
+   104|  background: rgba(255,255,255,0.08);
+   105|  color: #ccc;
+   106|  margin-top: 12px;
+   107|}
+   108|.btn-random {
+   109|  background: rgba(255,255,255,0.06);
+   110|  color: #8888cc;
+   111|  margin-top: 8px;
+   112|  font-size: 0.9em;
+   113|}
+   114|
+   115|/* Output */
+   116|.output-section { margin-top: 24px; }
+   117|.output-box {
+   118|  background: rgba(0,0,0,0.3);
+   119|  border: 1px solid rgba(255,255,255,0.1);
+   120|  border-radius: 12px;
+   121|  padding: 20px;
+   122|  font-family: 'SF Mono', 'Fira Code', monospace;
+   123|  font-size: 0.9em;
+   124|  line-height: 1.6;
+   125|  white-space: pre-wrap;
+   126|  word-break: break-word;
+   127|  max-height: 400px;
+   128|  overflow-y: auto;
+   129|}
+   130|.output-box:empty::after { content: '👆 选好参数，点击生成...'; color: #555; }
+   131|.copied { color: #44ff44; animation: fade 2s forwards; }
+   132|@keyframes fade { 0%{opacity:1} 100%{opacity:0} }
+   133|
+   134|/* Tips */
+   135|.tips {
+   136|  background: rgba(100,255,100,0.06);
+   137|  border: 1px solid rgba(100,255,100,0.15);
+   138|  border-radius: 10px;
+   139|  padding: 14px 16px;
+   140|  margin-top: 16px;
+   141|  font-size: 0.85em;
+   142|  color: #88cc88;
+   143|  line-height: 1.7;
+   144|}
+   145|.tips strong { color: #aaffaa; }
+   146|
+   147|.footer {
+   148|  text-align: center;
+   149|  padding: 30px 0;
+   150|  border-top: 1px solid rgba(255,255,255,0.06);
+   151|  margin-top: 30px;
+   152|}
+   153|.footer a {
+   154|  display: inline-block;
+   155|  margin: 8px;
+   156|  padding: 10px 24px;
+   157|  border-radius: 25px;
+   158|  text-decoration: none;
+   159|  font-weight: 600;
+   160|  font-size: 0.9em;
+   161|  transition: all 0.2s;
+   162|}
+   163|.footer .coffee {
+   164|  background: #FF813F;
+   165|  color: #fff;
+   166|}
+   167|.footer .github {
+   168|  background: rgba(255,255,255,0.1);
+   169|  color: #ccc;
+   170|}
+   171|.footer a:hover { transform: translateY(-2px); }
+   172|
+   173|.hidden { display: none; }
+   174|
+   175|/* Responsive */
+   176|@media (max-width: 480px) {
+   177|  .header h1 { font-size: 1.5em; }
+   178|}
+   179|</style>
+   180|</head>
+   181|<body>
+   182|<div class="container">
+   183|
+   184|<div class="header">
+   185|  <h1>🎵 Suno Funnel</h1>
+   186|  <p>选艺人、填想法 → 一键出 Suno 提示词，直接复制贴进去用</p>
+   187|</div>
+   188|
+   189|<!-- Tabs -->
+   190|<div class="tabs">
+   191|  <button class="tab active" onclick="switchTab('cover')">🎤 翻唱</button>
+   192|  <button class="tab" onclick="switchTab('remix')">🎛️ Remix</button>
+   193|  <button class="tab" onclick="switchTab('original')">🎸 原创</button>
+   194|  <button class="tab" onclick="switchTab('inspire')">🎲 灵感</button>
+   195|</div>
+   196|
+   197|<!-- Cover Tab -->
+   198|<div id="tab-cover" class="card">
+   199|  <h3>🎤 选艺人 → 出翻唱提示词</h3>
+   200|  <div class="form-group">
+   201|    <label>1. 参考哪位艺人的风格？</label>
+   202|    <select id="cover-artist">
+   203|    </select>
+   204|  </div>
+   205|  <div class="form-group">
+   206|    <label>2. 歌曲名 / 主题</label>
+   207|    <input type="text" id="cover-song" placeholder="比如: 晴天 / 好久不见 / 夜曲">
+   208|  </div>
+   209|  <div class="form-group">
+   210|    <label>3. 想要什么风格的翻唱？</label>
+   211|    <select id="cover-style">
+   212|    </select>
+   213|  </div>
+   214|  <button class="btn btn-primary" onclick="generateCover()">✨ 生成提示词</button>
+   215|  
+   216|  <div class="output-section hidden" id="cover-output-section">
+   217|    <div class="output-box" id="cover-output"></div>
+   218|    <button class="btn btn-copy" onclick="copyOutput('cover-output')">📋 复制到剪贴板</button>
+   219|    <div class="tips hidden" id="cover-tips"></div>
+   220|  </div>
+   221|</div>
+   222|
+   223|<!-- Remix Tab -->
+   224|<div id="tab-remix" class="card hidden">
+   225|  <h3>🎛️ 填想法 → 出 Remix 提示词</h3>
+   226|  <div class="form-group">
+   227|    <label>1. 创作主题 / 场景</label>
+   228|    <input type="text" id="remix-theme" placeholder="比如: 深夜城市霓虹 / 夏日海滩 / 雨天下便利店">
+   229|  </div>
+   230|  <div class="form-group">
+   231|    <label>2. 选一个曲风</label>
+   232|    <select id="remix-genre"></select>
+   233|  </div>
+   234|  <button class="btn btn-primary" onclick="generateRemix()">🎛️ 生成 Remix</button>
+   235|
+   236|  <div class="output-section hidden" id="remix-output-section">
+   237|    <div class="output-box" id="remix-output"></div>
+   238|    <button class="btn btn-copy" onclick="copyOutput('remix-output')">📋 复制到剪贴板</button>
+   239|  </div>
+   240|</div>
+   241|
+   242|<!-- Original Tab -->
+   243|<div id="tab-original" class="card hidden">
+   244|  <h3>🎸 自定义原创</h3>
+   245|  <div class="form-group">
+   246|    <label>1. 参考艺人风格（可选）</label>
+   247|    <select id="orig-artist">
+   248|      <option value="">不参考，完全自由发挥</option>
+   249|    </select>
+   250|  </div>
+   251|  <div class="form-group">
+   252|    <label>2. 歌曲主题</label>
+   253|    <input type="text" id="orig-theme" placeholder="写下你的想法...">
+   254|  </div>
+   255|  <div class="form-group">
+   256|    <label>3. 歌曲结构</label>
+   257|    <select id="orig-structure">
+   258|      <option value="ballad">情歌 (Verse→Verse2→Chorus→Bridge→Outro)</option>
+   259|      <option value="electronic">电子 (Intro→Build→Drop→Verse→Drop→Outro)</option>
+   260|      <option value="hiphop">说唱 (Intro→Verse→Hook→Verse2→Hook→Brdige→Outro)</option>
+   261|      <option value="standard">标准流行 (Verse→PreChorus→Chorus→Verse2→Chorus→Bridge→Outro)</option>
+   262|    </select>
+   263|  </div>
+   264|  <button class="btn btn-primary" onclick="generateOriginal()">🎵 生成提示词</button>
+   265|
+   266|  <div class="output-section hidden" id="original-output-section">
+   267|    <div class="output-box" id="original-output"></div>
+   268|    <button class="btn btn-copy" onclick="copyOutput('original-output')">📋 复制到剪贴板</button>
+   269|  </div>
+   270|</div>
+   271|
+   272|<!-- Inspire Tab -->
+   273|<div id="tab-inspire" class="card hidden">
+   274|  <h3>🎲 没灵感？随机来一个</h3>
+   275|  <p style="color:#8888cc;margin-bottom:16px">不知道做什么？点一下，随机搭配艺人和主题出完整方案。</p>
+   276|  <button class="btn btn-primary" onclick="generateRandom()">🎲 随机生成</button>
+   277|
+   278|  <div class="output-section hidden" id="inspire-output-section">
+   279|    <div class="output-box" id="inspire-output"></div>
+   280|    <button class="btn btn-copy" onclick="copyOutput('inspire-output')">📋 复制到剪贴板</button>
+   281|  </div>
+   282|</div>
+   283|
+   284|<!-- Footer -->
+   285|<div class="footer">
+   286|  <p style="color:#8888cc;margin-bottom:12px">觉得有用？请我喝杯咖啡 ☕</p>
+   287|  <a class="coffee" href="https://www.buymeacoffee.com/2569658930" target="_blank">☕ Buy Me a Coffee</a>
+   288|  <a class="github" href="https://github.com/2569658930/tan" target="_blank">⭐ GitHub</a>
+   289|  <p style="margin-top:16px;font-size:0.8em;color:#555">免费开源 · MIT License · 100+ 精品提示词持续更新</p>
+   290|</div>
+   291|
+   292|</div>
+   293|
+   294|<script>
+   295|// ── DATA ──
+   296|const ARTISTS = JSON.parse(`{"周杰伦": {"style": "Mandarin pop, R&B, piano ballad, Chinese pentatonic, melancholic male tenor, 80-100 BPM", "timbre": "slightly nasal, melancholic male tenor, relaxed delivery"}, "林俊杰": {"style": "Mandarin pop ballad, powerful tenor vocal, piano-driven, emotional, wide vocal range, 70-90 BPM", "timbre": "powerful clear tenor, effortless high notes, emotional vibrato"}, "邓紫棋": {"style": "Mandarin pop, female belting vocal, rock influence, high notes, emotional build-up, 80-100 BPM", "timbre": "strong belting female vocal, gritty texture, wide dynamic range"}, "陈奕迅": {"style": "Cantopop ballad, deep baritone vocal, minimalist arrangement, storytelling, 60-80 BPM", "timbre": "deep warm baritone, storytelling tone, understated power"}, "五月天": {"style": "Mandarin rock, band sound, uplifting, guitar-driven, stadium anthem, 120-140 BPM", "timbre": "band vocal, energetic rock tenor, crowd-feel"}, "蔡依林": {"style": "Mandopop dance, electronic, female vocal, upbeat, synth-heavy, 120-130 BPM", "timbre": "bright pop female vocal, precise articulation, dance energy"}, "薛之谦": {"style": "Mandarin ballad, emotional male vocal, string arrangement, dramatic, 70-85 BPM", "timbre": "raspy emotional male, intimate delivery, whispered sections"}, "王菲": {"style": "Art pop, ethereal female vocal, dreamy, reverb-heavy, atmospheric, 60-80 BPM", "timbre": "ethereal soprano, breathy delivery, floating tone"}, "陶喆": {"style": "Mandarin R&B, soulful male vocal, falsetto, groovy bass, 80-100 BPM", "timbre": "smooth R&B tenor, effortless falsetto, groovy phrasing"}, "李荣浩": {"style": "Mandarin pop, laid-back male vocal, guitar-based, minimalist production, 70-90 BPM", "timbre": "laid-back male vocal, conversational tone, subtle emotion"}, "Taylor Swift": {"style": "Pop, confessional female vocal, acoustic guitar, storytelling, 80-120 BPM", "timbre": "confessional female vocal, intimate, storytelling delivery"}, "Adele": {"style": "Soul pop, powerful female vocal, piano, emotional ballad, 60-80 BPM", "timbre": "powerful female vocal, emotional delivery, wide range"}, "Bruno Mars": {"style": "Funk, soul, retro pop, male vocal, groovy bass, 100-115 BPM", "timbre": "groovy male vocal, retro soul, falsetto runs"}, "Ed Sheeran": {"style": "Pop folk, acoustic guitar, male vocal, loop pedal, 80-100 BPM", "timbre": "warm male vocal, acoustic intimacy, loop-layered"}, "BTS": {"style": "K-pop, rap, vocal harmony, electronic, dance, 120-140 BPM", "timbre": "K-pop vocal, polished delivery, rap-sung switch"}, "Billie Eilish": {"style": "Alternative pop, whisper vocal, 808 bass, dark atmosphere, minimal, 75 BPM", "timbre": "whisper vocal, ASMR delivery, dark intimate"}, "Lana Del Rey": {"style": "Baroque pop, sultry female vocal, orchestral, vintage Americana, 65 BPM", "timbre": "sultry female vocal, reverb-drenched, cinematic"}, "Coldplay": {"style": "Alternative rock anthem, piano-driven, stadium chorus, uplifting, 130 BPM", "timbre": "anthemic male vocal, falsetto, stadium energy"}}`);
+   297|const COVER_STYLES = JSON.parse(`[{"id": "piano", "name": "钢琴版", "prompt": "piano cover, solo piano arrangement, classical influence, minimal, spacious, emotional reimagining"}, {"id": "acoustic", "name": "原声版", "prompt": "acoustic cover, stripped down, soft guitar, intimate vocal, raw emotion, campfire feel"}, {"id": "orchestral", "name": "管弦乐版", "prompt": "orchestral cover, cinematic strings, epic, film score style, dramatic build, full symphony"}, {"id": "lofi", "name": "Lo-fi版", "prompt": "lofi cover, chill beats, warm vinyl sound, relaxed version, bedroom pop, filtered production"}, {"id": "rock", "name": "摇滚版", "prompt": "rock cover, electric guitar reinterpretation, band energy, powerful drums, stadium rock"}, {"id": "electronic", "name": "电子版", "prompt": "electronic cover, synth remake, retro 80s, digital reimagining, modern production, club energy"}, {"id": "jazz", "name": "爵士版", "prompt": "jazz cover, swing reinterpretation, walking bass, lounge piano, sophisticated, smoky atmosphere"}, {"id": "chinese_traditional", "name": "国风版", "prompt": "Chinese traditional reinterpretation, 古筝 and 笛子, pentatonic melody, 琵琶, elegant, poetic"}]`);
+   298|const REMIX_GENRES = JSON.parse(`[{"id": "electronic", "name": "电子舞曲", "prompt": "electronic remix, synth, arpeggiator, 808 drums, sidechain compression, 128 BPM, club energy, massive drop"}, {"id": "lofi", "name": "Lo-fi 放松", "prompt": "lofi remix, chillhop, vinyl crackle, mellow, filtered drums, 80 BPM, study beats, warm atmosphere"}, {"id": "trap", "name": "Trap 重拍", "prompt": "trap remix, 808 bass, dark melody, hi-hat rolls, 145 BPM, hard-hitting, modern production, epic drop"}, {"id": "house", "name": "House 律动", "prompt": "deep house remix, groovy bassline, piano chords, soulful vocal chops, 122 BPM, warm, uplifting"}, {"id": "rock", "name": "摇滚电音", "prompt": "rock electronic remix, electric guitar riffs, heavy drums, synth bass, 130 BPM, energetic fusion"}, {"id": "chinese", "name": "国风电音", "prompt": "Chinese electronic fusion, 古筝 samples, 128 BPM, trap beat, 笛子 melody processed, cyberpunk traditional"}]`);
+   299|
+   300|const THEMES = [
+   301|  "深夜城市霓虹","夏日海滩的告别","雨天下的便利店","地铁最后一班车",
+   302|  "旧照片里的笑脸","无人接听的电话","天台上的星空","凌晨三点的便利店",
+   303|  "那年冬天的约定","一个人的电影院","日记本最后一页","城市的天际线",
+   304|  "放学后的操场","咖啡馆的窗边","海边的烟花","初雪天的约定",
+   305|  "老唱片里的回忆","霓虹灯下的孤独","樱花落下的瞬间"
+   306|];
+   307|
+   308|const STRUCTURES = {
+   309|  ballad: "Verse → Verse2 → Chorus → Bridge → Chorus → Outro (slow fade)",
+   310|  electronic: "Intro → Build → Drop → Verse → Build → Drop → Bridge → Final Drop",
+   311|  hiphop: "Intro → Verse → Hook → Verse2 → Hook → Bridge → Hook → Outro",
+   312|  standard: "Verse → Pre-Chorus → Chorus → Verse2 → Chorus → Bridge → Chorus → Outro",
+   313|};
+   314|
+   315|// ── INIT ──
+   316|function initSelects() {
+   317|  const artistSel = document.getElementById('cover-artist');
+   318|  const origArtistSel = document.getElementById('orig-artist');
+   319|  Object.entries(ARTISTS).forEach(([name, data]) => {
+   320|    artistSel.innerHTML += `<option value="${name}">${name}</option>`;
+   321|    origArtistSel.innerHTML += `<option value="${name}">${name}</option>`;
+   322|  });
+   323|
+   324|  document.getElementById('cover-style').innerHTML = COVER_STYLES.map(s =>
+   325|    `<option value="${s.id}">${s.name}</option>`
+   326|  ).join('');
+   327|
+   328|  document.getElementById('remix-genre').innerHTML = REMIX_GENRES.map(g =>
+   329|    `<option value="${g.id}">${g.name}</option>`
+   330|  ).join('');
+   331|}
+   332|
+   333|// ── TABS ──
+   334|function switchTab(tab) {
+   335|  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+   336|  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+   337|  document.getElementById('tab-' + tab).classList.remove('hidden');
+   338|  document.querySelector(`.tab:nth-child(${{cover:1,remix:2,original:3,inspire:4}[tab]})`).classList.add('active');
+   339|}
+   340|
+   341|// ── HELPERS ──
+   342|function escapeHtml(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+   343|
+   344|function copyOutput(id) {
+   345|  const el = document.getElementById(id);
+   346|  navigator.clipboard.writeText(el.textContent).then(() => {
+   347|    const btn = el.nextElementSibling;
+   348|    const orig = btn.textContent;
+   349|    btn.textContent = '✅ 已复制！直接贴入 Suno';
+   350|    btn.style.color = '#44ff44';
+   351|    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
+   352|  });
+   353|}
+   354|
+   355|function showSection(sectionId) {
+   356|  document.querySelectorAll('.output-section').forEach(s => s.classList.add('hidden'));
+   357|  const section = document.getElementById(sectionId);
+   358|  if (section) section.classList.remove('hidden');
+   359|}
+   360|
+   361|// ── GENERATORS ──
+   362|function generateCover() {
+   363|  const artist = document.getElementById('cover-artist').value;
+   364|  const song = document.getElementById('cover-song').value || '未命名';
+   365|  const styleId = document.getElementById('cover-style').value;
+   366|  const artistData = ARTISTS[artist];
+   367|  const styleData = COVER_STYLES.find(s => s.id === styleId);
+   368|
+   369|  if (!artistData || !styleData) return;
+   370|
+   371|  const prompt = `[Cover Version]
+   372|Original: ${artist} — ${song}
+   373|Style: ${styleData.name}
+   374|
+   375|🎤 Suno Prompt:
+   376|A ${styleData.prompt}, cover of ${song} originally in the style of ${artist}. ${artistData.timbre}. Professional production, clean mix, emotional delivery.
+   377|
+   378|📝 Style Tags: ${artistData.style}
+   379|
+   380|📊 Suno Settings:
+   381|  BPM: ${artistData.style.match(/\d+-\d+ BPM/)?.[0] || '90-120'}
+   382|  Vocals: ${artistData.timbre}
+   383|
+   384|🚀 汽水音乐上传 Tips:
+   385|  分类: 选「原创」→ 不要选「翻唱」
+   386|  标题: ${song} (${styleData.name})
+   387|  描述: AI音乐创作实验作品
+   388|  封面: 自制 800x800 图`;
+   389|
+   390|  document.getElementById('cover-output').textContent = prompt;
+   391|  showSection('cover-output-section');
+   392|}
+   393|
+   394|function generateRemix() {
+   395|  const theme = document.getElementById('remix-theme').value || '未命名主题';
+   396|  const genreId = document.getElementById('remix-genre').value;
+   397|  const genre = REMIX_GENRES.find(g => g.id === genreId);
+   398|
+   399|  if (!genre) return;
+   400|
+   401|  const prompt = `[Remix Version]
+   402|Theme: ${theme}
+   403|Style: ${genre.name}
+   404|
+   405|🎤 Suno Prompt:
+   406|A ${genre.prompt}, ${theme}. Driving energy, professional production, clean mastering, club-ready sound.
+   407|
+   408|🚀 汽水音乐上传 Tips:
+   409|  选「音频投稿」→「原创」
+   410|  标题: ${theme} (${genre.name})
+   411|  标签: #原创 #AI音乐 #${genre.name}`;
+   412|
+   413|  document.getElementById('remix-output').textContent = prompt;
+   414|  showSection('remix-output-section');
+   415|}
+   416|
+   417|function generateOriginal() {
+   418|  const artist = document.getElementById('orig-artist').value;
+   419|  const theme = document.getElementById('orig-theme').value || '未命名';
+   420|  const structureKey = document.getElementById('orig-structure').value;
+   421|
+   422|  let stylePart = '';
+   423|  let timbrePart = '';
+   424|  if (artist && ARTISTS[artist]) {
+   425|    stylePart = ARTISTS[artist].style;
+   426|    timbrePart = ARTISTS[artist].timbre;
+   427|  } else {
+   428|    stylePart = 'Mandarin pop, emotional vocal, modern production, clean mix';
+   429|    timbrePart = 'emotional vocal, clear articulation';
+   430|  }
+   431|
+   432|  const bpm = stylePart.match(/\d+-\d+ BPM/)?.[0] || '90-120';
+   433|
+   434|  const prompt = `[Original]
+   435|Artist Reference: ${artist || '自由创作'}
+   436|Theme: ${theme}
+   437|
+   438|🎤 Suno Prompt:
+   439|${stylePart}. A song about ${theme}, ${timbrePart}. Professional production, emotional delivery.
+   440|
+   441|🎼 Suggested Structure:
+   442|${STRUCTURES[structureKey]}
+   443|
+   444|📊 Settings:
+   445|  BPM: ${bpm}
+   446|  Duration: 3:00-4:30
+   447|  
+   448|🚀 汽水音乐上传:
+   449|  分类: 原创
+   450|  标题: ${theme}
+   451|  标签: #原创 #AI音乐`;
+   452|
+   453|  document.getElementById('original-output').textContent = prompt;
+   454|  showSection('original-output-section');
+   455|}
+   456|
+   457|function generateRandom() {
+   458|  const artists = Object.keys(ARTISTS);
+   459|  const artist = artists[Math.floor(Math.random() * artists.length)];
+   460|  const theme = THEMES[Math.floor(Math.random() * THEMES.length)];
+   461|  const allStyles = [...COVER_STYLES, ...REMIX_GENRES];
+   462|  const style = allStyles[Math.floor(Math.random() * allStyles.length)];
+   463|  const ad = ARTISTS[artist];
+   464|
+   465|  const isRemix = REMIX_GENRES.includes(style);
+   466|
+   467|  let prompt;
+   468|  if (isRemix) {
+   469|    prompt = `[Random Remix]
+   470|🎲 随机搭配: ${artist} 风格 × ${style.name}
+   471|
+   472|Theme: ${theme}
+   473|
+   474|🎤 Suno Prompt:
+   475|A ${style.prompt}, ${theme}. ${ad.timbre}. Professional production.
+   476|
+   477|📊 BPM: ${ad.style.match(/\d+-\d+ BPM/)?.[0] || '90-120'}`;
+   478|  } else {
+   479|    prompt = `[Random Cover]
+   480|🎲 随机搭配: ${artist} 风格 × ${style.name}
+   481|
+   482|Song: ${theme}
+   483|
+   484|🎤 Suno Prompt:
+   485|A ${style.prompt}, ${theme}. ${ad.timbre}. Professional production, emotional delivery.
+   486|
+   487|📝 Reference Style: ${ad.style}`;
+   488|  }
+   489|
+   490|  document.getElementById('inspire-output').textContent = prompt;
+   491|  showSection('inspire-output-section');
+   492|}
+   493|
+   494|// ── START ──
+   495|initSelects();
+   496|</script>
+   497|</body>
+   498|</html>
+   499|
