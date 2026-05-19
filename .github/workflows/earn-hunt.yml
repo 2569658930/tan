@@ -1,0 +1,38 @@
+name: Earn Hunt
+on:
+  workflow_dispatch:
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Fetch real bounties
+        run: |
+          echo "# Available Bounties" > bounties.md
+          
+          echo "## Bountycaster (beginner-friendly)" >> bounties.md
+          echo '```' >> bounties.md
+          curl -s --max-time 15 "https://www.bountycaster.xyz/?tag=beginner-friendly" 2>/dev/null | grep -oiP '(\$[\d,]+[^<]{0,100}|bounty[^<]{0,100})' | head -30 >> bounties.md 2>&1 || echo "No data" >> bounties.md
+          echo '```' >> bounties.md
+          
+          echo "## Bountycaster (highest value)" >> bounties.md
+          echo '```' >> bounties.md
+          curl -s --max-time 15 "https://www.bountycaster.xyz/?tag=highest-value" 2>/dev/null | grep -oiP '(\$[\d,]+[^<]{0,100}|bounty[^<]{0,100})' | head -20 >> bounties.md 2>&1 || echo "No data" >> bounties.md
+          echo '```' >> bounties.md
+          
+          echo "## Superteam Earn" >> bounties.md
+          echo '```' >> bounties.md
+          curl -s --max-time 15 "https://earn.superteam.fun/" 2>/dev/null | grep -oiP '(\$[\d,]+[^<]{0,100}|bounty[^<]{0,100})' | head -20 >> bounties.md 2>&1 || echo "No data" >> bounties.md
+          echo '```' >> bounties.md
+          
+          echo "## Algora Open Bounties" >> bounties.md
+          echo '```' >> bounties.md
+          curl -s --max-time 15 "https://algora.io/bounties" 2>/dev/null | grep -oiP '(\$[\d,]+[^<]{0,100}|bounty[^<]{0,100})' | head -20 >> bounties.md 2>&1 || echo "No data" >> bounties.md
+          echo '```' >> bounties.md
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bounty-results
+          path: bounties.md
