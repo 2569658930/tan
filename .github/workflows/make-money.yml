@@ -1,0 +1,172 @@
+name: Make Money
+on:
+  workflow_dispatch:
+
+jobs:
+  cash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install tools
+        run: pip install requests beautifulsoup4 praw 2>/dev/null; npm install -g puppeteer 2>/dev/null; true
+      
+      - name: Hunt Reddit r/signupsforpay
+        run: |
+          python3 << 'PYEOF'
+          import requests, re, json
+          headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
+          
+          results = []
+          
+          # Scrape r/signupsforpay
+          try:
+              r = requests.get("https://old.reddit.com/r/signupsforpay/new/.json?limit=15", headers=headers, timeout=15)
+              data = r.json()
+              for post in data['data']['children']:
+                  d = post['data']
+                  title = d['title']
+                  body = d.get('selftext', '')[:300]
+                  
+                  # Extract dollar amounts
+                  amounts = re.findall(r'\$(\d+[\.,]?\d*)', title + ' ' + body)
+                  crypto = any(w in (title+body).lower() for w in ['crypto','btc','eth','usdt','usdc','paypal','cashapp','venmo','binance'])
+                  
+                  if amounts:
+                      results.append({
+                          'title': title[:100],
+                          'amounts': amounts,
+                          'crypto': crypto,
+                          'url': f"https://reddit.com{d['permalink']}",
+                          'comments': d['num_comments'],
+                          'body_snippet': body[:200]
+                      })
+          except Exception as e:
+              results.append({'error': str(e)})
+          
+          with open("reddit-bounties.json", "w") as f:
+              json.dump(results, f, indent=2)
+          
+          for r_item in results:
+              if isinstance(r_item, dict) and 'title' in r_item:
+                  print(f"${'~'.join(r_item['amounts'][:3])} | crypto:{r_item['crypto']} | {r_item['title'][:80]}")
+          PYEOF
+          
+      - name: Hunt r/forhire
+        run: |
+          python3 << 'PYEOF'
+          import requests, re, json
+          headers = {"User-Agent": "Mozilla/5.0"}
+          
+          results = []
+          try:
+              r = requests.get("https://old.reddit.com/r/forhire/search.json?q=script+OR+python+OR+bot+OR+automation&sort=new&restrict_sr=on&t=day&limit=15", headers=headers, timeout=15)
+              data = r.json()
+              for post in data['data']['children']:
+                  d = post['data']
+                  title = d['title']
+                  body = d.get('selftext', '')[:300]
+                  hiring = any(w in (title+body).lower() for w in ['hiring','pay','paid','$','rate','budget'])
+                  if hiring:
+                      results.append({
+                          'title': title[:100],
+                          'body': body[:200],
+                          'url': f"https://reddit.com{d['permalink']}"
+                      })
+          except Exception as e:
+              results.append({'error': str(e)})
+          
+          with open("forhire.json", "w") as f:
+              json.dump(results, f, indent=2)
+          
+          for r_item in results:
+              if isinstance(r_item, dict) and 'title' in r_item:
+                  print(r_item['title'][:100])
+          PYEOF
+          
+      - name: Try crypto testnet with real rewards
+        run: |
+          python3 << 'PYEOF'
+          import requests, json
+          headers = {"User-Agent": "Mozilla/5.0"}
+          
+          results = {}
+          
+          # Check Layer3 quests
+          try:
+              r = requests.get("https://layer3.xyz/api/trpc/quest.getActiveQuestsBatch?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22page%22%3A0%2C%22sortBy%22%3A%22rewards%22%7D%7D%7D", headers=headers, timeout=15)
+              results['layer3'] = r.status_code
+              if r.status_code == 200:
+                  try:
+                      d = r.json()
+                      results['layer3_data'] = str(d)[:500]
+                  except:
+                      results['layer3_data'] = 'parse error'
+          except Exception as e:
+              results['layer3'] = str(e)
+
+          # Check if Scroll testnet faucet works
+          try:
+              r = requests.get("https://docs.scroll.io/en/developers/faucet/", headers=headers, timeout=10)
+              results['scroll'] = r.status_code
+          except Exception as e:
+              results['scroll'] = str(e)
+
+          # Check Base testnet
+          try:
+              r = requests.get("https://docs.base.org/tools/network-faucets", headers=headers, timeout=10)
+              results['base'] = r.status_code
+          except Exception as e:
+              results['base'] = str(e)
+
+          with open("crypto.json", "w") as f:
+              json.dump(results, f, indent=2)
+          
+          print(json.dumps(results, indent=2))
+          PYEOF
+
+      - name: Post Suno Funnel to Show HN
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          
+          # Try posting to Hacker News Show HN
+          data = {
+              "title": "Show HN: Suno Funnel - free web Suno AI prompt generator (零门槛，选艺人即出提示词)",
+              "url": "https://2569658930.github.io/tan/",
+          }
+          try:
+              r = requests.post("https://news.ycombinator.com/r", data=data, 
+                                headers={"User-Agent": "Mozilla/5.0", "Content-Type": "application/x-www-form-urlencoded"},
+                                timeout=15)
+              print(f"HN status: {r.status_code}")
+              print(r.text[:300])
+          except Exception as e:
+              print(f"HN error: {e}")
+          PYEOF
+          
+      - name: Post to Lobsters
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          data = {
+              "story[title]": "Suno Funnel: Free one-click Suno AI music prompt generator (Chinese artists included)",
+              "story[url]": "https://2569658930.github.io/tan/",
+              "story[tags]": "ai,web,music"
+          }
+          try:
+              r = requests.post("https://lobste.rs/stories", data=data,
+                                headers={"User-Agent": "Mozilla/5.0"},
+                                timeout=15)
+              print(f"Lobsters status: {r.status_code}")
+          except Exception as e:
+              print(f"Lobsters error: {e}")
+          PYEOF
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: money-hunt-results
+          path: |
+            reddit-bounties.json
+            forhire.json
+            crypto.json
