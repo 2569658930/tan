@@ -6,13 +6,45 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
       - name: Test connectivity
         run: |
-          echo "=== Testing ==="
-          for url in "https://dev.to" "https://www.reddit.com" "https://news.ycombinator.com" "https://api.x.com/2/tweets" "https://t.me"; do
-            status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$url" 2>/dev/null || echo "TIMEOUT")
-            echo "$url -> $status"
+          echo "# Network Test Results" > results.md
+          echo "\`\`\`" >> results.md
+          for url in "https://dev.to" "https://www.reddit.com" "https://news.ycombinator.com" "https://api.x.com/2/tweets" "https://t.me" "https://www.v2ex.com" "https://juejin.cn" "https://www.bilibili.com"; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 "$url" 2>/dev/null || echo "TIMEOUT")
+            echo "$url -> $status" | tee -a results.md
           done
+          echo "\`\`\`" >> results.md
           
-          echo "=== Test POST to dev.to ==="
-          curl -s --max-time 10 -X POST "https://dev.to/api/articles"             -H "Content-Type: application/json"             -d '{"article":{"title":"test","published":false,"body_markdown":"test","tags":["test"]}}' 2>&1 | head -5
+      - name: Test POST to Dev.to
+        run: |
+          echo "" >> results.md
+          echo "## Dev.to POST test" >> results.md
+          echo "\`\`\`" >> results.md
+          curl -s --max-time 10 -X POST "https://dev.to/api/articles"             -H "Content-Type: application/json"             -d '{"article":{"title":"test","published":false,"body_markdown":"test","tags":["test"]}}' >> results.md 2>&1
+          echo "\`\`\`" >> results.md
+          
+      - name: Test POST to Reddit
+        run: |
+          echo "" >> results.md  
+          echo "## Reddit test" >> results.md
+          echo "\`\`\`" >> results.md
+          curl -s --max-time 10 "https://oauth.reddit.com/api/v1/me"             -H "User-Agent: test/1.0" >> results.md 2>&1
+          echo "\`\`\`" >> results.md
+          
+      - name: Test X/Twitter
+        run: |
+          echo "" >> results.md
+          echo "## X/Twitter test" >> results.md
+          echo "\`\`\`" >> results.md
+          curl -s --max-time 10 "https://api.x.com/2/tweets" >> results.md 2>&1
+          echo "\`\`\`" >> results.md
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: network-test-results
+          path: results.md
