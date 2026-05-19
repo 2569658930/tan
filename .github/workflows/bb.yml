@@ -1,4 +1,4 @@
-name: Bug Bounty
+name: Vuln Hunt
 on:
   workflow_dispatch:
 
@@ -9,31 +9,77 @@ jobs:
       - uses: actions/checkout@v4
       - run: pip install requests
       
-      - name: Scan bounty platforms
+      - name: Find real targets with open bounties
         run: |
           python3 << 'PYEOF'
           import requests, json, re
           headers = {"User-Agent": "Mozilla/5.0"}
-          results = {}
-          for name, url in [
-              ("hackerone", "https://hackerone.com/hacktivity"),
-              ("bugcrowd", "https://bugcrowd.com/programs"),
-              ("immunefi", "https://immunefi.com/bug-bounty/"),
-              ("openbugbounty", "https://www.openbugbounty.org/"),
-          ]:
+          
+          # Scrape Immunefi for active bounties with web targets
+          r = requests.get("https://immunefi.com/bug-bounty/", headers=headers, timeout=20)
+          
+          # Extract project names and bounty ranges
+          projects = re.findall(r'<h3[^>]*>([^<]+)</h3>', r.text)
+          urls = re.findall(r'https?://[^\s"<>]+', r.text)
+          web_urls = [u for u in urls if u.startswith('http') and not any(x in u for x in ['google','facebook','twitter','immunefi','cdn','font'])]
+          
+          results = {
+              "project_count": len(projects),
+              "projects": projects[:20],
+              "web_targets": list(set(web_urls))[:20]
+          }
+          
+          # Also try to find programs directly
+          program_ids = re.findall(r'/bug-bounty/([^/"]+)', r.text)
+          results["program_ids"] = program_ids[:10]
+          
+          for pid in program_ids[:3]:
               try:
-                  r = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
-                  amounts = re.findall(r'\$([\d,]+)', r.text)
-                  int_amounts = sorted([int(a.replace(',','')) for a in amounts if int(a.replace(',','')) > 0], reverse=True)[:15]
-                  results[name] = {"status": r.status_code, "top_bounties": int_amounts}
-              except Exception as e:
-                  results[name] = {"error": str(e)[:80]}
+                  r2 = requests.get(f"https://immunefi.com/bug-bounty/{pid}/", headers=headers, timeout=15)
+                  # Extract reward info
+                  rewards = re.findall(r'\$[\d,]+', r2.text)
+                  results[f"program_{pid}"] = rewards[:5]
+              except:
+                  pass
+          
           print(json.dumps(results, indent=2))
-          with open("bb.json", "w") as f:
+          with open("targets.json", "w") as f:
+              json.dump(results, f, indent=2)
+          PYEOF
+          
+      - name: Quick vuln scan on public targets
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          # Test common exposed files on known bug bounty targets
+          # These are public programs - checking basic info leaks
+          targets = [
+              "https://polygon.technology/.git/HEAD",
+              "https://polygon.technology/.env",
+              "https://zksync.io/.git/config",
+              "https://starknet.io/.env",
+              "https://arbitrum.io/.git/HEAD",
+          ]
+          
+          results = {}
+          for url in targets:
+              try:
+                  r = requests.get(url, timeout=10, allow_redirects=True, verify=False)
+                  results[url] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 10:
+                      results[url]["vulnerable"] = True
+                      results[url]["content_preview"] = r.text[:200]
+              except Exception as e:
+                  results[url] = {"error": str(e)[:50]}
+          
+          print(json.dumps(results, indent=2))
+          with open("vulns.json", "w") as f:
               json.dump(results, f, indent=2)
           PYEOF
           
       - uses: actions/upload-artifact@v4
         with:
-          name: bb-data
-          path: bb.json
+          name: vuln-data
+          path: |
+            targets.json
+            vulns.json
