@@ -1,0 +1,56 @@
+name: Auto-Promote Suno Funnel
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */2 * * *'
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Promote on Reddit
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+        run: |
+          pip install praw
+          python3 << 'PYEOF'
+          import praw, os
+          
+          reddit = praw.Reddit(
+              client_id=os.environ['REDDIT_CLIENT_ID'],
+              client_secret=os.environ['REDDIT_CLIENT_SECRET'],
+              username=os.environ['REDDIT_USERNAME'],
+              password=os.environ['REDDIT_PASSWORD'],
+              user_agent='SunoFunnel/1.0'
+          )
+          
+          # Post to r/SunoAI
+          sub = reddit.subreddit('SunoAI')
+          post = sub.submit(
+              title='[Tool] Free Suno Funnel — 1-Click Cover/Remix Prompts (Chinese artists included) 🎵',
+              selftext='''I built a CLI tool that generates Suno AI prompts instantly:
+
+          ```bash
+          python3 suno_funnel.py full 周杰伦 "雨天下的便利店" ballad
+          ```
+
+          **Outputs:**
+          - 🎤 Suno-ready English prompt
+          - 🎼 Full lyrics structure template  
+          - 🎛️ Vocal timbre settings
+          - 📊 BPM range
+          - 🚀 汽水音乐 upload checklist
+
+          **15 artists:** 周杰伦/林俊杰/邓紫棋/陈奕迅/五月天/BTS/Taylor Swift...
+
+          GitHub: https://github.com/2569658930/tan
+          MIT License — free to use.
+
+          If it saves you time, consider buying me a coffee ☕ https://www.buymeacoffee.com/2569658930
+          '''
+          )
+          print(f"Posted: {post.url}")
+          PYEOF

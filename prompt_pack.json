@@ -1,0 +1,1019 @@
+{
+  "name": "🎵 Suno Prompt Pack Premium",
+  "version": "1.0.0",
+  "description": "100 professionally curated Suno AI prompts for Cover, Remix, Original, and 汽水音乐 creation",
+  "price": "$5 — Get instant access. Support open-source AI music tools.",
+  "buy_link": "https://github.com/sponsors/2569658930",
+  "categories": {
+    "Chinese Cover": 20,
+    "English Cover": 20,
+    "Instrumental": 15,
+    "Remix/Adaptation": 15,
+    "汽水音乐原创": 20,
+    "场景专用": 10
+  },
+  "total_prompts": 100,
+  "usage": "Copy any prompt directly into Suno AI Custom Mode. Adjust BPM and style tags as needed.",
+  "prompts": [
+    {
+      "category": "Chinese Cover",
+      "theme": "周杰伦风格 - 钢琴抒情",
+      "prompt": "Mandarin pop ballad, melancholic piano, slightly nasal male tenor, 75 BPM, Chinese pentatonic melody, rain sounds intro, emotional crescendo in bridge, warm string quartet backing, reverb-soaked outro",
+      "tags": [
+        "Mandarin pop ballad",
+        " melancholic piano",
+        " slightly nasal male tenor"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "林俊杰风格 - 力量情歌",
+      "prompt": "Mandarin power ballad, grand piano intro, powerful clear tenor vocal, wide dynamic range, 85 BPM, orchestra swell in chorus, emotional vibrato, key change in final chorus, cinematic strings",
+      "tags": [
+        "Mandarin power ballad",
+        " grand piano intro",
+        " powerful clear tenor vocal"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "邓紫棋风格 - 摇滚女声",
+      "prompt": "Mandarin pop rock, female belting vocal, gritty texture, 95 BPM, distorted guitar riff, driving drums, wide vocal range, emotional build from verse to chorus, stadium reverb",
+      "tags": [
+        "Mandarin pop rock",
+        " female belting vocal",
+        " gritty texture"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "陈奕迅风格 - 叙事民谣",
+      "prompt": "Cantopop storytelling ballad, deep baritone vocal, acoustic guitar fingerpicking, 70 BPM, minimalist arrangement, cello solo in bridge, intimate production, vinyl warmth, spoken-word outro",
+      "tags": [
+        "Cantopop storytelling ballad",
+        " deep baritone vocal",
+        " acoustic guitar fingerpicking"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "五月天风格 - 青春摇滚",
+      "prompt": "Mandarin rock anthem, energetic band sound, 130 BPM, driving electric guitar, crowd singalong chorus, uplifting major key, stadium drums, youth nostalgia vibe, gang vocals",
+      "tags": [
+        "Mandarin rock anthem",
+        " energetic band sound",
+        " 130 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "蔡依林风格 - 电子舞曲",
+      "prompt": "Mandopop dance electronic, bright female vocal, 125 BPM, synth arpeggiator intro, four-on-the-floor beat, sidechain compression, catchy hook, vocal chops in breakdown, club energy",
+      "tags": [
+        "Mandopop dance electronic",
+        " bright female vocal",
+        " 125 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "薛之谦风格 - 苦情叙事",
+      "prompt": "Mandarin emotional ballad, raspy male vocal, 78 BPM, piano and strings, dramatic pauses, whispered verses, powerful belt in chorus, rain ambience, bittersweet ending",
+      "tags": [
+        "Mandarin emotional ballad",
+        " raspy male vocal",
+        " 78 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "王菲风格 - 空灵梦幻",
+      "prompt": "Art pop, ethereal female soprano, 65 BPM, dreamy reverb, floating synth pads, minimalist drum machine, breathy delivery, atmospheric soundscape, shoegaze influence",
+      "tags": [
+        "Art pop",
+        " ethereal female soprano",
+        " 65 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "陶喆风格 - R&B情歌",
+      "prompt": "Mandarin R&B, smooth male tenor, 92 BPM, groovy bassline, falsetto runs, electric piano, 808 kick, soulful ad-libs, jazz-influenced chord progression",
+      "tags": [
+        "Mandarin R&B",
+        " smooth male tenor",
+        " 92 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "李荣浩风格 - 简约都市",
+      "prompt": "Mandarin pop, laid-back male vocal, 88 BPM, acoustic guitar strumming, minimalist production, conversational delivery, subtle emotional swell, lo-fi warmth",
+      "tags": [
+        "Mandarin pop",
+        " laid-back male vocal",
+        " 88 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "古风 - 侠客行",
+      "prompt": "Chinese ancient style, 古筝 and 笛子, 72 BPM, pentatonic melody, 琵琶 tremolo, 二胡 solo, atmospheric wind sounds, epic storytelling, cinematic drama",
+      "tags": [
+        "Chinese ancient style",
+        " 古筝 and 笛子",
+        " 72 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "City Pop - 霓虹夜晚",
+      "prompt": "Mandarin city pop, retro 80s synth, 110 BPM, funky bass, female vocal, saxophone solo, night city vibes, tape saturation, Japanese city pop influence",
+      "tags": [
+        "Mandarin city pop",
+        " retro 80s synth",
+        " 110 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "民谣 - 旅人之歌",
+      "prompt": "Mandarin folk, acoustic guitar, warm male vocal, 85 BPM, harmonica interlude, storytelling lyrics, campfire atmosphere, simple arrangement, sincere delivery",
+      "tags": [
+        "Mandarin folk",
+        " acoustic guitar",
+        " warm male vocal"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "国风电子 - 赛博长安",
+      "prompt": "Chinese electronic fusion, 古筝 + 808 bass, 128 BPM, trap beat with 琵琶 samples, 笛子 melody, cyberpunk aesthetic, traditional meets future, massive drop",
+      "tags": [
+        "Chinese electronic fusion",
+        " 古筝 + 808 bass",
+        " 128 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "爵士 - 午夜咖啡馆",
+      "prompt": "Mandarin jazz ballad, lounge piano, walking bass, 95 BPM, brush drums, smoky female vocal, saxophone solo, vinyl crackle, intimate atmosphere",
+      "tags": [
+        "Mandarin jazz ballad",
+        " lounge piano",
+        " walking bass"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "摇滚 - 不服",
+      "prompt": "Mandarin hard rock, aggressive male vocal, 140 BPM, distorted power chords, screaming guitar solo, pounding drums, rebellious energy, arena anthem",
+      "tags": [
+        "Mandarin hard rock",
+        " aggressive male vocal",
+        " 140 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "R&B - 月光",
+      "prompt": "Mandarin contemporary R&B, smooth vocal, 88 BPM, 808 bass, trap hi-hats, atmospheric pads, falsetto runs, bedroom production, intimate vibe",
+      "tags": [
+        "Mandarin contemporary R&B",
+        " smooth vocal",
+        " 88 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "Indie - 独立姿态",
+      "prompt": "Mandarin indie pop, quirky female vocal, 105 BPM, jangly guitar, lo-fi drums, handclaps, carefree energy, cassette tape warmth, DIY aesthetic",
+      "tags": [
+        "Mandarin indie pop",
+        " quirky female vocal",
+        " 105 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "Soul - 灵魂深处",
+      "prompt": "Mandarin soul, powerful vocal, 75 BPM, Hammond organ, gospel choir backing, horn section, emotional climax, vintage production, analog warmth",
+      "tags": [
+        "Mandarin soul",
+        " powerful vocal",
+        " 75 BPM"
+      ]
+    },
+    {
+      "category": "Chinese Cover",
+      "theme": "Acoustic - 原声版",
+      "prompt": "Mandarin acoustic cover, solo acoustic guitar, intimate vocal, 80 BPM, stripped down, raw emotion, room reverb, fingerpicking pattern, natural dynamics",
+      "tags": [
+        "Mandarin acoustic cover",
+        " solo acoustic guitar",
+        " intimate vocal"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Taylor Swift Style - Storytelling Pop",
+      "prompt": "Confessional pop, female vocal, acoustic guitar, 95 BPM, storytelling lyrics, layered harmonies in chorus, banjo texture, intimate bridge, emotional crescendo",
+      "tags": [
+        "Confessional pop",
+        " female vocal",
+        " acoustic guitar"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Adele Style - Soul Ballad",
+      "prompt": "Soul pop ballad, powerful female vocal, grand piano, 72 BPM, emotional delivery, string orchestra, key change climax, reverb cathedral, tear-jerking finale",
+      "tags": [
+        "Soul pop ballad",
+        " powerful female vocal",
+        " grand piano"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Bruno Mars Style - Funk Pop",
+      "prompt": "Retro funk pop, groovy male vocal, 108 BPM, slap bass, horn section, falsetto chorus, danceable rhythm, 70s production aesthetic, party energy",
+      "tags": [
+        "Retro funk pop",
+        " groovy male vocal",
+        " 108 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Ed Sheeran Style - Acoustic Pop",
+      "prompt": "Pop folk, male vocal, looped acoustic guitar, 90 BPM, intimate delivery, build from sparse to full, rap-sung bridge, stadium-friendly chorus",
+      "tags": [
+        "Pop folk",
+        " male vocal",
+        " looped acoustic guitar"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "BTS Style - K-pop Energy",
+      "prompt": "K-pop, polished production, 125 BPM, rap verse, vocal harmony chorus, synth bass, trap drums, Korean/English switch, powerful dance break, catchy hook",
+      "tags": [
+        "K-pop",
+        " polished production",
+        " 125 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Billie Eilish Style - Dark Pop",
+      "prompt": "Alternative pop, whisper female vocal, 75 BPM, 808 bass, minimal production, ASMR elements, dark atmosphere, electronic texture, sparse but impactful",
+      "tags": [
+        "Alternative pop",
+        " whisper female vocal",
+        " 75 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Coldplay Style - Anthem Rock",
+      "prompt": "Alternative rock anthem, male vocal, piano-driven, 130 BPM, stadium chorus, uplifting major key, guitar delay wash, crowd energy, euphoric climax",
+      "tags": [
+        "Alternative rock anthem",
+        " male vocal",
+        " piano-driven"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Lana Del Rey Style - Cinematic Pop",
+      "prompt": "Baroque pop, sultry female vocal, 65 BPM, orchestral strings, vintage Americana, reverb-drenched, cinematic atmosphere, melancholic beauty",
+      "tags": [
+        "Baroque pop",
+        " sultry female vocal",
+        " 65 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Drake Style - R&B Rap",
+      "prompt": "Hip-hop R&B crossover, melodic rap, 85 BPM, 808 bass, atmospheric pads, introspective lyrics, half-sung delivery, moody production",
+      "tags": [
+        "Hip-hop R&B crossover",
+        " melodic rap",
+        " 85 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Dua Lipa Style - Nu-Disco",
+      "prompt": "Nu-disco pop, powerful female vocal, 118 BPM, funky bassline, four-on-the-floor, retro synth, dance energy, modern production, radio-ready hook",
+      "tags": [
+        "Nu-disco pop",
+        " powerful female vocal",
+        " 118 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Lo-fi Study Beats",
+      "prompt": "Lo-fi hip-hop, chill beats, 80 BPM, vinyl crackle, jazz piano samples, filtered drums, study atmosphere, rain ambience, relaxed vibe, no vocals",
+      "tags": [
+        "Lo-fi hip-hop",
+        " chill beats",
+        " 80 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "80s Synthwave",
+      "prompt": "Synthwave retro, 110 BPM, analog synth, gated reverb drums, neon aesthetic, driving bassline, cinematic, night drive energy, instrumental",
+      "tags": [
+        "Synthwave retro",
+        " 110 BPM",
+        " analog synth"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Jazz Standard Cover",
+      "prompt": "Jazz standard, female vocal, 100 BPM, piano trio, walking bass, swing drums, improvised scat section, smoky lounge atmosphere, live feel",
+      "tags": [
+        "Jazz standard",
+        " female vocal",
+        " 100 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Country Folk",
+      "prompt": "Country pop, male vocal, 95 BPM, acoustic guitar, pedal steel, storytelling lyrics, harmonica solo, Americana warmth, road trip energy",
+      "tags": [
+        "Country pop",
+        " male vocal",
+        " 95 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Gospel Choir",
+      "prompt": "Gospel, choir vocals, 80 BPM, Hammond organ, call and response, emotional build, church reverb, powerful solo, spiritual energy, uplifting climax",
+      "tags": [
+        "Gospel",
+        " choir vocals",
+        " 80 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Reggae Vibes",
+      "prompt": "Reggae pop, male vocal, 75 BPM, offbeat guitar skank, deep bass, horn section, laid-back delivery, island vibes, positive message, one-drop rhythm",
+      "tags": [
+        "Reggae pop",
+        " male vocal",
+        " 75 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Punk Rock",
+      "prompt": "Pop punk, energetic male vocal, 180 BPM, power chords, fast drums, teenage angst, catchy hook, short and punchy, raw production, crowd energy",
+      "tags": [
+        "Pop punk",
+        " energetic male vocal",
+        " 180 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Dream Pop",
+      "prompt": "Dream pop, ethereal female vocal, 95 BPM, shoegaze guitars, reverb wash, floating atmosphere, minimalist drums, hazy production, cinematic texture",
+      "tags": [
+        "Dream pop",
+        " ethereal female vocal",
+        " 95 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Latin Pop",
+      "prompt": "Latin pop, male vocal, 100 BPM, reggaeton beat, acoustic guitar, Spanish lyrics, dance energy, tropical vibe, catchy hook, summer atmosphere",
+      "tags": [
+        "Latin pop",
+        " male vocal",
+        " 100 BPM"
+      ]
+    },
+    {
+      "category": "English Cover",
+      "theme": "Orchestral Cinematic",
+      "prompt": "Cinematic orchestral, no vocals, 85 BPM, full symphony, emotional strings, epic brass, timpani rolls, building tension, heroic climax, film score quality",
+      "tags": [
+        "Cinematic orchestral",
+        " no vocals",
+        " 85 BPM"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "钢琴独奏 - 月光",
+      "prompt": "Solo piano, classical influence, 65 BPM, emotional, minor key, soft dynamics, reverb hall, contemplative, Chopin-inspired, intimate recording",
+      "tags": [
+        "Solo piano",
+        " classical influence",
+        " 65 BPM"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "电子氛围 - 星际",
+      "prompt": "Ambient electronic, no drums, 60 BPM, evolving synth pads, space atmosphere, granular texture, slow build, meditative, sci-fi soundscape",
+      "tags": [
+        "Ambient electronic",
+        " no drums",
+        " 60 BPM"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "吉他指弹 - 春日",
+      "prompt": "Fingerstyle acoustic guitar, 90 BPM, folk influence, natural reverb, melodic, warm tone, percussive technique, nature sounds, peaceful",
+      "tags": [
+        "Fingerstyle acoustic guitar",
+        " 90 BPM",
+        " folk influence"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "爵士三重奏 - 夜",
+      "prompt": "Jazz trio, piano lead, 110 BPM, walking bass, swing drums, improvised feel, smoky club atmosphere, live recording, extended solo",
+      "tags": [
+        "Jazz trio",
+        " piano lead",
+        " 110 BPM"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "管弦乐 - 史诗",
+      "prompt": "Epic orchestral, 120 BPM, full symphony, heroic brass, string ostinato, percussion ensemble, dramatic swells, Hans Zimmer style, cinematic climax",
+      "tags": [
+        "Epic orchestral",
+        " 120 BPM",
+        " full symphony"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "Lo-fi Hip-hop - 晨",
+      "prompt": "Lo-fi instrumental, 85 BPM, vinyl crackle, jazz chords, mellow beat, morning coffee vibes, filtered samples, relaxed, study-friendly",
+      "tags": [
+        "Lo-fi instrumental",
+        " 85 BPM",
+        " vinyl crackle"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "Synthwave - 追光",
+      "prompt": "Synthwave instrumental, 115 BPM, retro synth, arpeggiated bass, gated snare, neon atmosphere, Outrun aesthetic, driving energy, 80s nostalgia",
+      "tags": [
+        "Synthwave instrumental",
+        " 115 BPM",
+        " retro synth"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "中国风 - 山水",
+      "prompt": "Chinese traditional instrumental, 古筝 lead, 68 BPM, 笛子 countermelody, 琵琶 tremolo, nature ambience, water sounds, meditative, ink painting aesthetic",
+      "tags": [
+        "Chinese traditional instrumental",
+        " 古筝 lead",
+        " 68 BPM"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "后摇 - 日出",
+      "prompt": "Post-rock instrumental, 75 BPM, clean guitar arpeggios, gradual build, delay and reverb, crescendo at 4:00, emotional climax, Explosions in the Sky influence",
+      "tags": [
+        "Post-rock instrumental",
+        " 75 BPM",
+        " clean guitar arpeggios"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "电子舞曲 - 派对",
+      "prompt": "EDM instrumental, 128 BPM, build-up intro, massive drop, synth lead, sidechain compression, festival energy, hands-up moment, clean production",
+      "tags": [
+        "EDM instrumental",
+        " 128 BPM",
+        " build-up intro"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "冥想 - 空",
+      "prompt": "Meditation music, 55 BPM, singing bowls, drone, nature ambience, no beat, theta waves, healing frequencies, 432Hz tuning, spacious reverb",
+      "tags": [
+        "Meditation music",
+        " 55 BPM",
+        " singing bowls"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "Funk - 律动",
+      "prompt": "Funk instrumental, 105 BPM, slap bass lead, tight drums, wah guitar, horn stabs, groovy, danceable, 70s production, James Brown energy",
+      "tags": [
+        "Funk instrumental",
+        " 105 BPM",
+        " slap bass lead"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "弦乐四重奏 - 秋",
+      "prompt": "String quartet, 72 BPM, classical, violins and cello, emotional, chamber music, autumn atmosphere, bittersweet melody, refined performance",
+      "tags": [
+        "String quartet",
+        " 72 BPM",
+        " classical"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "Trap Beat - 黑暗",
+      "prompt": "Trap instrumental, 145 BPM, 808 bass, dark melody, hi-hat rolls, sparse arrangement, menace energy, modern production, rap-ready",
+      "tags": [
+        "Trap instrumental",
+        " 145 BPM",
+        " 808 bass"
+      ]
+    },
+    {
+      "category": "Instrumental",
+      "theme": "钢琴+大提琴 - 雨",
+      "prompt": "Piano and cello duet, 68 BPM, romantic, rain sounds intro, emotional dialogue between instruments, classical crossover, intimate recording, gentle dynamics",
+      "tags": [
+        "Piano and cello duet",
+        " 68 BPM",
+        " romantic"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "中文流行 → Lofi Remix",
+      "prompt": "Lofi remix, Mandarin pop sample, 80 BPM, vinyl crackle, filtered beat, chillhop drums, warm bass, relaxed version, study-friendly, nostalgic feel",
+      "tags": [
+        "Lofi remix",
+        " Mandarin pop sample",
+        " 80 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "英文经典 → Trap Remix",
+      "prompt": "Trap remix, pop vocal chops, 145 BPM, 808 bass, dark atmosphere, hi-hat rolls, modern production, hard-hitting drums, festival-ready drop",
+      "tags": [
+        "Trap remix",
+        " pop vocal chops",
+        " 145 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "民谣 → 电子 Remix",
+      "prompt": "Electronic folk remix, 110 BPM, acoustic guitar chops, synth bass, four-on-the-floor, vocal glitches, indie dance energy, warm analog synths",
+      "tags": [
+        "Electronic folk remix",
+        " 110 BPM",
+        " acoustic guitar chops"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "摇滚 → 交响 Remix",
+      "prompt": "Orchestral rock remix, 130 BPM, electric guitar + full orchestra, epic strings, cinematic drums, Metallica S&M influence, dramatic crescendo",
+      "tags": [
+        "Orchestral rock remix",
+        " 130 BPM",
+        " electric guitar + full orchestra"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "R&B → House Remix",
+      "prompt": "Deep house remix, R&B vocal, 122 BPM, groovy bassline, piano chords, soulful, club energy, filtered intro, joyful drop",
+      "tags": [
+        "Deep house remix",
+        " R&B vocal",
+        " 122 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "古风 → 电子 Remix",
+      "prompt": "Chinese electronic remix, 古筝 samples, 128 BPM, trap beat, 笛子 melody processed, cyberpunk aesthetic, traditional + future fusion",
+      "tags": [
+        "Chinese electronic remix",
+        " 古筝 samples",
+        " 128 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "爵士 → Lo-fi Remix",
+      "prompt": "Jazz lo-fi remix, 85 BPM, saxophone samples, vinyl crackle, mellow beat, study vibes, warm production, coffee shop atmosphere",
+      "tags": [
+        "Jazz lo-fi remix",
+        " 85 BPM",
+        " saxophone samples"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "情歌 → Dance Remix",
+      "prompt": "Dance pop remix, emotional vocal, 126 BPM, piano house chords, uplifting drop, euphoric build, radio-friendly, hands-up moment",
+      "tags": [
+        "Dance pop remix",
+        " emotional vocal",
+        " 126 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "摇滚 → Acoustic Remix",
+      "prompt": "Acoustic cover remix, rock song stripped down, 78 BPM, solo guitar, raw vocal, intimate, emotional reimagining, campfire version",
+      "tags": [
+        "Acoustic cover remix",
+        " rock song stripped down",
+        " 78 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "电子 → 钢琴 Remix",
+      "prompt": "Piano reinterpretation, EDM song, 70 BPM, solo piano, classical arrangement, emotional depth, minimalist, haunting beauty",
+      "tags": [
+        "Piano reinterpretation",
+        " EDM song",
+        " 70 BPM"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "Hip-hop → Jazz Remix",
+      "prompt": "Jazz hip-hop fusion, 90 BPM, live band, rap vocal, horn section, swing drums, sophisticated, genre-blending, unexpected",
+      "tags": [
+        "Jazz hip-hop fusion",
+        " 90 BPM",
+        " live band"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "流行 → 管弦 Remix",
+      "prompt": "Orchestral pop cover, 85 BPM, full symphony, pop melody, cinematic arrangement, Disney-esque, magical atmosphere, grand finale",
+      "tags": [
+        "Orchestral pop cover",
+        " 85 BPM",
+        " full symphony"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "K-pop → Rock Remix",
+      "prompt": "Rock K-pop cover, 130 BPM, electric guitars, live drums, powerful vocal, band energy, stadium-ready, Japanese rock influence",
+      "tags": [
+        "Rock K-pop cover",
+        " 130 BPM",
+        " electric guitars"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "Reggae → Dub Remix",
+      "prompt": "Dub reggae remix, 70 BPM, deep bass, echo effects, spacious production, trippy atmosphere, King Tubby influence, heavy reverb",
+      "tags": [
+        "Dub reggae remix",
+        " 70 BPM",
+        " deep bass"
+      ]
+    },
+    {
+      "category": "Remix/Adaptation",
+      "theme": "Country → Blues Remix",
+      "prompt": "Blues country fusion, 90 BPM, slide guitar, harmonica, soulful vocal, 12-bar structure, raw emotion, Delta blues influence",
+      "tags": [
+        "Blues country fusion",
+        " 90 BPM",
+        " slide guitar"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "治愈系 - 晚安",
+      "prompt": "Mandarin healing pop, warm female vocal, 72 BPM, gentle piano, soft strings, ASMR whispers, bedtime atmosphere, positive lyrics, calming energy",
+      "tags": [
+        "Mandarin healing pop",
+        " warm female vocal",
+        " 72 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "元气 - 早安",
+      "prompt": "Mandarin energetic pop, bright female vocal, 120 BPM, ukulele, handclaps, morning energy, positive vibes, cheerful melody, sunshine feel",
+      "tags": [
+        "Mandarin energetic pop",
+        " bright female vocal",
+        " 120 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "暗黑 - 面具",
+      "prompt": "Dark pop Mandarin, whisper vocal, 95 BPM, trap beat, minor key, atmospheric synths, mysterious energy, edgy production, haunting hook",
+      "tags": [
+        "Dark pop Mandarin",
+        " whisper vocal",
+        " 95 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "夏日 - 海滩",
+      "prompt": "Summer pop Mandarin, breezy male vocal, 105 BPM, acoustic guitar, tropical percussion, beach vibes, carefree energy, whistle hook, feel-good chorus",
+      "tags": [
+        "Summer pop Mandarin",
+        " breezy male vocal",
+        " 105 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "冬日 - 雪",
+      "prompt": "Winter ballad Mandarin, warm baritone vocal, 68 BPM, felt piano, strings, snowfall atmosphere, nostalgic, cozy, fireplace ambience",
+      "tags": [
+        "Winter ballad Mandarin",
+        " warm baritone vocal",
+        " 68 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "赛博朋克 - 2077",
+      "prompt": "Cyberpunk Mandarin pop, vocoder vocal, 128 BPM, industrial beat, glitch effects, dystopian atmosphere, neon aesthetic, Blade Runner influence",
+      "tags": [
+        "Cyberpunk Mandarin pop",
+        " vocoder vocal",
+        " 128 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "校园 - 青春",
+      "prompt": "Campus pop Mandarin, youthful vocal, 100 BPM, acoustic guitar, school bell sample, innocent energy, first love theme, graduation nostalgia",
+      "tags": [
+        "Campus pop Mandarin",
+        " youthful vocal",
+        " 100 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "都市 - 地铁",
+      "prompt": "Urban pop Mandarin, androgynous vocal, 90 BPM, electronic beat, city sounds intro, modern life theme, subway rhythm, neon lights atmosphere",
+      "tags": [
+        "Urban pop Mandarin",
+        " androgynous vocal",
+        " 90 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "武侠 - 江湖",
+      "prompt": "Wuxia style Mandarin, dramatic male vocal, 85 BPM, 古筝 and 笛子, epic storytelling, martial arts atmosphere, heroic, cinematic",
+      "tags": [
+        "Wuxia style Mandarin",
+        " dramatic male vocal",
+        " 85 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "童话 - 森林",
+      "prompt": "Fairy tale pop, childlike female vocal, 75 BPM, music box intro, harp glissandos, magical atmosphere, forest sounds, innocent wonder",
+      "tags": [
+        "Fairy tale pop",
+        " childlike female vocal",
+        " 75 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "失恋 - 放手",
+      "prompt": "Breakup ballad Mandarin, emotional male vocal, 70 BPM, solo piano, rain sounds, heartbreak delivery, minimalist, tears-in-voice, devastating outro",
+      "tags": [
+        "Breakup ballad Mandarin",
+        " emotional male vocal",
+        " 70 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "暗恋 - 秘密",
+      "prompt": "Crush pop Mandarin, shy female vocal, 95 BPM, guitar strum, diary-entry lyrics, sweet melody, blushing energy, ukulele bridge, hopeful ending",
+      "tags": [
+        "Crush pop Mandarin",
+        " shy female vocal",
+        " 95 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "旅行 - 远方",
+      "prompt": "Travel folk Mandarin, warm male vocal, 88 BPM, acoustic guitar, train rhythm percussion, wanderlust theme, open road energy, harmonica solo",
+      "tags": [
+        "Travel folk Mandarin",
+        " warm male vocal",
+        " 88 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "复古 - 上海滩",
+      "prompt": "Shanghai retro pop, sultry female vocal, 78 BPM, jazz band, gramophone crackle, 1930s aesthetic, 旗袍 elegance, smoky nightclub atmosphere",
+      "tags": [
+        "Shanghai retro pop",
+        " sultry female vocal",
+        " 78 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "科幻 - 外星",
+      "prompt": "Sci-fi pop Mandarin, processed vocal, 110 BPM, space synth, alien sounds, futuristic production, cosmic theme, interstellar atmosphere",
+      "tags": [
+        "Sci-fi pop Mandarin",
+        " processed vocal",
+        " 110 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "孤独 - 深夜",
+      "prompt": "Lonely lo-fi Mandarin, whisper male vocal, 65 BPM, ambient pads, heartbeat drum, 3am vibe, urban isolation, minimal production, cathartic release",
+      "tags": [
+        "Lonely lo-fi Mandarin",
+        " whisper male vocal",
+        " 65 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "友情 - 兄弟",
+      "prompt": "Bromance pop Mandarin, male duet, 105 BPM, electric guitar, band energy, friendship theme, singalong chorus, memories montage, uplifting",
+      "tags": [
+        "Bromance pop Mandarin",
+        " male duet",
+        " 105 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "亲情 - 妈妈",
+      "prompt": "Mother love ballad, emotional vocal, 72 BPM, piano and strings, gratitude theme, warm delivery, home memories, tear-inducing bridge, simple and sincere",
+      "tags": [
+        "Mother love ballad",
+        " emotional vocal",
+        " 72 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "梦想 - 追光",
+      "prompt": "Inspirational pop Mandarin, powerful vocal, 115 BPM, orchestral build, chasing dreams theme, motivational lyrics, epic key change, stadium finale",
+      "tags": [
+        "Inspirational pop Mandarin",
+        " powerful vocal",
+        " 115 BPM"
+      ]
+    },
+    {
+      "category": "汽水音乐原创",
+      "theme": "佛系 - 禅",
+      "prompt": "Zen electronic Mandarin, chanting vocal, 60 BPM, temple bell, ambient drone, meditative, Buddhist influence, minimal, spiritual atmosphere",
+      "tags": [
+        "Zen electronic Mandarin",
+        " chanting vocal",
+        " 60 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "春节 - 团圆",
+      "prompt": "Chinese New Year pop, festive, 120 BPM, 锣鼓 percussion, 笛子 melody, family reunion theme, happy atmosphere, fireworks, celebratory",
+      "tags": [
+        "Chinese New Year pop",
+        " festive",
+        " 120 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "情人节 - 告白",
+      "prompt": "Valentine's Day pop, romantic duet, 85 BPM, acoustic guitar, strings, confession theme, sweet delivery, heart-shaped production, intimate",
+      "tags": [
+        "Valentine's Day pop",
+        " romantic duet",
+        " 85 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "圣诞节 - 初雪",
+      "prompt": "Christmas pop Mandarin, warm vocal, 78 BPM, sleigh bells, piano, snow atmosphere, cozy, holiday romance, nostalgic",
+      "tags": [
+        "Christmas pop Mandarin",
+        " warm vocal",
+        " 78 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "毕业季 - 再见",
+      "prompt": "Graduation ballad, emotional vocal, 75 BPM, piano, strings, farewell theme, youth nostalgia, bittersweet, group sing ending",
+      "tags": [
+        "Graduation ballad",
+        " emotional vocal",
+        " 75 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "生日 - 快乐",
+      "prompt": "Birthday pop, cheerful, 125 BPM, party horns, dance beat, celebration energy, happy vocals, confetti atmosphere, fun",
+      "tags": [
+        "Birthday pop",
+        " cheerful",
+        " 125 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "婚礼 - 誓言",
+      "prompt": "Wedding waltz, romantic vocal, 85 BPM, string quartet, piano, first dance, eternal love theme, elegant, timeless",
+      "tags": [
+        "Wedding waltz",
+        " romantic vocal",
+        " 85 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "万圣节 - 古堡",
+      "prompt": "Halloween dark pop, spooky, 100 BPM, theremin, organ, haunted house sounds, theatrical, monster theme, thrilling",
+      "tags": [
+        "Halloween dark pop",
+        " spooky",
+        " 100 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "中秋节 - 月圆",
+      "prompt": "Mid-Autumn festival, 古风, 72 BPM, 古筝 solo, moon imagery, longing theme, family reunion, poetic lyrics, elegant",
+      "tags": [
+        "Mid-Autumn festival",
+        " 古风",
+        " 72 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "健身 - 燃脂",
+      "prompt": "Workout EDM, energetic, 140 BPM, pumping beat, motivational shouts, gym energy, high intensity, drop every 32 bars, relentless",
+      "tags": [
+        "Workout EDM",
+        " energetic",
+        " 140 BPM"
+      ]
+    },
+    {
+      "category": "场景专用",
+      "theme": "游戏 - Boss战",
+      "prompt": "Video game boss music, 160 BPM, epic orchestral + metal, choir, intense drums, dark atmosphere, multiple phases, final fantasy influence",
+      "tags": [
+        "Video game boss music",
+        " 160 BPM",
+        " epic orchestral + metal"
+      ]
+    }
+  ]
+}
