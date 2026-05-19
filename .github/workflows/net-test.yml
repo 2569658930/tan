@@ -1,0 +1,18 @@
+name: Net Test
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test connectivity
+        run: |
+          echo "=== Testing ==="
+          for url in "https://dev.to" "https://www.reddit.com" "https://news.ycombinator.com" "https://api.x.com/2/tweets" "https://t.me"; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$url" 2>/dev/null || echo "TIMEOUT")
+            echo "$url -> $status"
+          done
+          
+          echo "=== Test POST to dev.to ==="
+          curl -s --max-time 10 -X POST "https://dev.to/api/articles"             -H "Content-Type: application/json"             -d '{"article":{"title":"test","published":false,"body_markdown":"test","tags":["test"]}}' 2>&1 | head -5
