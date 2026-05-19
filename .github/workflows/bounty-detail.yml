@@ -1,0 +1,74 @@
+name: Bounty Detail
+on:
+  workflow_dispatch:
+
+jobs:
+  detail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install deps
+        run: pip install requests beautifulsoup4
+        
+      - name: Scrape Bountycaster + Algora
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+
+          results = []
+          
+          # Try Bountycaster open bounties
+          try:
+              r = requests.get("https://www.bountycaster.xyz/", timeout=15)
+              # Extract bounty data from Next.js data
+              matches = re.findall(r'\$(\d[\d,]*)', r.text)
+              amounts = [int(m.replace(',','')) for m in matches if int(m.replace(',','')) > 0]
+              results.append(f"Bountycaster amounts: {sorted(amounts, reverse=True)[:10]}")
+              
+              # Look for Farcaster frames / links
+              urls = re.findall(r'https://www\.bountycaster\.xyz/bounty/[a-zA-Z0-9]+', r.text)
+              results.append(f"Bountycaster URLs: {urls[:5]}")
+          except Exception as e:
+              results.append(f"Bountycaster error: {e}")
+
+          # Try Algora more carefully
+          try:
+              r = requests.get("https://algora.io/bounties", timeout=15, 
+                               headers={"User-Agent": "Mozilla/5.0"})
+              dollar_matches = re.findall(r'\$([\d,]+)', r.text)
+              amounts = [int(m.replace(',','')) for m in dollar_matches if 3 <= int(m.replace(',','')) <= 10000]
+              results.append(f"Algora amounts: {sorted(amounts, reverse=True)[:15]}")
+              
+              # Find bounty titles
+              titles = re.findall(r'<h[23][^>]*>([^<]{10,100})</h[23]>', r.text)
+              results.append(f"Algora titles: {titles[:5]}")
+          except Exception as e:
+              results.append(f"Algora error: {e}")
+              
+          # Try Opire
+          try:
+              r = requests.get("https://opire.dev", timeout=15)
+              results.append(f"Opire status: {r.status_code}")
+              amounts = re.findall(r'\$([\d,]+)', r.text)
+              results.append(f"Opire amounts: {amounts[:10]}")
+          except Exception as e:
+              results.append(f"Opire error: {e}")
+
+          # Try Gitcoin
+          try:
+              r = requests.get("https://explorer.gitcoin.co/", timeout=15)
+              results.append(f"Gitcoin status: {r.status_code}")
+          except Exception as e:
+              results.append(f"Gitcoin error: {e}")
+
+          with open("detail.md", "w") as f:
+              for line in results:
+                  f.write(line + "\n\n")
+          print("\n".join(results))
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: detail-results
+          path: detail.md
