@@ -1,0 +1,65 @@
+name: Opire Scan
+on:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Scrape Opire bounties
+        run: |
+          pip install requests beautifulsoup4
+          python3 << 'PYEOF'
+          import requests, re, json
+
+          # Opire - get bounty listing
+          r = requests.get("https://opire.dev", timeout=15)
+          
+          # Look for bounty data
+          # Opire likely has an API endpoint
+          # Try to find bounty cards/data
+          bounty_cards = re.findall(r'\$([\d,]+)[^<]{0,200}', r.text)
+          
+          with open("opire.md", "w") as f:
+              f.write("# Opire Bounty Scan\n\n")
+              for i, card in enumerate(bounty_cards[:20]):
+                  f.write(f"{i+1}. ${card}\n")
+              
+              # Try direct API
+              try:
+                  r2 = requests.get("https://opire.dev/api/bounties?status=open&limit=10", timeout=10,
+                                    headers={"Accept": "application/json"})
+                  f.write(f"\nAPI status: {r2.status_code}\n")
+                  if r2.status_code == 200:
+                      data = r2.json()
+                      for b in data[:10]:
+                          f.write(f"- ${b.get('amount',b.get('reward','?'))} | {b.get('title','?')[:80]}\n")
+              except Exception as e:
+                  f.write(f"\nAPI error: {e}\n")
+                  
+              # Try yasumorishima's opire-watcher data
+              try:
+                  r3 = requests.get("https://raw.githubusercontent.com/yasumorishima/opire-watcher/main/data/bounties.json", timeout=15)
+                  if r3.status_code == 200:
+                      data = r3.json()
+                      f.write(f"\n# Opire Watcher ({len(data)} bounties)\n\n")
+                      # Sort by amount, show cheapest
+                      sorted_bounties = sorted(data, key=lambda x: x.get('amount_usd', 0) or 0)
+                      for b in sorted_bounties[:10]:
+                          amt = b.get('amount_usd', 0)
+                          title = b.get('title','?')[:100]
+                          claimers = len(b.get('claimer_usernames',[]) or [])
+                          f.write(f"- ${amt:.2f} | claimers:{claimers} | {title}\n")
+                          f.write(f"  {b.get('url','')}\n")
+              except Exception as e:
+                  f.write(f"\nWatcher error: {e}\n")
+
+          print("Done")
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: opire-results
+          path: opire.md
