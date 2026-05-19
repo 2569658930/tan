@@ -8,7 +8,15 @@
 
 ---
 
-## ⚡ 快速开始
+## 🌐 网页版 — 不用装任何东西
+
+👉 **[2569658930.github.io/tan](https://2569658930.github.io/tan/)**
+
+打开网页 → 选艺人 → 填想法 → 点生成 → 复制 → 贴入 Suno，3秒出 prompt。
+
+---
+
+## ⚡ 命令行版
 
 ```bash
 git clone https://github.com/2569658930/tan.git
