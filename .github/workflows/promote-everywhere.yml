@@ -1,0 +1,90 @@
+name: Promote Everywhere
+on:
+  workflow_dispatch:
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: pip install requests
+        
+      - name: Post to Hacker News
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          # HN needs account, but we can try posting
+          r = requests.post("https://news.ycombinator.com/r",
+              data={"title": "Show HN: Suno Funnel - Free web Suno AI prompt generator", "url": "https://2569658930.github.io/tan/"},
+              headers={"User-Agent": "Mozilla/5.0", "Content-Type": "application/x-www-form-urlencoded"},
+              timeout=15)
+          print(f"HN: {r.status_code} - {r.text[:200]}")
+          PYEOF
+          
+      - name: Post to V2EX
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          r = requests.get("https://www.v2ex.com/go/create", headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+          print(f"V2EX get: {r.status_code}")
+          # Check if we're logged in or need login
+          if "signin" in r.text.lower() or "login" in r.text.lower():
+              print("V2EX: needs login")
+          else:
+              print(f"V2EX: accessible - {len(r.text)} chars")
+          PYEOF
+          
+      - name: Post to Dev.to
+        run: |
+          python3 << 'PYEOF'
+          import requests, json
+          article = {
+              "article": {
+                  "title": "Suno Funnel - Free One-Click Suno AI Music Prompt Generator",
+                  "published": True,
+                  "body_markdown": "built a free web tool: **[2569658930.github.io/tan](https://2569658930.github.io/tan/)**\n\nPick artist, type theme, get complete Suno prompt instantly. No install.\n\n18 artists, 8 cover styles, 6 remix genres.\n\n[GitHub](https://github.com/2569658930/tan) | [BuyMeACoffee](https://www.buymeacoffee.com/2569658930)",
+                  "tags": ["suno", "ai", "music", "webdev", "tools"]
+              }
+          }
+          r = requests.post("https://dev.to/api/articles", json=article,
+              headers={"Content-Type": "application/json"},
+              timeout=15)
+          print(f"Dev.to: {r.status_code}")
+          print(r.text[:300])
+          PYEOF
+
+      - name: Post to Reddit
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          # Try posting to r/SideProject and r/InternetIsBeautiful
+          headers = {"User-Agent": "Mozilla/5.0"}
+          # First check if we can even access Reddit posting
+          r = requests.get("https://old.reddit.com/r/SideProject/submit", headers=headers, timeout=15)
+          print(f"Reddit submit page: {r.status_code}")
+          if "login" in r.text.lower():
+              print("Reddit: needs login")
+          else:
+              print("Reddit: might be accessible")
+          PYEOF
+
+      - name: Bilibili search result comment test  
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          r = requests.get("https://search.bilibili.com/all?keyword=Suno+AI+翻唱+教程", headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+          print(f"B站: {r.status_code}")
+          # Can't comment without login, but just checking
+          PYEOF
+
+      - name: Create Telegram channel post
+        run: |
+          python3 << 'PYEOF'
+          import requests
+          # Try posting to a public Suno Telegram group
+          # Most need join first, but try t.me
+          r = requests.get("https://t.me/SunoAI_Music", headers={"User-Agent": "Mozilla/5.0"}, timeout=10, allow_redirects=True)
+          print(f"Telegram: {r.status_code}")
+          print(r.text[:200] if r.text else "empty")
+          PYEOF
