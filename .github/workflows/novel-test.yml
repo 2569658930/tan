@@ -1,0 +1,67 @@
+name: Novel Test
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      - name: Find Tomato Novel API
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+          headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"}
+          results = {}
+          
+          # Test the actual reading API
+          book_id = "1630324483249155"
+          
+          # Try different API patterns
+          for name, url in [
+              ("detail_page", f"https://fanqienovel.com/page/{book_id}"),
+              ("reader_api", f"https://fanqienovel.com/api/reader/book/directory?bookId={book_id}"),
+              ("reader_v2", f"https://fanqienovel.com/api/reader/directory?bookId={book_id}"),
+              ("novel_api_dir", f"https://novel.snssdk.com/api/novel/book/directory/list/v1/?book_id={book_id}"),
+              ("novel_api_detail", f"https://novel.snssdk.com/api/novel/book/detail/v1/?book_id={book_id}"),
+              ("novel_api_chapter", f"https://novel.snssdk.com/api/novel/book/reader/full/v1/?book_id={book_id}&item_id=1"),
+          ]:
+              try:
+                  r = requests.get(url, headers=headers, timeout=15, allow_redirects=True)
+                  results[name] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 50:
+                      try:
+                          j = r.json()
+                          results[name]["json_keys"] = list(j.keys())[:5] if isinstance(j, dict) else "list"
+                          results[name]["preview"] = json.dumps(j, ensure_ascii=False)[:600]
+                      except:
+                          results[name]["preview"] = r.text[:300]
+              except Exception as e:
+                  results[name] = {"error": str(e)[:80]}
+          
+          # Search page source for API endpoints  
+          try:
+              r = requests.get(f"https://fanqienovel.com/page/{book_id}", headers=headers, timeout=15)
+              # Look for __NEXT_DATA__ or similar
+              next_data = re.findall(r'__NEXT_DATA__[^>]*>({.*?})</script>', r.text, re.DOTALL)
+              results['next_data_found'] = len(next_data)
+              if next_data:
+                  results['next_data_preview'] = next_data[0][:1000]
+              
+              # Look for any API URLs in JS
+              api_urls = re.findall(r'["\'](https?://[^"\']*(?:api|reader|chapter|book)[^"\']*)', r.text)
+              results['api_urls_found'] = len(api_urls)
+              results['api_urls'] = api_urls[:10]
+          except Exception as e:
+              results['page_scan'] = str(e)[:80]
+          
+          print(json.dumps(results, indent=2, ensure_ascii=False))
+          with open("novel_api.json", "w") as f:
+              json.dump(results, f, indent=2, ensure_ascii=False)
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: novel-api-data
+          path: novel_api.json
