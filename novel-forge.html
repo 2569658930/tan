@@ -450,7 +450,7 @@ function GSUM(){
   o+="  外显目标："+conflict+"\n";
   o+="  致命缺陷："+flaw+"\n";
   o+="  成长弧："+arc+"\n";
-  o+="  📝 一句话：一个"+protag+"，为了"+conflict+"，学会了"+arc.split("→")[1]+"。\n\n";
+  o+="  📝 一句话：一个"+protag+"，为了"+conflict+"，学会了"+arc.replace(/从|到/g,"")+"。\n\n";
 
   o+="━━━ 📝 章节大纲（约"+totalCh+"章）━━━\n";
   o+=outlineStr+"\n";
