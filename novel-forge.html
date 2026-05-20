@@ -63,11 +63,11 @@ textarea{width:100%;min-height:80px;font-family:monospace;resize:vertical}
 
 <script>
 var D=JSON.parse(document.getElementById("nv").textContent);
-var TABS=["rank","trend","hook","world","character","outline"];
+var TABS=["rank","trend","hook","world","character","outline","summary"];
 var T="rank";
 
 function initTabs(){
-  var names={rank:"📋 榜单分析",trend:"📊 市场趋势",hook:"🪝 开局钩子",world:"🌍 世界观",character:"👤 人物设计",outline:"📝 大纲生成"};
+  var names={rank:"📋 榜单分析",trend:"📊 市场趋势",hook:"🪝 开局钩子",world:"🌍 世界观",character:"👤 人物设计",outline:"📝 大纲生成",summary:"📄 汇总大纲"};
   var h='';
   TABS.forEach(function(t,i){
     h+='<button class="ti'+(i===0?' ac':'')+'" onclick="S(\''+t+'\')">'+names[t]+'</button>';
@@ -81,6 +81,7 @@ function M(){
   if(T==="rank")R();else if(T==="trend")Tr();
   else if(T==="hook")Hk();else if(T==="world")Wd();
   else if(T==="character")Ch();else if(T==="outline")O();
+  else if(T==="summary")SMT();
 }
 
 // ═══ RANK ═══
@@ -338,5 +339,134 @@ function GCO(){
 }
 
 function E(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+// ═══ SUMMARY OUTLINE ═══
+function SMT(){
+  var h='<div class="ca"><h3>📄 汇总大纲生成器</h3>';
+  h+='<p style="color:#888;margin-bottom:16px">一键生成完整小说方案：开局钩子 + 世界观 + 主角 + 大纲 + 写作建议</p>';
+
+  h+='<div class="sr"><div class="sb"><div class="nu">1</div><div class="lb">选类型</div></div><div class="sb"><div class="nu">2</div><div class="lb">填想法</div></div><div class="sb"><div class="nu">3</div><div class="lb">点生成</div></div></div>';
+
+  h+='<div class="ln">小说类型：<select id="smType">';
+  ["重生逆袭","穿越架空","修仙玄幻","总裁豪门","都市言情","悬疑推理","种田基建","战神兵王","星际科幻","末日废土"].forEach(function(t){h+='<option>'+t+'</option>'});
+  h+='</select></div>';
+
+  h+='<div class="ln">世界观背景：<select id="smWorld"><option>古代架空</option><option>现代都市</option><option>修仙玄幻</option><option>末日废土</option><option>星际科幻</option></select></div>';
+  h+='<div class="ln">核心冲突：<input id="smConflict" placeholder="比如：复仇 / 证明自己 / 夺回身份 / 拯救世界" style="width:300px"></div>';
+  h+='<div class="ln">主角设定（一句话）：<input id="smProtag" placeholder="比如：被退婚的将军之女重生复仇 / 穿越成废柴的996程序员" style="width:300px"></div>';
+  h+='<div class="ln">书名（可选）：<input id="smTitle" placeholder="留空则自动生成"></div>';
+
+  h+='<button class="bt" onclick="GSUM()" style="margin-top:12px;font-size:1.1em;padding:14px 40px">🪄 一键生成完整方案</button>';
+  h+='<div id="smOut" class="ob" style="margin-top:16px"></div></div>';
+  document.getElementById("main").innerHTML=h;
+}
+
+function GSUM(){
+  var type=document.getElementById("smType").value;
+  var world=document.getElementById("smWorld").value;
+  var conflict=document.getElementById("smConflict").value||"逆袭";
+  var protag=document.getElementById("smProtag").value||"一个在逆境中崛起的主角";
+  var title=document.getElementById("smTitle").value;
+
+  // Auto generate title if empty
+  if(!title){
+    var titles={};
+    titles["重生逆袭"]=["重生之","涅槃","归来","逆命","重生后我","一世倾城"];
+    titles["穿越架空"]=["穿越之","异世","降临","我在异世界","穿越成了"];
+    titles["修仙玄幻"]=["仙途","大道","修真","飞升","万古","修仙"];
+    titles["总裁豪门"]=["总裁的","豪门","契约","霸总","替身新娘"];
+    titles["都市言情"]=["都市","遇见","你是我的","余生","念念不忘"];
+    var pool=titles[type]||["逆袭","崛起","巅峰","传奇"];
+    title=pool[Math.floor(Math.random()*pool.length)]+conflict;
+    if(title.length>15)title=title.substring(0,15);
+  }
+
+  // 1. Generate hook
+  var ht=HOOKS[Math.floor(Math.random()*HOOKS.length)];
+  var hookOpening="";
+  if(ht.id==="conflict")hookOpening=protag+"睁眼的第一秒，一切已天翻地覆。\n  "+conflict+"——这是唯一的出路。";
+  else if(ht.id==="mystery")hookOpening=protag+"收到了一样东西。\n  没人知道这意味着什么。直到"+conflict+"的真相开始浮现。";
+  else if(ht.id==="identity")hookOpening="所有人都以为"+protag+"不过如此。\n  直到"+conflict+"的那一刻，他们才知道自己错得有多离谱。";
+  else if(ht.id==="flashback")hookOpening=protag+"站在命运的十字路口。\n  三个月前，一切还不是这样。那时——";
+  else if(ht.id==="dialogue")hookOpening="'"+(conflict.length>8?conflict:'你确定？')+"'——这句话改变了一切。\n  "+protag+"。从那一刻起。";
+  else hookOpening=protag+"。\n  "+conflict+"。\n  故事就此开始。";
+
+  // 2. World summary
+  var wt=WORLDS[world]||WORLDS["古代架空"];
+  var worldSummary="📅 "+wt.time+"\n  🗺 "+wt.geo+"\n  ⚔ "+wt.power;
+
+  // 3. Character
+  var names=["苏瑾","沈墨","林七夜","顾倾城","陆沉舟","姜禾","萧烬","云棠"];
+  var name=names[Math.floor(Math.random()*names.length)];
+  var flaws=["太容易相信别人","控制欲太强","不敢面对过去","嘴硬心软","过于追求完美","习惯性逃避"];
+  var flaw=flaws[Math.floor(Math.random()*flaws.length)];
+  var arcs=["从自卑到自信","从逃避到面对","从孤独到被爱","从复仇到原谅","从迷茫到坚定"];
+  var arc=arcs[Math.floor(Math.random()*arcs.length)];
+
+  // 4. Outline chapters
+  var totalCh=type==="修仙玄幻"?2000:type==="重生逆袭"?1200:type==="穿越架空"?1000:type==="总裁豪门"?800:600;
+  var ps=[];
+  if(totalCh>=1200)ps=[{p:.02,n:"开篇钩子"},{p:.08,n:"第一卷·开局"},{p:.15,n:"第二卷·发展"},{p:.25,n:"第三卷·高潮"},{p:.30,n:"第四卷·转折"},{p:.15,n:"第五卷·收束"},{p:.05,n:"终章"}];
+  else if(totalCh>=600)ps=[{p:.03,n:"开篇钩子"},{p:.12,n:"第一卷·开局"},{p:.25,n:"第二卷·发展"},{p:.35,n:"第三卷·高潮"},{p:.20,n:"第四卷·收束"},{p:.05,n:"终章"}];
+  else ps=[{p:.05,n:"开篇"},{p:.20,n:"第一卷·发展"},{p:.40,n:"第二卷·高潮"},{p:.25,n:"第三卷·收束"},{p:.10,n:"终章"}];
+
+  var outlineStr="";var st=1;
+  ps.forEach(function(p){var cnt=Math.round(totalCh*p.p);var ed=Math.min(st+cnt-1,totalCh);outlineStr+=p.n+" 【第"+st+"-"+ed+"章】\n";var bi=Math.max(3,Math.floor((ed-st+1)/8));
+  if(/重生/.test(type))outlineStr+="  第"+st+"章:重生  "+"第"+(st+bi)+"章:打脸  "+"第"+(st+bi*2)+"章:暴露  "+"第"+(st+bi*3)+"章:胜利\n";
+  else if(/总裁/.test(type))outlineStr+="  第"+st+"章:相遇  "+"第"+(st+bi)+"章:契约  "+"第"+(st+bi*2)+"章:心动  "+"第"+(st+bi*3)+"章:虐点\n";
+  else if(/修仙/.test(type))outlineStr+="  第"+st+"章:传承  "+"第"+(st+bi)+"章:宗门  "+"第"+(st+bi*2)+"章:大比  "+"第"+(st+bi*3)+"章:新图\n";
+  else outlineStr+="  第"+st+"章:开篇  "+"第"+(st+bi)+"章:高潮  "+"第"+(st+bi*2)+"章:转折  "+"第"+(st+bi*3)+"章:收束\n";
+  st=ed+1});
+
+  // 5. Writing tips
+  var tips=[];
+  tips.push("前3章必须抛出钩子——读者只会给你3秒");
+  tips.push("每章结尾留悬念：问句/预告/意外/反转 四选一");
+  tips.push("每10-15章安排一次小高潮(打脸/揭秘/收获)");
+  tips.push("主角的成长弧要清晰:起点状态→中点挣扎→终点蜕变");
+  tips.push("不要在第1章倾倒世界观设定——让读者先感受,再理解");
+  tips.push("每个配角都要有独立动机——不能只是主角的工具人");
+  tips.push("对照番茄热门榜的钩子和类型,确保符合市场趋势");
+
+  // Build final output
+  var o="";
+  o+="╔══════════════════════════════════════════════╗\n";
+  o+="║          📖 《"+title+"》                          ║\n";
+  o+="║          类型："+type.padEnd(30)+"║\n";
+  o+="╚══════════════════════════════════════════════╝\n\n";
+
+  o+="━━━ 🪝 开局钩子（第1章）━━━\n";
+  o+="  风格："+ht.name+"\n";
+  o+="  开篇：\n  "+hookOpening+"\n";
+  o+="  🔑 关键：前500字必须出钩子，第1章结尾留悬念\n\n";
+
+  o+="━━━ 🌍 世界观 ━━━\n";
+  o+="  "+worldSummary.split("\n").join("\n  ")+"\n";
+  o+="  核心规则："+wt.rules.split(";")[0]+"\n\n";
+
+  o+="━━━ 👤 主角 ━━━\n";
+  o+="  姓名："+name+"\n";
+  o+="  设定："+protag+"\n";
+  o+="  外显目标："+conflict+"\n";
+  o+="  致命缺陷："+flaw+"\n";
+  o+="  成长弧："+arc+"\n";
+  o+="  📝 一句话：一个"+protag+"，为了"+conflict+"，学会了"+arc.split("→")[1]+"。\n\n";
+
+  o+="━━━ 📝 章节大纲（约"+totalCh+"章）━━━\n";
+  o+=outlineStr+"\n";
+
+  o+="━━━ ✍️ 写作要诀 ━━\n";
+  tips.forEach(function(t,i){o+="  "+(i+1)+". "+t+"\n"});
+
+  o+="\n━━━ 🚀 下一步 ━━\n";
+  o+="  1. 填主角设计卡的空白项（回去看「👤人物设计」Tab）\n";
+  o+="  2. 用「🪝开局钩子」Tab细化第1章\n";
+  o+="  3. 用「🌍世界观」Tab补全世界细节\n";
+  o+="  4. 用「📝大纲生成」Tab调整章节节奏\n";
+  o+="  5. 打开番茄小说「📋榜单」对照市场\n";
+  o+="  6. 开始写第1章——不要回头看！\n";
+
+  document.getElementById("smOut").textContent=o;
+}
 initTabs();
 </script></body></html>
