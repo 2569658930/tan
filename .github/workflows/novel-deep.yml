@@ -1,0 +1,86 @@
+name: Deep Novel Analysis
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      
+      - name: Find chapter API + get content
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re, time
+          headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"}
+          book_id = "1630324483249155"
+          results = {}
+          
+          # Try various API patterns for full directory
+          api_patterns = [
+              f"https://fanqienovel.com/api/reader/book/directory?bookId={book_id}&page=1&size=2000",
+              f"https://fanqienovel.com/api/reader/directory/list?bookId={book_id}",
+              f"https://fanqienovel.com/api/reader/book/catalog?bookId={book_id}",
+              f"https://fanqienovel.com/api/book/directory/v2?book_id={book_id}",
+              f"https://novel.snssdk.com/api/novel/book/directory/list/v1/?book_id={book_id}&offset=0&limit=2000",
+              f"https://novel.snssdk.com/api/novel/book/catalog/v2/?book_id={book_id}",
+          ]
+          
+          for api_url in api_patterns:
+              try:
+                  r = requests.get(api_url, headers=headers, timeout=15)
+                  results[api_url[-40:]] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 100:
+                      try:
+                          j = r.json()
+                          results[api_url[-40:]]["json_keys"] = str(list(j.keys())[:5]) if isinstance(j, dict) else f"list({len(j)})"
+                          # Check for chapter list
+                          if isinstance(j, dict):
+                              for k in ['data', 'chapterList', 'list', 'items', 'chapters']:
+                                  if k in j and j[k]:
+                                      if isinstance(j[k], list):
+                                          results[api_url[-40:]][f"{k}_count"] = len(j[k])
+                                          if len(j[k]) > 0:
+                                              results[api_url[-40:]][f"{k}_sample"] = str(j[k][0])[:200]
+                          results[api_url[-40:]]["preview"] = r.text[:400]
+                      except:
+                          results[api_url[-40:]]["preview"] = r.text[:200]
+              except Exception as e:
+                  results[api_url[-40:]] = {"error": str(e)[:80]}
+          
+          # Try to get chapter content directly
+          # From state we know itemIds: 7521328301458080318 etc
+          item_ids = ["7521328301458080318", "6889763179463868935"]  # latest + chapter 1 by interpolation
+          
+          content_results = {}
+          for item_id in item_ids:
+              for content_api in [
+                  f"https://fanqienovel.com/api/reader/chapter/content?bookId={book_id}&itemId={item_id}",
+                  f"https://novel.snssdk.com/api/novel/book/reader/full/v1/?book_id={book_id}&item_id={item_id}",
+                  f"https://fanqienovel.com/api/reader/content?itemId={item_id}",
+              ]:
+                  try:
+                      r = requests.get(content_api, headers=headers, timeout=15)
+                      content_results[f"{item_id[:8]}_{content_api[-30:]}"] = {"status": r.status_code, "len": len(r.text)}
+                      if r.status_code == 200 and len(r.text) > 100:
+                          content_results[f"{item_id[:8]}_{content_api[-30:]}_data"] = r.text[:500]
+                  except Exception as e:
+                      content_results[f"{item_id[:8]}"] = str(e)[:80]
+          
+          with open("chapter_api_test.json", "w") as f:
+              json.dump({"directory_spi": results, "content_spi": content_results}, f, indent=2)
+          
+          print("=== Directory API Results ===")
+          for k, v in results.items():
+              print(f"{k}: {v}")
+          print("
+=== Content API Results ===")  
+          for k, v in content_results.items():
+              print(f"{k}: {v}")
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chapter-api-data
+          path: chapter_api_test.json
