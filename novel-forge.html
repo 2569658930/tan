@@ -16,6 +16,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab.active{background:rgba(120,120,255,.2);color:#fff}
 .tab:hover{background:rgba(120,120,255,.1)}
 .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:20px}
+.card h3{color:#aaaaff;margin-bottom:12px}
 .book-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:8px 0;cursor:pointer;transition:.2s}
 .book-card:hover{border-color:rgba(120,120,255,.3);background:rgba(120,120,255,.05)}
 .book-card h4{color:#fff;margin-bottom:4px}
@@ -41,7 +42,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <div id="content"></div>
-<div class="footer">数据来源：番茄小说 · 仅供学习研究</div>
+<div class="footer">数据来源：番茄小说 · 自动更新 · 仅供学习研究</div>
 </div>
 
 <script>
@@ -66,14 +67,17 @@ function render(tab){
     if(a.hooks.length) html += '<div class="line">🪝 开篇钩子：'+a.hooks.map(function(h){return'<span class="tag">'+esc(h)+'</span>'}).join(' ')+'</div>';
     if(a.tropes.length) html += '<div class="line">🎭 核心套路：'+a.tropes.map(function(t){return'<span class="tag">'+esc(t)+'</span>'}).join(' ')+'</div>';
     if(a.structure.length) html += '<div class="structure">'+a.structure.map(function(s){return'<li>'+esc(s)+'</li>'}).join('')+'</div>';
-    html += '</div></div>';
+    html += '</div>';
+    html += '</div>';
   });
   document.getElementById('content').innerHTML = html;
 }
 
 function toggleAnalysis(el){
-  el.querySelector('.abstract').classList.toggle('expanded');
-  el.querySelector('.analysis').classList.toggle('show');
+  var abs = el.querySelector('.abstract');
+  var ana = el.querySelector('.analysis');
+  abs.classList.toggle('expanded');
+  ana.classList.toggle('show');
 }
 
 function analyze(text, chapters){
@@ -81,13 +85,12 @@ function analyze(text, chapters){
   if(!text) return r;
   var types = [['重生','重生逆袭'],['穿越','穿越架空'],['系统','系统流'],['宫斗','宫斗宅斗'],['修仙','修仙玄幻'],['总裁','总裁文'],['种田','种田基建'],['娱乐圈','娱乐圈文'],['悬疑','悬疑推理'],['末世','末世求生'],['星际','星际科幻'],['都市','都市言情']];
   types.forEach(function(t){if(text.indexOf(t[0])>=0 && !r.type) r.type=t[1]});
-  var hooks = [['一夜之间|灭门|砍头','灭门开局'],['重生.*归来|睁开眼|回到','重生开局'],['穿越|穿成|醒来.*古代','穿越开局'],['退婚|退亲|休书','退婚打脸'],['未婚夫|世子|王爷|将军','权贵婚约'],['复仇|报仇|雪恨','复仇主线']];
+  var hooks = [['一夜之间|灭门|砍头','灭门开局'],['重生.*归来|睁开眼|回到','重生开局'],['穿越|穿成|醒来.*古代','穿越开局'],['退婚|退亲|休书','退婚打脸'],['未婚夫|世子|王爷|将军','权贵婚约']];
   hooks.forEach(function(h){if(new RegExp(h[0]).test(text)) r.hooks.push(h[1])});
-  var tropes = [['庶妹|庶女|嫡女|庶子','嫡庶之争'],['打脸|丢脸|啪啪','打脸爽文'],['扮猪吃虎|隐藏.*实力','扮猪吃虎'],['追妻.*火葬|后悔.*挽回','追妻火葬场'],['团宠|宠.*上天','团宠设定']];
+  var tropes = [['庶妹|庶女|嫡女|庶子','嫡庶之争'],['打脸|丢脸|啪啪','打脸爽文'],['扮猪吃虎|隐藏.*实力','扮猪吃虎']];
   tropes.forEach(function(t){if(new RegExp(t[0]).test(text)) r.tropes.push(t[1])});
-  if(text.length>200) r.structure.push('简介详细 → 铺垫型开局（慢热文）');
-  else r.structure.push('简介精炼 → 快节奏开局（爽文向）');
-  if(text.indexOf('一夜之间')>=0||text.indexOf('重生')>=0||text.indexOf('穿越')>=0) r.structure.push('强钩子开头 → 第1章即抛冲突');
+  if(text.length>200) r.structure.push('简介详细 → 铺垫型开局');
+  else r.structure.push('简介精炼 → 快节奏开局');
   return r;
 }
 
