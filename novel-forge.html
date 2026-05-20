@@ -1,102 +1,280 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 NovelForge — 小说写作研究</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);min-height:100vh;color:#e0e0ff;padding:20px}
-.container{max-width:900px;margin:0 auto}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);min-height:100vh;color:#e0e0ff;padding:20px}
+.container{max-width:960px;margin:0 auto}
 .header{text-align:center;padding:30px 0 20px}
 .header h1{font-size:2em;margin-bottom:8px}
 .header p{color:#8888cc}
-.tabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;margin-bottom:24px}
-.tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;color:#8888cc;border:none;background:transparent;font-size:.9em;transition:.2s}
-.tab.active{background:rgba(120,120,255,.2);color:#fff}
-.tab:hover{background:rgba(120,120,255,.1)}
+.tab-row{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{flex:1;min-width:70px;padding:12px 8px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;color:#8888cc;border:none;background:transparent;font-size:.85em;transition:.2s}
+.tab-btn.active{background:rgba(120,120,255,.2);color:#fff}
 .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:20px}
-.card h3{color:#aaaaff;margin-bottom:12px}
-.book-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:8px 0;cursor:pointer;transition:.2s}
+.card h3{color:#aaaaff;margin-bottom:14px}
+.book-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:8px 0;cursor:pointer}
 .book-card:hover{border-color:rgba(120,120,255,.3);background:rgba(120,120,255,.05)}
 .book-card h4{color:#fff;margin-bottom:4px}
 .book-card .meta{color:#8888cc;font-size:.85em}
-.book-card .abstract{color:#aaa;font-size:.9em;margin-top:8px;line-height:1.5;max-height:60px;overflow:hidden;transition:max-height .3s}
-.book-card .abstract.expanded{max-height:500px}
-.analysis{margin-top:12px;padding:12px;background:rgba(0,0,0,.2);border-radius:10px;display:none}
+.book-card .abstract{color:#aaa;font-size:.9em;margin-top:8px;line-height:1.5;max-height:60px;overflow:hidden;transition:.3s}
+.book-card .abstract.expanded{max-height:600px}
+.analysis{margin-top:12px;padding:14px;background:rgba(0,0,0,.2);border-radius:10px;display:none}
 .analysis.show{display:block}
-.analysis .tag{display:inline-block;background:rgba(120,120,255,.15);color:#aaaaff;padding:3px 10px;border-radius:15px;margin:2px;font-size:.85em}
-.analysis .line{margin:6px 0;color:#ccc;font-size:.9em}
+.tag{display:inline-block;background:rgba(120,120,255,.15);color:#aaaaff;padding:3px 10px;border-radius:15px;margin:2px;font-size:.85em}
+.tag2{background:rgba(255,180,100,.15);color:#ffb488}
+.line{margin:5px 0;color:#ccc;font-size:.9em;line-height:1.6}
 .footer{text-align:center;padding:20px;color:#555;font-size:.85em}
-.structure{margin-top:8px;padding-left:16px;border-left:2px solid rgba(120,120,255,.3)}
-.structure li{color:#aaa;font-size:.85em;margin:3px 0}
-</style>
-</head>
+.stat-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stat-box{flex:1;min-width:130px;background:rgba(0,0,0,.2);border-radius:10px;padding:14px;text-align:center}
+.stat-box .num{font-size:1.8em;font-weight:bold;color:#aaaaff}
+.stat-box .label{font-size:.75em;color:#888;margin-top:4px}
+.bar-row{display:flex;align-items:center;margin:3px 0;font-size:.82em}
+.bar-label{width:85px;text-align:right;padding-right:8px;color:#aaa}
+.bar-fill{height:18px;border-radius:9px;min-width:4px;background:linear-gradient(90deg,#6666ff,#8844ff)}
+.bar-count{width:35px;text-align:right;color:#ccc;font-size:.78em}
+.outline-box{background:rgba(0,0,0,.35);border-radius:10px;padding:18px;margin-top:12px;font-family:monospace;font-size:.85em;line-height:1.8;white-space:pre-wrap;max-height:70vh;overflow-y:auto}
+.btn{display:inline-block;padding:10px 20px;border-radius:10px;border:none;font-weight:600;cursor:pointer;background:linear-gradient(135deg,#6666ff,#8844ff);color:#fff;margin:4px;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-sm{padding:6px 14px;font-size:.8em}
+select,input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 12px;border-radius:8px;font-size:.9em;margin:4px}
+select option{background:#1a1a2e;color:#fff}
+</style></head>
 <body>
 <div class="container">
-<div class="header"><h1>📚 NovelForge</h1><p>热门小说榜单 · 框架分析 · 写作风格研究</p></div>
+<div class="header"><h1>📚 NovelForge</h1><p>热门榜单 · 深度分析 · 趋势洞察 · 大纲生成</p></div>
 
-<div class="tabs">
-<button class="tab active" onclick="showTab('hot')">🔥 热门榜</button>
-<button class="tab" onclick="showTab('new')">🆕 新书榜</button>
+<div class="tab-row">
+<button class="tab-btn active" onclick="showTab('rank')">📋 榜单分析</button>
+<button class="tab-btn" onclick="showTab('trend')">📊 市场趋势</button>
+<button class="tab-btn" onclick="showTab('outline')">📝 大纲生成</button>
 </div>
-
-<div id="content"></div>
-<div class="footer">数据来源：番茄小说 · 自动更新 · 仅供学习研究</div>
+<div id="main"></div>
+<div class="footer">数据:番茄小说API · 实时更新 · 写作研究专用</div>
 </div>
 
 <script>
-var DATA = {"hot": [{"id": "1630324483249155", "title": "偏偏世子要娶我", "author": "温幸运", "abstract": "作为大长公主之女，一出生就是郡主之尊，定下与护国公世子的婚事，是大安朝人人羡慕的一对；一夜之间，全家一百余口人被冠上通敌的罪名，午门砍头。他却和庶妹给了自己一杯毒酒。原来所有的一切，都是阴谋。重生归来，她联手爱人，护好所有亲人，让一切恶人恶有恶报。"}, {"id": "6698512561156918275", "title": "人生三十", "author": "七分生", "abstract": "事业破产，娇妻背叛！成年人的世界没有容易。不穿越，无重生。没有意淫，只有真实，脚踏实地一步一个脚印逆风翻盘，走上神坛！\n八零后专属，玻璃心以及没经历过生活毒打者慎入！勿看！"}, {"id": "1625353478176782", "title": "极品仙尊在都市", "author": "扮阳吃虎", "abstract": "仙域万仙之尊一睁眼，居然成了上门女婿。\n前世被人各种瞧不起，重生之后，成了古武界的天才宗师，医学界的超级神医，术可通天，力能裂地。"}, {"id": "6730119336171670536", "title": "最强弃子", "author": "一毛渡江", "abstract": "林东阳，十二年前被家族抛弃沦为弃子，十二年后权势滔天富可敌国的他王者归来；\n他不仅打造了一个全球超级商业帝国，更是最神秘的组织“恶魔岛”的黄泉教主。"}, {"id": "1619002277549060", "title": "西游天殇", "author": "叶之秋", "abstract": "孙悟空上续太古以来的仙神争霸，下连诸天仙尊神王血斗，一路斩妖除魔，成就一段不朽传奇。天殇延续老叶一贯的权谋风格，局中有局，套中有套，被许多读者认为是写得最好的西游后传。"}, {"id": "1624278158883844", "title": "帝国争霸", "author": "白色孤岛", "abstract": "陈子昂一觉醒来，发现自己穿越到了陌生的年代，金戈铁马，满目疮痍，这是一个支离破碎的时代，这也是一个群雄逐鹿的时代，这是最好的时代，也是最坏的时代，陈子昂崛起于草莽，组建精锐之师，横扫天下，拯救黎明百姓，建立无上帝国！"}, {"id": "1631142533641227", "title": "农家子的科举之路", "author": "山的那边", "abstract": "穿越成家徒四壁的书生，前世计算机专业毕业，在此百无一用……姜丰想了想：万般皆下品，惟有读书高，还是硬着头皮考科举吧！\n这一路走下去，蓦然回首，已位极人臣、开疆拓土、创不世之基业了！PS：新书《一品寒士》已发布。"}, {"id": "1624193943574542", "title": "都市兵王", "author": "神无踪", "abstract": "【完结精品】【兵王】【校花】\n他姓陈、名生、字八荒，本是至强兵王，因一场意外入狱，监狱里各个都是人才，他喜得超强传承，回归花花世界保护大校花，他一次次拔刀，一路攀登，暮然回首已是遍地荣光。"}, {"id": "6693874279383043083", "title": "深渊星芒", "author": "星宇科幻", "abstract": "2185年，从高维通道传送过来的低级虫子占据了整个太阳系，人类被迫背井离乡，舍弃太阳系寻找新的家园，一路走来，流浪的地球舰队发现事情远远不是虫族入侵那么简单，整个银河系的文明都陷入了一场巨大的阴谋中。这是一个囊括银河系背景宏大的科幻故事，没有机甲进化，没有基因超神，更没有修炼渡劫。"}, {"id": "1621553079684110", "title": "走偏门", "author": "李二不哈", "abstract": "【改编短剧《捞偏门》《走偏门》《做局人》，漫剧《捞偏门之北漂》《歪路逆袭》《千面江湖》《捞偏记》感兴趣可以去看看】\n何为偏门？捞偏者，为自己谋活路，给他人算死局。一入偏门深似海，从此走遍五湖四海，混迹三教九流，见识世道人心。"}], "new": [{"id": "6766157068916231182", "title": "女总裁的超级司机", "author": "凤凰孤狼", "abstract": "虽然只是一名小司机，却有着常人所没有的大智慧，虽然只是一名小司机，却有着非同凡响的洞察力，虽然只是一名小司机，却与上司有着不一般的关系，虽然只是一名小司机，却在前行的路上缔造了一个又一个神话。"}, {"id": "6710491544828251147", "title": "武林七诀", "author": "注销用户1147545691098731", "abstract": "相传江湖有七种上乘武学，名为“武林七诀”。当年靖难之役明惠帝流落江湖消失于淮南一带，两百多年后淮南萧家堡惨遭灭门。幸存者萧凌踏入江湖寻觅真相，而因“武林七诀”之一鬼脉诀重现江湖卷入一场血雨腥风。"}, {"id": "1628345327911948", "title": "长生不可期", "author": "独孤一生只为你", "abstract": "“前辈你冷静冷静！我年纪还小！您就行行好放了我吧？”李无邪哀求不断，却始终无法摆脱眼前这个魔道女祖，\n她一万岁，艳压天下众仙，渡劫大能，魔道四大宗门，仙楼楼主。他是三清师兄们眼中的单纯小师弟，生性善良，结果却被她挥手镇压五花大绑起来，\n“老女人，死女人，臭女人，你今日若敢碰我，我师父知道一定不会饶了你？”\n“呦，小夫君三十来岁没有，脾气却是不好，来来来，妾身教教你怎么做人？”"}, {"id": "6742284482226686979", "title": "都市天兵：我的碰瓷老公", "author": "昨知", "abstract": "为逼女儿嫁给富二代，洛天震从路上拉了一个碰瓷的废物少年回家，让女儿二选一。没想到女儿直接拉着碰瓷少年去领了证……更没想到的是，这个碰瓷的废物少年身份并不一般：京城大少、第一大家族唯一继承人、修炼者、天界天兵……"}, {"id": "6740800866741128199", "title": "星灵之石", "author": "源风广漠", "abstract": "【我们等待了121亿年】【这是我们最后一次机会】【远古的星灵已经死去】【我们的宇宙正在被吞噬】【散落在银河系文明中的星灵之石】【是毁灭还是重生】"}, {"id": "6707567410615946254", "title": "万灵葬天", "author": "红尘心", "abstract": "无尽岁月后，少年锁囚从沙漠走出，世间灾难劫数降临...！\n他，是后世震惊天地的千古人王！\n他，是后世横推豪杰的索命死神！\n他，是后世一剑断时空的盖世剑神！\n他...也是人们心目中的希望，经历万千磨难，成就万世传奇之人！\n世人皆不凡，那有完美身，为人者，擅其长，每个人都能成为自己的传奇，因为，自己就是自己的主角，人生的这张画卷之上，只有终点之前的点点滴滴，你准备好了吗？请降临哪个属于你的光环之上！"}, {"id": "6687044045451037709", "title": "婚戒", "author": "鹰神A", "abstract": "（书名婚戒不是结婚戒指，而是婚姻生活需要戒许多，其中一条戒出轨，这可是底线。）\n欧阳敏娜超级模特，人称女王，婚后忍受不了寂寞，对婚姻开始不安分玩起了名堂。\n杨青山常年海外出差办公不问家事，对妻子照顾不周。\n夫妻离异后，夫妻仕途一片光明，当女明星，当大总裁。\n由于杨青山的原因，导致幼女杨朵朵发生巨大变化，……"}, {"id": "6769501911100951565", "title": "神龙快婿", "author": "风中的阳光", "abstract": "他本是一方战神，却因为伤病一傻三年，被人百般凌辱，唯有漂亮妻子与他不离不弃！\n情敌千方百计把他妻子骗到酒店，这时，他突然苏醒！\n战神归来，势不可挡！凡欺辱我者皆需付出代价！"}, {"id": "6683094033801153549", "title": "逍遥医婿", "author": "秘制红烧肉", "abstract": "遭人迫害疯了十年的段浪，机缘巧合下获得上古药王的传承，从此开启开挂人生。"}]};
+var D={"hot": [{"id": "1630324483249155", "title": "偏偏世子要娶我", "author": "温幸运", "abstract": "作为大长公主之女，一出生就是郡主之尊，定下与护国公世子的婚事，是大安朝人人羡慕的一对；一夜之间，全家一百余口人被冠上通敌的罪名，午门砍头。他却和庶妹给了自己一杯毒酒。原来所有的一切，都是阴谋。重生归来，她联手爱人，护好所有亲人，让一切恶人恶有恶报。"}, {"id": "6698512561156918275", "title": "人生三十", "author": "七分生", "abstract": "事业破产，娇妻背叛！成年人的世界没有容易。不穿越，无重生。没有意淫，只有真实，脚踏实地一步一个脚印逆风翻盘，走上神坛！\n八零后专属，玻璃心以及没经历过生活毒打者慎入！勿看！"}, {"id": "1625353478176782", "title": "极品仙尊在都市", "author": "扮阳吃虎", "abstract": "仙域万仙之尊一睁眼，居然成了上门女婿。\n前世被人各种瞧不起，重生之后，成了古武界的天才宗师，医学界的超级神医，术可通天，力能裂地。"}, {"id": "6730119336171670536", "title": "最强弃子", "author": "一毛渡江", "abstract": "林东阳，十二年前被家族抛弃沦为弃子，十二年后权势滔天富可敌国的他王者归来；\n他不仅打造了一个全球超级商业帝国，更是最神秘的组织“恶魔岛”的黄泉教主。"}, {"id": "1619002277549060", "title": "西游天殇", "author": "叶之秋", "abstract": "孙悟空上续太古以来的仙神争霸，下连诸天仙尊神王血斗，一路斩妖除魔，成就一段不朽传奇。天殇延续老叶一贯的权谋风格，局中有局，套中有套，被许多读者认为是写得最好的西游后传。"}, {"id": "1624278158883844", "title": "帝国争霸", "author": "白色孤岛", "abstract": "陈子昂一觉醒来，发现自己穿越到了陌生的年代，金戈铁马，满目疮痍，这是一个支离破碎的时代，这也是一个群雄逐鹿的时代，这是最好的时代，也是最坏的时代，陈子昂崛起于草莽，组建精锐之师，横扫天下，拯救黎明百姓，建立无上帝国！"}, {"id": "1631142533641227", "title": "农家子的科举之路", "author": "山的那边", "abstract": "穿越成家徒四壁的书生，前世计算机专业毕业，在此百无一用……姜丰想了想：万般皆下品，惟有读书高，还是硬着头皮考科举吧！\n这一路走下去，蓦然回首，已位极人臣、开疆拓土、创不世之基业了！PS：新书《一品寒士》已发布。"}, {"id": "1624193943574542", "title": "都市兵王", "author": "神无踪", "abstract": "【完结精品】【兵王】【校花】\n他姓陈、名生、字八荒，本是至强兵王，因一场意外入狱，监狱里各个都是人才，他喜得超强传承，回归花花世界保护大校花，他一次次拔刀，一路攀登，暮然回首已是遍地荣光。"}, {"id": "6693874279383043083", "title": "深渊星芒", "author": "星宇科幻", "abstract": "2185年，从高维通道传送过来的低级虫子占据了整个太阳系，人类被迫背井离乡，舍弃太阳系寻找新的家园，一路走来，流浪的地球舰队发现事情远远不是虫族入侵那么简单，整个银河系的文明都陷入了一场巨大的阴谋中。这是一个囊括银河系背景宏大的科幻故事，没有机甲进化，没有基因超神，更没有修炼渡劫。"}, {"id": "1621553079684110", "title": "走偏门", "author": "李二不哈", "abstract": "【改编短剧《捞偏门》《走偏门》《做局人》，漫剧《捞偏门之北漂》《歪路逆袭》《千面江湖》《捞偏记》感兴趣可以去看看】\n何为偏门？捞偏者，为自己谋活路，给他人算死局。一入偏门深似海，从此走遍五湖四海，混迹三教九流，见识世道人心。"}], "new": [{"id": "6766157068916231182", "title": "女总裁的超级司机", "author": "凤凰孤狼", "abstract": "虽然只是一名小司机，却有着常人所没有的大智慧，虽然只是一名小司机，却有着非同凡响的洞察力，虽然只是一名小司机，却与上司有着不一般的关系，虽然只是一名小司机，却在前行的路上缔造了一个又一个神话。"}, {"id": "6710491544828251147", "title": "武林七诀", "author": "注销用户1147545691098731", "abstract": "相传江湖有七种上乘武学，名为“武林七诀”。当年靖难之役明惠帝流落江湖消失于淮南一带，两百多年后淮南萧家堡惨遭灭门。幸存者萧凌踏入江湖寻觅真相，而因“武林七诀”之一鬼脉诀重现江湖卷入一场血雨腥风。"}, {"id": "1628345327911948", "title": "长生不可期", "author": "独孤一生只为你", "abstract": "“前辈你冷静冷静！我年纪还小！您就行行好放了我吧？”李无邪哀求不断，却始终无法摆脱眼前这个魔道女祖，\n她一万岁，艳压天下众仙，渡劫大能，魔道四大宗门，仙楼楼主。他是三清师兄们眼中的单纯小师弟，生性善良，结果却被她挥手镇压五花大绑起来，\n“老女人，死女人，臭女人，你今日若敢碰我，我师父知道一定不会饶了你？”\n“呦，小夫君三十来岁没有，脾气却是不好，来来来，妾身教教你怎么做人？”"}, {"id": "6742284482226686979", "title": "都市天兵：我的碰瓷老公", "author": "昨知", "abstract": "为逼女儿嫁给富二代，洛天震从路上拉了一个碰瓷的废物少年回家，让女儿二选一。没想到女儿直接拉着碰瓷少年去领了证……更没想到的是，这个碰瓷的废物少年身份并不一般：京城大少、第一大家族唯一继承人、修炼者、天界天兵……"}, {"id": "6740800866741128199", "title": "星灵之石", "author": "源风广漠", "abstract": "【我们等待了121亿年】【这是我们最后一次机会】【远古的星灵已经死去】【我们的宇宙正在被吞噬】【散落在银河系文明中的星灵之石】【是毁灭还是重生】"}, {"id": "6707567410615946254", "title": "万灵葬天", "author": "红尘心", "abstract": "无尽岁月后，少年锁囚从沙漠走出，世间灾难劫数降临...！\n他，是后世震惊天地的千古人王！\n他，是后世横推豪杰的索命死神！\n他，是后世一剑断时空的盖世剑神！\n他...也是人们心目中的希望，经历万千磨难，成就万世传奇之人！\n世人皆不凡，那有完美身，为人者，擅其长，每个人都能成为自己的传奇，因为，自己就是自己的主角，人生的这张画卷之上，只有终点之前的点点滴滴，你准备好了吗？请降临哪个属于你的光环之上！"}, {"id": "6687044045451037709", "title": "婚戒", "author": "鹰神A", "abstract": "（书名婚戒不是结婚戒指，而是婚姻生活需要戒许多，其中一条戒出轨，这可是底线。）\n欧阳敏娜超级模特，人称女王，婚后忍受不了寂寞，对婚姻开始不安分玩起了名堂。\n杨青山常年海外出差办公不问家事，对妻子照顾不周。\n夫妻离异后，夫妻仕途一片光明，当女明星，当大总裁。\n由于杨青山的原因，导致幼女杨朵朵发生巨大变化，……"}, {"id": "6769501911100951565", "title": "神龙快婿", "author": "风中的阳光", "abstract": "他本是一方战神，却因为伤病一傻三年，被人百般凌辱，唯有漂亮妻子与他不离不弃！\n情敌千方百计把他妻子骗到酒店，这时，他突然苏醒！\n战神归来，势不可挡！凡欺辱我者皆需付出代价！"}, {"id": "6683094033801153549", "title": "逍遥医婿", "author": "秘制红烧肉", "abstract": "遭人迫害疯了十年的段浪，机缘巧合下获得上古药王的传承，从此开启开挂人生。"}]};
+var T="rank";
 
-function showTab(tab){
-  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('active', (i===0&&tab==='hot')||(i===1&&tab==='new'))});
-  render(tab);
-}
+function S(t){T=t;document.querySelectorAll(".tab-btn").forEach(function(x,i){x.classList.toggle("active",["rank","trend","outline"].indexOf(t)===i)});M()}
+function M(){if(T==="rank")R();else if(T==="trend")Tr();else O()}
 
-function render(tab){
-  var books = DATA[tab] || [];
-  var html = '';
-  books.forEach(function(b,i){
-    var a = analyze(b.abstract, 0);
-    html += '<div class="book-card" onclick="toggleAnalysis(this)">';
-    html += '<h4>'+(i+1)+'. '+esc(b.title)+'</h4>';
-    html += '<div class="meta">✍️ '+esc(b.author)+' | 📖 ID: '+esc(b.id)+'</div>';
-    html += '<div class="abstract">'+esc(b.abstract||'(无简介)')+'</div>';
-    html += '<div class="analysis">';
-    if(a.type) html += '<div class="line">🎯 类型：<span class="tag">'+esc(a.type)+'</span></div>';
-    if(a.hooks.length) html += '<div class="line">🪝 开篇钩子：'+a.hooks.map(function(h){return'<span class="tag">'+esc(h)+'</span>'}).join(' ')+'</div>';
-    if(a.tropes.length) html += '<div class="line">🎭 核心套路：'+a.tropes.map(function(t){return'<span class="tag">'+esc(t)+'</span>'}).join(' ')+'</div>';
-    if(a.structure.length) html += '<div class="structure">'+a.structure.map(function(s){return'<li>'+esc(s)+'</li>'}).join('')+'</div>';
-    html += '</div>';
-    html += '</div>';
+// ── RANK ──
+var cr="hot";
+function R(){
+  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="btn btn-sm" style="background:'+(cr==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="cr=\'hot\';R()">🔥 热门榜</button><button class="btn btn-sm" style="background:'+(cr==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="cr=\'new\';R()">🆕 新书榜</button></div>';
+  var bks=D[cr]||[];
+  bks.forEach(function(b,i){
+    var a=A(b.title,b.abstract);
+    h+='<div class="book-card" onclick="X(this)"><h4>'+Q(i+1)+'. '+E(b.title)+'</h4><div class="meta">✍ '+E(b.author)+'</div><div class="abstract">'+E(b.abstract||"")+'</div><div class="analysis">';
+    if(a.ty)h+='<div class="line">🎯 '+a.ty+'</div>';
+    if(a.st)h+='<div class="line">📌 '+a.st+'</div>';
+    if(a.hk.length)h+='<div class="line">🪝 '+a.hk.map(function(x){return'<span class="tag">'+x+"</span>"}).join(" ")+'</div>';
+    if(a.tr.length)h+='<div class="line">🎭 '+a.tr.map(function(x){return'<span class="tag tag2">'+x+"</span>"}).join(" ")+'</div>';
+    h+='<div class="line">💭 '+a.em+' | ⚡ '+a.pc+'</div>';
+    if(a.tp.length)h+='<div class="line">💡 '+a.tp.map(function(x){return'<span class="tag">'+x+"</span>"}).join(" ")+'</div>';
+    h+='</div></div>';
   });
-  document.getElementById('content').innerHTML = html;
+  document.getElementById("main").innerHTML=h;
 }
 
-function toggleAnalysis(el){
-  var abs = el.querySelector('.abstract');
-  var ana = el.querySelector('.analysis');
-  abs.classList.toggle('expanded');
-  ana.classList.toggle('show');
-}
+function X(e){e.querySelector(".abstract").classList.toggle("expanded");e.querySelector(".analysis").classList.toggle("show")}
 
-function analyze(text, chapters){
-  var r = {type:'',hooks:[],tropes:[],structure:[]};
-  if(!text) return r;
-  var types = [['重生','重生逆袭'],['穿越','穿越架空'],['系统','系统流'],['宫斗','宫斗宅斗'],['修仙','修仙玄幻'],['总裁','总裁文'],['种田','种田基建'],['娱乐圈','娱乐圈文'],['悬疑','悬疑推理'],['末世','末世求生'],['星际','星际科幻'],['都市','都市言情']];
-  types.forEach(function(t){if(text.indexOf(t[0])>=0 && !r.type) r.type=t[1]});
-  var hooks = [['一夜之间|灭门|砍头','灭门开局'],['重生.*归来|睁开眼|回到','重生开局'],['穿越|穿成|醒来.*古代','穿越开局'],['退婚|退亲|休书','退婚打脸'],['未婚夫|世子|王爷|将军','权贵婚约']];
-  hooks.forEach(function(h){if(new RegExp(h[0]).test(text)) r.hooks.push(h[1])});
-  var tropes = [['庶妹|庶女|嫡女|庶子','嫡庶之争'],['打脸|丢脸|啪啪','打脸爽文'],['扮猪吃虎|隐藏.*实力','扮猪吃虎']];
-  tropes.forEach(function(t){if(new RegExp(t[0]).test(text)) r.tropes.push(t[1])});
-  if(text.length>200) r.structure.push('简介详细 → 铺垫型开局');
-  else r.structure.push('简介精炼 → 快节奏开局');
+// ── DEEP ANALYZE ──
+function A(tl,ab){
+  var r={ty:"",st:"",hk:[],tr:[],em:"",pc:"",tp:[]};
+  var tx=tl+(ab||"");
+  if(!tx)return r;
+
+  // Type hierarchy
+  var tys=[["重生","重生逆袭"],["穿越","穿越架空"],["修仙|修真|仙尊","修仙玄幻"],["宫斗|宅斗","宫斗宅斗"],["总裁|豪门","总裁豪门"],["种田|基建","种田基建"],["悬疑|推理","悬疑推理"],["末世|末日","末世求生"],["星际|宇宙|科幻","星际科幻"],["都市|现代","都市言情"],["神医|医术","神医流"],["战神|兵王","战神兵王"],["赘婿|上门","赘婿逆袭"],["弃子|弃少","弃子逆袭"],["科举|权谋","科举权谋"],["娱乐圈|明星","娱乐圈文"]];
+  tys.forEach(function(x){if(new RegExp(x[0]).test(tx)&&!r.ty)r.ty=x[1]});
+  if(!r.ty)r.ty="多元融合";
+
+  // Subtype
+  if(r.ty==="重生逆袭"){
+    if(/复仇|报仇/.test(tx))r.st="复仇型重生";
+    else if(/弥补|挽回|后悔/.test(tx))r.st="弥补型重生";
+  }else if(r.ty==="总裁豪门"){
+    if(/契约|替身|替嫁/.test(tx))r.st="契约婚姻";
+    else if(/带球|怀孕/.test(tx))r.st="带球跑";
+  }
+
+  // Hooks
+  var hks=[["一夜之间.*死|灭门|满门|砍头|抄家","灭门开局"],["重生.*归来|重生.*睁|回到.*年前","重生归来"],["穿越|穿成|醒来.*古代","穿越异世"],["退婚|退亲|休书","退婚打脸"],["未婚夫|世子|王爷.*婚","权贵婚约"],["系统|绑定|叮","系统降临"],["破产|背叛|离婚","落魄开局"],["复仇|报仇|雪恨","复仇主线"]];
+  hks.forEach(function(x){if(new RegExp(x[0]).test(tx))r.hk.push(x[1])});
+
+  // Tropes
+  var trs=[["庶妹|庶姐|嫡庶","嫡庶之争"],["打脸|啪啪|丢脸","打脸爽"],["扮猪|隐藏.*实力","扮猪吃虎"],["追妻.*火葬|后悔.*挽回","追妻火葬场"],["团宠|全民.*宠","团宠"],["金手指|空间|灵泉|传承","金手指"],["逆袭|翻身|翻盘","逆袭爽文"],["甜宠|宠溺|宠.*上天","高甜路线"],["替身|替嫁","替身文学"],["马甲|伪装.*身份","马甲流"]];
+  trs.forEach(function(x){if(new RegExp(x[0]).test(tx))r.tr.push(x[1])});
+
+  // Emotion
+  if(/虐|泪|痛|死.*别|悲伤/.test(tx))r.em="虐心向";
+  else if(/甜|宠|暖|萌/.test(tx))r.em="甜宠向";
+  else if(/爽|打脸|碾压|无敌/.test(tx))r.em="爽文向";
+  else if(/悬疑|谜|诡|真相/.test(tx))r.em="烧脑向";
+  else r.em="综合向";
+
+  // Pacing
+  if(r.hk.length>=3)r.pc="极速（多钩子）";
+  else if(r.hk.length>=2)r.pc="紧凑";
+  else r.pc="常规";
+
+  // Tips
+  if(!r.hk.length)r.tp.push("缺少强力钩子");
+  if(ab&&ab.length<60)r.tp.push("简介过短");
+  if(ab&&ab.length>250)r.tp.push("简介过长");
+
   return r;
 }
 
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+// ── TREND ──
+function Tr(){
+  var all=[];D.hot.forEach(function(b){all.push({t:b.title,a:b.abstract})});D["new"].forEach(function(b){all.push({t:b.title,a:b.abstract})});
 
-showTab('hot');
-</script>
-</body>
-</html>
+  var tc={},hc={},rc={},ec={};
+  all.forEach(function(b){var a=A(b.t,b.a);tc[a.ty]=(tc[a.ty]||0)+1;a.hk.forEach(function(h){hc[h]=(hc[h]||0)+1});a.tr.forEach(function(r){rc[r]=(rc[r]||0)+1});ec[a.em]=(ec[a.em]||0)+1});
+
+  var ts=Object.entries(tc).sort(function(a,b){return b[1]-a[1]});
+  var hs=Object.entries(hc).sort(function(a,b){return b[1]-a[1]});
+  var rs=Object.entries(rc).sort(function(a,b){return b[1]-a[1]});
+
+  var h='<div class="card"><h3>📊 当前番茄小说市场趋势</h3>';
+  h+=B(ts,ts[0]?ts[0][1]:1,"🎯 热门类型","red");
+  h+=B(hs,hs[0]?hs[0][1]:1,"🪝 流行钩子","blue");
+  h+=B(rs,rs[0]?rs[0][1]:1,"🎭 热门套路","green");
+
+  h+='<div style="margin-top:16px; padding:16px; background:rgba(0,0,0,.2); border-radius:10px"><h4 style="color:#aaaaff;margin-bottom:8px">💡 创作建议</h4>';
+  if(ts[0])h+='<div class="line">1. 最热类型: <b>'+ts[0][0]+'</b>（红海，要做出差异化）</div>';
+  if(hs[0])h+='<div class="line">2. 标配钩子: <b>'+hs[0][0]+'</b>（前3章必出）</div>';
+  if(rs[0])h+='<div class="line">3. 必备套路: <b>'+rs[0][0]+'</b>（读者预期）</div>';
+
+  var emoKeys=Object.keys(ec);
+  if(emoKeys.length){
+    var topEmo=emoKeys.sort(function(a,b){return (ec[b]||0)-(ec[a]||0)})[0];
+    h+='<div class="line">4. 主流基调: <b>'+topEmo+'</b></div>';
+  }
+
+  h+='<div class="line">5. 差异化: 融合两种类型的元素（如重生+科举/穿越+种田）</div>';
+  h+='</div></div>';
+  document.getElementById("main").innerHTML=h;
+}
+
+function B(items,maxv,title,color){
+  var h='<h4 style="color:#aaaaff;margin:16px 0 8px">'+title+'</h4>';
+  items.slice(0,8).forEach(function(e){
+    var p=Math.round(e[1]/maxv*100);
+    h+='<div class="bar-row"><span class="bar-label">'+e[0]+'</span><div style="flex:1;background:rgba(255,255,255,.04);border-radius:9px"><div class="bar-fill" style="width:'+p+'%"></div></div><span class="bar-count">'+e[1]+'</span></div>';
+  });
+  return h;
+}
+
+// ── OUTLINE ──
+var OT={
+"重生逆袭":{"ch":1200,"ph":[
+  {n:"第一幕·绝望深渊",c:"1-5章",d:"灭门/背叛/死亡 — 一记重拳",k:"前3章完成死亡+重生"},
+  {n:"第二幕·重生布局",c:"6-50章",d:"利用记忆暗中介入",k:"每10章一次小高潮"},
+  {n:"第三幕·身份展露",c:"51-200章",d:"实力暴露，马甲掉落",k:"配角轮被打脸"},
+  {n:"第四幕·势力扩张",c:"201-500章",d:"建立势力，正面交锋",k:"引入大世界观"},
+  {n:"第五幕·真相揭露",c:"501-800章",d:"前世谜团浮出",k:"每200章一个伏笔"},
+  {n:"第六幕·终极对决",c:"801-1100章",d:"与BOSS决战",k:"多线收束"},
+  {n:"第七幕·尘埃落定",c:"1101-1200章",d:"结局+番外",k:"各角色收线"}
+],"tp":["主角成长曲线要清晰","每50章一次情感波动","配角有独立故事线"]},
+"穿越架空":{"ch":1000,"ph":[
+  {n:"第一幕·异世降临",c:"1-10章",d:"穿越+世界观",k:"前3章理解处境"},
+  {n:"第二幕·生存适应",c:"11-80章",d:"现代知识降维打击",k:"每章有观念冲突"},
+  {n:"第三幕·崭露头角",c:"81-250章",d:"改变世界获关注",k:"科举/经商等"},
+  {n:"第四幕·危机暗涌",c:"251-600章",d:"卷入权力漩涡",k:"多条暗线"},
+  {n:"第五幕·力挽狂澜",c:"601-900章",d:"成为关键人物",k:"正面大对决"},
+  {n:"第六幕·新时代",c:"901-1000章",d:"开创时代+结局",k:"各角色交代"}
+],"tp":["尽快建立穿越优势","每100章升级/换地图","用'现代知识碾压'造爽点"]},
+"修仙玄幻":{"ch":2000,"ph":[
+  {n:"第一幕·凡人起步",c:"1-30章",d:"传承/系统入修仙",k:"5章内转变身份"},
+  {n:"第二幕·宗门崛起",c:"31-200章",d:"外门逆袭",k:"内外竞争兼有"},
+  {n:"第三幕·纵横天下",c:"201-600章",d:"离开宗门闯荡",k:"200章换新地图"},
+  {n:"第四幕·巅峰之争",c:"601-1200章",d:"跨域大战",k:"多方势力博弈"},
+  {n:"第五幕·超脱",c:"1201-1800章",d:"飞升新维度",k:"留够篇幅展开"},
+  {n:"第六幕·终章",c:"1801-2000章",d:"至高存在+番外",k:"因果了结"}
+],"tp":["境界体系要清晰","每100章升一级","反派不要一次用完"]},
+"总裁豪门":{"ch":800,"ph":[
+  {n:"第一幕·命运相遇",c:"1-20章",d:"意外相遇+契约",k:"5章内完成三重"},
+  {n:"第二幕·豪门生活",c:"21-100章",d:"面对家族刁难",k:"每10章霸气护一次"},
+  {n:"第三幕·感情升温",c:"101-300章",d:"假戏真做",k:"甜中带虐"},
+  {n:"第四幕·真相危机",c:"301-500章",d:"秘密/前女友",k:"这是虐的高潮"},
+  {n:"第五幕·追妻火葬场",c:"501-700章",d:"男主挽回",k:"每30章名场面"},
+  {n:"第六幕·圆满",c:"701-800章",d:"HE+番外",k:"婚礼宝宝和解"}
+],"tp":["男主又强又宠","女主越虐越成长","每100章全城轰动"]},
+"通用爽文":{"ch":600,"ph":[
+  {n:"第一幕·钩子",c:"1-10章",d:"强力开局+目标",k:"前5章必有打脸"},
+  {n:"第二幕·蓄力",c:"11-80章",d:"积累实力间歇打脸",k:"每15章小爽点"},
+  {n:"第三幕·爆发",c:"81-250章",d:"连续打脸身份揭露",k:"最爽阶段"},
+  {n:"第四幕·转折",c:"251-400章",d:"大危机+新对手",k:"好的转折=读者想追"},
+  {n:"第五幕·终极逆袭",c:"401-550章",d:"最终碾压+复仇",k:"多线收束"},
+  {n:"第六幕·后日谈",c:"551-600章",d:"结局+番外",k:"各角色交代"}
+],"tp":["每章结尾留钩子","前期5章一打脸","不让主角太无敌"]}};
+
+function O(){
+  var h='<div class="card"><h3>📝 小说大纲生成器</h3><p style="color:#888;margin-bottom:12px">基于热门小说结构模式自动生成完整章节框架</p>';
+  h+='<select id="ot" onchange="GO()">';
+  Object.keys(OT).forEach(function(k){h+='<option value="'+k+'">'+k+'</option>'});
+  h+='</select>';
+  h+='<div id="oo" class="outline-box">加载中...</div></div>';
+
+  h+='<div class="card"><h3>🛠 自定义大纲</h3>';
+  h+='<div class="line">预计章数: <input id="cc" type="number" value="800" min="100" max="5000" style="width:80px">章</div>';
+  h+='<div class="line">类型: <select id="ct">';
+  ["重生逆袭","穿越架空","修仙玄幻","总裁豪门","悬疑推理","都市言情","种田基建","战神兵王"].forEach(function(t){h+='<option>'+t+'</option>'});
+  h+='</select></div>';
+  h+='<button class="btn" onclick="GCO()" style="margin-top:8px">🪄 生成大纲</button>';
+  h+='<div id="co" class="outline-box" style="margin-top:12px"></div></div>';
+  document.getElementById("main").innerHTML=h;
+  setTimeout(function(){GO()},50);
+}
+
+function GO(){
+  var t=OT[document.getElementById("ot").value];
+  if(!t)return;
+  var o="╔══════════════════════════════╗\n║ 📖 "+document.getElementById("ot").value+"（约"+t.ch+"章）║\n╚══════════════════════════════╝\n";
+  t.ph.forEach(function(p){o+="\n"+p.n+" 【"+p.c+"】\n  "+p.d+"\n  🔑 "+p.k+"\n"});
+  o+="\n━━ ✍️ 写作要诀 ━━\n";
+  t.tp.forEach(function(tp){o+="  • "+tp+"\n"});
+  document.getElementById("oo").textContent=o;
+}
+
+function GCO(){
+  var ch=parseInt(document.getElementById("cc").value)||800;
+  var tp=document.getElementById("ct").value;
+  var ps=[];
+  if(ch>=1200)ps=[{p:.02,n:"开篇钩子"},{p:.08,n:"第一卷·开局"},{p:.15,n:"第二卷·发展"},{p:.25,n:"第三卷·高潮"},{p:.30,n:"第四卷·转折"},{p:.15,n:"第五卷·收束"},{p:.05,n:"终章+番外"}];
+  else if(ch>=600)ps=[{p:.03,n:"开篇钩子"},{p:.12,n:"第一卷·开局"},{p:.25,n:"第二卷·发展"},{p:.35,n:"第三卷·高潮"},{p:.20,n:"第四卷·收束"},{p:.05,n:"终章+番外"}];
+  else ps=[{p:.05,n:"开篇钩子"},{p:.20,n:"第一卷·发展"},{p:.40,n:"第二卷·高潮"},{p:.25,n:"第三卷·收束"},{p:.10,n:"终章"}];
+
+  var o="📖 "+tp+" · "+ch+"章 大纲\n"+"═".repeat(40)+"\n\n";
+  var st=1;
+  ps.forEach(function(p,pi){
+    var cnt=Math.round(ch*p.p);var ed=Math.min(st+cnt-1,ch);
+    o+=p.n+" 【"+st+"-"+ed+"章】("+(ed-st+1)+"章)\n";
+    var bs=GB(tp,cnt,st);
+    bs.forEach(function(b){o+="  "+b+"\n"});
+    o+="\n";st=ed+1;
+  });
+  document.getElementById("co").textContent=o;
+}
+
+function GB(tp,total,base){
+  var bi=Math.max(3,Math.floor(total/8));
+  if(/重生/.test(tp))return["第"+base+"章：死亡/重生（钩子）","第"+(base+bi)+"章：首次打脸/逆袭","第"+(base+bi*2)+"章：身份开始暴露","第"+(base+bi*3)+"章：第一次重大胜利","第"+(base+bi*4)+"章：新对手出现","第"+(base+bi*5)+"章：关键转折/真相","第"+(base+bi*6)+"章：终极对决前","第"+(base+bi*7)+"章：高潮/收束"];
+  if(/总裁/.test(tp))return["第"+base+"章：命运相遇","第"+(base+bi)+"章：契约开始","第"+(base+bi*2)+"章：首次心动","第"+(base+bi*3)+"章：误会/虐点","第"+(base+bi*4)+"章：追妻开始","第"+(base+bi*5)+"章：全城轰动","第"+(base+bi*6)+"章：真相大白","第"+(base+bi*7)+"章：HE/婚礼"];
+  if(/修仙/.test(tp))return["第"+base+"章：获得传承","第"+(base+bi)+"章：入宗门/突破","第"+(base+bi*2)+"章：宗门大比","第"+(base+bi*3)+"章：换新地图","第"+(base+bi*4)+"章：跨域大战","第"+(base+bi*5)+"章：冲击至高","第"+(base+bi*6)+"章：飞升/超脱","第"+(base+bi*7)+"章：最终了结"];
+  if(/穿越/.test(tp))return["第"+base+"章：穿越+世界观","第"+(base+bi)+"章：知识破局","第"+(base+bi*2)+"章：获权贵关注","第"+(base+bi*3)+"章：卷入漩涡","第"+(base+bi*4)+"章：危机爆发","第"+(base+bi*5)+"章：力挽狂澜","第"+(base+bi*6)+"章：改变时代","第"+(base+bi*7)+"章：结局"];
+  return["第"+base+"章：强力开篇","第"+(base+bi)+"章：首次小高潮","第"+(base+bi*2)+"章：阶段转折","第"+(base+bi*3)+"章：中段高潮","第"+(base+bi*4)+"章：最大危机","第"+(base+bi*5)+"章：逆袭开始","第"+(base+bi*6)+"章：终极对决","第"+(base+bi*7)+"章：结局"];
+}
+
+function E(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function Q(n){var c=["零","一","二","三","四","五","六","七","八","九","十"];if(n<=10)return c[n];return n}
+
+M();
+</script></body></html>
