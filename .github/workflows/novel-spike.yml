@@ -1,0 +1,172 @@
+name: Novel Crawl Spike
+on:
+  workflow_dispatch:
+
+jobs:
+  spike:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests beautifulsoup4
+      
+      - name: Test 七猫免费小说
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+          headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"}
+          
+          results = {}
+          
+          # Test main page
+          try:
+              r = requests.get("https://www.qimao.com/", headers=headers, timeout=15)
+              results['qimao_home'] = {"status": r.status_code, "len": len(r.text)}
+              # Look for API endpoints
+              apis = re.findall(r'(https?://[^"'\s]+api[^"'\s]+)', r.text)
+              results['qimao_apis'] = apis[:5]
+          except Exception as e:
+              results['qimao_home'] = {"error": str(e)[:100]}
+          
+          # Try their API directly
+          try:
+              # Common endpoints for 七猫
+              for ep in [
+                  "https://www.qimao.com/api/rank/list",
+                  "https://api.qimao.com/v1/rank",
+                  "https://www.qimao.com/api/book/list",
+              ]:
+                  r = requests.get(ep, headers=headers, timeout=10)
+                  results[f'qimao_api_{ep.split("/")[-1]}'] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 20:
+                      results[f'qimao_api_{ep.split("/")[-1]}_data'] = r.text[:500]
+          except Exception as e:
+              results['qimao_api_scan'] = str(e)[:80]
+          
+          print(json.dumps(results, indent=2, ensure_ascii=False))
+          with open("qimao.json", "w") as f:
+              json.dump(results, f, indent=2, ensure_ascii=False)
+          PYEOF
+          
+      - name: Test 番茄小说
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+          headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36"}
+          results = {}
+          
+          # Try web version
+          try:
+              r = requests.get("https://fanqienovel.com/", headers=headers, timeout=15)
+              results['fanqie_home'] = {"status": r.status_code, "len": len(r.text)}
+              # Look for API endpoints and data
+              apis = re.findall(r'(https?://[^"'\s]+api[^"'\s]+)', r.text)
+              results['fanqie_apis'] = apis[:5]
+              # Extract any JSON data
+              jsons = re.findall(r'(\{[^}]+\})', r.text)
+              results['fanqie_json_hints'] = [j[:100] for j in jsons[:5]]
+          except Exception as e:
+              results['fanqie_home'] = {"error": str(e)[:100]}
+          
+          # Try API endpoints
+          try:
+              for ep in [
+                  "https://fanqienovel.com/api/rank/list",
+                  "https://novel.snssdk.com/api/novel/channel/home",
+                  "https://fanqienovel.com/api/trending",
+              ]:
+                  r = requests.get(ep, headers=headers, timeout=10)
+                  results[f'fanqie_api_{ep.split("/")[-1][:20]}'] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 20:
+                      results[f'fanqie_api_{ep.split("/")[-1][:20]}_data'] = r.text[:500]
+          except Exception as e:
+              results['fanqie_api_scan'] = str(e)[:80]
+          
+          print(json.dumps(results, indent=2, ensure_ascii=False))
+          with open("fanqie.json", "w") as f:
+              json.dump(results, f, indent=2, ensure_ascii=False)
+          PYEOF
+          
+      - name: Test 起点小说
+        run: |
+          python3 << 'PYEOF'
+          import requests, json, re
+          headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36"}
+          results = {}
+          
+          # 起点 web
+          try:
+              r = requests.get("https://www.qidian.com/", headers=headers, timeout=15)
+              results['qidian_home'] = {"status": r.status_code, "len": len(r.text)}
+              apis = re.findall(r'(https?://[^"'\s]+api[^"'\s]+)', r.text)
+              results['qidian_apis'] = apis[:5]
+          except Exception as e:
+              results['qidian_home'] = {"error": str(e)[:100]}
+          
+          # Try ranking/popular APIs  
+          try:
+              for ep in [
+                  "https://www.qidian.com/rank/hotsales/",
+                  "https://www.qidian.com/ajax/rank/index",
+              ]:
+                  r = requests.get(ep, headers=headers, timeout=10)
+                  results[f'qidian_{ep.split("/")[-2]}'] = {"status": r.status_code, "len": len(r.text)}
+                  if r.status_code == 200 and len(r.text) > 20:
+                      results[f'qidian_{ep.split("/")[-2]}_data'] = r.text[:500]
+          except Exception as e:
+              results['qidian_api_scan'] = str(e)[:80]
+          
+          # Try m.qidian.com (mobile - often easier)
+          try:
+              r = requests.get("https://m.qidian.com/", headers=headers, timeout=15)
+              results['qidian_mobile'] = {"status": r.status_code, "len": len(r.text)}
+              urls = re.findall(r'href="([^"]+rank[^"]+)"', r.text)
+              results['qidian_rank_links'] = urls[:5]
+          except Exception as e:
+              results['qidian_mobile'] = {"error": str(e)[:80]}
+          
+          print(json.dumps(results, indent=2, ensure_ascii=False))
+          with open("qidian.json", "w") as f:
+              json.dump(results, f, indent=2, ensure_ascii=False)
+          PYEOF
+          
+      - name: Test API-based alternatives
+        run: |
+          python3 << 'PYEOF'
+          import requests, json
+          headers = {"User-Agent": "Mozilla/5.0"}
+          results = {}
+          
+          # Try 番茄小说 header-free API used by their app
+          try:
+              data = {"page": 1, "page_size": 20}
+              r = requests.post("https://novel.snssdk.com/api/novel/channel/home/guest/v2/", 
+                                json=data, headers=headers, timeout=15)
+              results['fanqie_app_api'] = {"status": r.status_code}
+              if r.status_code == 200:
+                  results['fanqie_app_api_data'] = r.text[:800]
+          except Exception as e:
+              results['fanqie_app_api'] = str(e)[:80]
+          
+          # Try 七猫 API
+          try:
+              r = requests.get("https://api-bc.wtzw.com/api/v1/rank-list?type=1&page=1&size=20",
+                              headers=headers, timeout=15)
+              results['qimao_bc_api'] = {"status": r.status_code}
+              if r.status_code == 200:
+                  results['qimao_bc_api_data'] = r.text[:500]
+          except Exception as e:
+              results['qimao_bc_api'] = str(e)[:80]
+          
+          print(json.dumps(results, indent=2, ensure_ascii=False))
+          with open("apis.json", "w") as f:
+              json.dump(results, f, indent=2, ensure_ascii=False)
+          PYEOF
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: novel-spike
+          path: |
+            qimao.json
+            fanqie.json
+            qidian.json
+            apis.json
