@@ -1,472 +1,404 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>📚 NovelForge — 小说创作全流程工具箱</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);min-height:100vh;color:#e0e0ff;padding:20px}
-.c{max-width:1000px;margin:0 auto}
-.hd{text-align:center;padding:30px 0 20px}
-.hd h1{font-size:2em;margin-bottom:6px}
-.hd p{color:#8888cc;font-size:.9em}
-.tb{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;margin-bottom:20px;flex-wrap:wrap}
-.ti{flex:1;min-width:70px;padding:12px 8px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;color:#8888cc;border:none;background:transparent;font-size:.82em;transition:.2s}
-.ti.ac{background:rgba(120,120,255,.2);color:#fff}
-.ti:hover{background:rgba(120,120,255,.1)}
-.ca{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px;margin-bottom:20px}
-.ca h3{color:#aaaaff;margin-bottom:14px;font-size:1.1em}
-.ca h4{color:#aaafff;margin:16px 0 8px}
-.bk{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:8px 0;cursor:pointer}
-.bk:hover{border-color:rgba(120,120,255,.3)}
-.bk h4{color:#fff}
-.bk .mt{color:#8888cc;font-size:.85em}
-.bk .ab{color:#aaa;font-size:.9em;margin-top:8px;line-height:1.5;max-height:60px;overflow:hidden;transition:.3s}
-.bk .ab.xp{max-height:500px}
-.an{margin-top:12px;padding:14px;background:rgba(0,0,0,.2);border-radius:10px;display:none}
-.an.sh{display:block}
-.tg{display:inline-block;background:rgba(120,120,255,.15);color:#aaaaff;padding:3px 10px;border-radius:15px;margin:2px;font-size:.85em}
-.tg2{background:rgba(255,180,100,.15);color:#ffb488}
-.tg3{background:rgba(100,255,180,.15);color:#88ffaa}
-.ln{margin:5px 0;color:#ccc;font-size:.9em;line-height:1.7}
-.ft{text-align:center;padding:20px;color:#555;font-size:.85em}
-.sr{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.sb{flex:1;min-width:130px;background:rgba(0,0,0,.2);border-radius:10px;padding:14px;text-align:center}
-.sb .nu{font-size:1.8em;font-weight:bold;color:#aaaaff}
-.sb .lb{font-size:.75em;color:#888;margin-top:4px}
-.br{display:flex;align-items:center;margin:3px 0;font-size:.82em}
-.bl{width:80px;text-align:right;padding-right:8px;color:#aaa}
-.bf{height:18px;border-radius:9px;min-width:4px;background:linear-gradient(90deg,#6666ff,#8844ff)}
-.bc{width:35px;text-align:right;color:#ccc;font-size:.78em}
-.ob{background:rgba(0,0,0,.35);border-radius:10px;padding:18px;margin-top:12px;font-family:monospace;font-size:.84em;line-height:1.8;white-space:pre-wrap;max-height:70vh;overflow-y:auto}
-.bt{display:inline-block;padding:10px 20px;border-radius:10px;border:none;font-weight:600;cursor:pointer;background:linear-gradient(135deg,#6666ff,#8844ff);color:#fff;margin:4px;transition:.2s}
-.bt:hover{transform:translateY(-1px)}
-.bs{padding:6px 14px;font-size:.8em}
-select,input,textarea{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 12px;border-radius:8px;font-size:.9em;margin:4px}
-select option{background:#1a1a2e;color:#fff}
-textarea{width:100%;min-height:80px;font-family:monospace;resize:vertical}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-@media(max-width:700px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}}
-.card-mini{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;cursor:pointer;transition:.2s}
-.card-mini:hover{border-color:rgba(120,120,255,.3);background:rgba(120,120,255,.05)}
-.card-mini h5{color:#fff;font-size:.9em;margin-bottom:4px}
-.card-mini p{color:#888;font-size:.8em;line-height:1.4}
-</style></head><body><div class="c">
-
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh}.c{max-width:900px;margin:0 auto;padding:20px}.hd{text-align:center;margin-bottom:24px}.hd h1{font-size:2em;background:linear-gradient(135deg,#58a6ff,#bc8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}.hd p{color:#8b949e;font-size:.9em}.tb{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}.ti{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#c9d1d9;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9em;transition:.2s}.ti.ac,.ti:hover{background:linear-gradient(135deg,#238636,#1f6feb);color:#fff;border-color:transparent}.bt{border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85em;color:#c9d1d9;transition:.2s}.bs:hover{transform:translateY(-1px)}.bk{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin-bottom:10px;cursor:pointer;transition:.2s}.bk:hover{border-color:rgba(88,166,255,.3);background:rgba(255,255,255,.05)}.bk h4{font-size:1em;margin-bottom:4px}.mt{color:#8b949e;font-size:.8em;margin-bottom:8px}.ab{max-height:0;overflow:hidden;transition:max-height .3s}.ab.xp{max-height:500px}.an{display:none}.an.sh{display:block}.ln{margin:4px 0;font-size:.85em}.tg{background:rgba(88,166,255,.15);color:#58a6ff;padding:2px 6px;border-radius:4px;margin:0 2px;font-size:.8em}.tg2{background:rgba(188,140,255,.15);color:#bc8cff;padding:2px 6px;border-radius:4px;margin:0 2px;font-size:.8em}#main{padding:16px 0}.ft{text-align:center;color:#484f58;font-size:.75em;margin-top:30px;border-top:1px solid rgba(255,255,255,.05);padding-top:16px}h3{color:#58a6ff;margin-bottom:12px;font-size:1.1em}h2{color:#bc8cff;margin-bottom:12px;font-size:1em}input,textarea,select{width:100%;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#c9d1d9;font-size:.9em;margin-bottom:10px;font-family:inherit}textarea{min-height:80px;resize:vertical}.btn{display:inline-block;background:linear-gradient(135deg,#238636,#1f6feb);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:.9em;transition:.2s}.btn:hover{transform:translateY(-1px);opacity:.9}.ca{font-size:.85em}.br{margin:12px 0;padding:12px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.05)}pre{background:rgba(0,0,0,.3);border-radius:6px;padding:12px;overflow-x:auto;font-size:.8em;white-space:pre-wrap;line-height:1.5}</style>
+</head>
+<body>
+<div class="c">
 <div class="hd"><h1>📚 NovelForge</h1><p>开局钩子 · 世界观搭建 · 人物设计 · 大纲生成 · 市场趋势</p></div>
 <div class="tb" id="tabBar"></div>
 <div id="main"></div>
-<div class="ft">数据:番茄小说API · 写作研究专用 · 全部免费开源</div></div>
-
+<div class="ft">数据:番茄小说API · 写作研究专用 · 全部免费开源</div>
+</div>
 <script id="nv" type="application/json">{"hot": [{"id": "1630324483249155", "title": "偏偏世子要娶我", "author": "温幸运", "abstract": "作为大长公主之女，一出生就是郡主之尊，定下与护国公世子的婚事，是大安朝人人羡慕的一对；一夜之间，全家一百余口人被冠上通敌的罪名，午门砍头。他却和庶妹给了自己一杯毒酒。原来所有的一切，都是阴谋。重生归来，她联手爱人，护好所有亲人，让一切恶人恶有恶报。"}, {"id": "6698512561156918275", "title": "人生三十", "author": "七分生", "abstract": "事业破产，娇妻背叛！成年人的世界没有容易。不穿越，无重生。没有意淫，只有真实，脚踏实地一步一个脚印逆风翻盘，走上神坛！\n八零后专属，玻璃心以及没经历过生活毒打者慎入！勿看！"}, {"id": "1625353478176782", "title": "极品仙尊在都市", "author": "扮阳吃虎", "abstract": "仙域万仙之尊一睁眼，居然成了上门女婿。\n前世被人各种瞧不起，重生之后，成了古武界的天才宗师，医学界的超级神医，术可通天，力能裂地。"}, {"id": "6730119336171670536", "title": "最强弃子", "author": "一毛渡江", "abstract": "林东阳，十二年前被家族抛弃沦为弃子，十二年后权势滔天富可敌国的他王者归来；\n他不仅打造了一个全球超级商业帝国，更是最神秘的组织“恶魔岛”的黄泉教主。"}, {"id": "1619002277549060", "title": "西游天殇", "author": "叶之秋", "abstract": "孙悟空上续太古以来的仙神争霸，下连诸天仙尊神王血斗，一路斩妖除魔，成就一段不朽传奇。天殇延续老叶一贯的权谋风格，局中有局，套中有套，被许多读者认为是写得最好的西游后传。"}, {"id": "1624278158883844", "title": "帝国争霸", "author": "白色孤岛", "abstract": "陈子昂一觉醒来，发现自己穿越到了陌生的年代，金戈铁马，满目疮痍，这是一个支离破碎的时代，这也是一个群雄逐鹿的时代，这是最好的时代，也是最坏的时代，陈子昂崛起于草莽，组建精锐之师，横扫天下，拯救黎明百姓，建立无上帝国！"}, {"id": "1631142533641227", "title": "农家子的科举之路", "author": "山的那边", "abstract": "穿越成家徒四壁的书生，前世计算机专业毕业，在此百无一用……姜丰想了想：万般皆下品，惟有读书高，还是硬着头皮考科举吧！\n这一路走下去，蓦然回首，已位极人臣、开疆拓土、创不世之基业了！PS：新书《一品寒士》已发布。"}, {"id": "1624193943574542", "title": "都市兵王", "author": "神无踪", "abstract": "【完结精品】【兵王】【校花】\n他姓陈、名生、字八荒，本是至强兵王，因一场意外入狱，监狱里各个都是人才，他喜得超强传承，回归花花世界保护大校花，他一次次拔刀，一路攀登，暮然回首已是遍地荣光。"}, {"id": "6693874279383043083", "title": "深渊星芒", "author": "星宇科幻", "abstract": "2185年，从高维通道传送过来的低级虫子占据了整个太阳系，人类被迫背井离乡，舍弃太阳系寻找新的家园，一路走来，流浪的地球舰队发现事情远远不是虫族入侵那么简单，整个银河系的文明都陷入了一场巨大的阴谋中。这是一个囊括银河系背景宏大的科幻故事，没有机甲进化，没有基因超神，更没有修炼渡劫。"}, {"id": "1621553079684110", "title": "走偏门", "author": "李二不哈", "abstract": "【改编短剧《捞偏门》《走偏门》《做局人》，漫剧《捞偏门之北漂》《歪路逆袭》《千面江湖》《捞偏记》感兴趣可以去看看】\n何为偏门？捞偏者，为自己谋活路，给他人算死局。一入偏门深似海，从此走遍五湖四海，混迹三教九流，见识世道人心。"}], "new": [{"id": "6766157068916231182", "title": "女总裁的超级司机", "author": "凤凰孤狼", "abstract": "虽然只是一名小司机，却有着常人所没有的大智慧，虽然只是一名小司机，却有着非同凡响的洞察力，虽然只是一名小司机，却与上司有着不一般的关系，虽然只是一名小司机，却在前行的路上缔造了一个又一个神话。"}, {"id": "6710491544828251147", "title": "武林七诀", "author": "注销用户1147545691098731", "abstract": "相传江湖有七种上乘武学，名为“武林七诀”。当年靖难之役明惠帝流落江湖消失于淮南一带，两百多年后淮南萧家堡惨遭灭门。幸存者萧凌踏入江湖寻觅真相，而因“武林七诀”之一鬼脉诀重现江湖卷入一场血雨腥风。"}, {"id": "1628345327911948", "title": "长生不可期", "author": "独孤一生只为你", "abstract": "“前辈你冷静冷静！我年纪还小！您就行行好放了我吧？”李无邪哀求不断，却始终无法摆脱眼前这个魔道女祖，\n她一万岁，艳压天下众仙，渡劫大能，魔道四大宗门，仙楼楼主。他是三清师兄们眼中的单纯小师弟，生性善良，结果却被她挥手镇压五花大绑起来，\n“老女人，死女人，臭女人，你今日若敢碰我，我师父知道一定不会饶了你？”\n“呦，小夫君三十来岁没有，脾气却是不好，来来来，妾身教教你怎么做人？”"}, {"id": "6742284482226686979", "title": "都市天兵：我的碰瓷老公", "author": "昨知", "abstract": "为逼女儿嫁给富二代，洛天震从路上拉了一个碰瓷的废物少年回家，让女儿二选一。没想到女儿直接拉着碰瓷少年去领了证……更没想到的是，这个碰瓷的废物少年身份并不一般：京城大少、第一大家族唯一继承人、修炼者、天界天兵……"}, {"id": "6740800866741128199", "title": "星灵之石", "author": "源风广漠", "abstract": "【我们等待了121亿年】【这是我们最后一次机会】【远古的星灵已经死去】【我们的宇宙正在被吞噬】【散落在银河系文明中的星灵之石】【是毁灭还是重生】"}, {"id": "6707567410615946254", "title": "万灵葬天", "author": "红尘心", "abstract": "无尽岁月后，少年锁囚从沙漠走出，世间灾难劫数降临...！\n他，是后世震惊天地的千古人王！\n他，是后世横推豪杰的索命死神！\n他，是后世一剑断时空的盖世剑神！\n他...也是人们心目中的希望，经历万千磨难，成就万世传奇之人！\n世人皆不凡，那有完美身，为人者，擅其长，每个人都能成为自己的传奇，因为，自己就是自己的主角，人生的这张画卷之上，只有终点之前的点点滴滴，你准备好了吗？请降临哪个属于你的光环之上！"}, {"id": "6687044045451037709", "title": "婚戒", "author": "鹰神A", "abstract": "（书名婚戒不是结婚戒指，而是婚姻生活需要戒许多，其中一条戒出轨，这可是底线。）\n欧阳敏娜超级模特，人称女王，婚后忍受不了寂寞，对婚姻开始不安分玩起了名堂。\n杨青山常年海外出差办公不问家事，对妻子照顾不周。\n夫妻离异后，夫妻仕途一片光明，当女明星，当大总裁。\n由于杨青山的原因，导致幼女杨朵朵发生巨大变化，……"}, {"id": "6769501911100951565", "title": "神龙快婿", "author": "风中的阳光", "abstract": "他本是一方战神，却因为伤病一傻三年，被人百般凌辱，唯有漂亮妻子与他不离不弃！\n情敌千方百计把他妻子骗到酒店，这时，他突然苏醒！\n战神归来，势不可挡！凡欺辱我者皆需付出代价！"}, {"id": "6683094033801153549", "title": "逍遥医婿", "author": "秘制红烧肉", "abstract": "遭人迫害疯了十年的段浪，机缘巧合下获得上古药王的传承，从此开启开挂人生。"}], "peak": [{"id": "7069948840148732967", "title": "部族荣光", "author": "丧狐", "abstract": "盛产美女的“姜氏部族”与“申屠部族”已开战三年，这让姜氏部族的成年男人近乎死绝，而一但输掉“部族生死战”，姜氏部族的所有女人，会被折磨致死，会被凌辱贩卖，绝望的气氛笼罩着整个部族，有人选择了逃亡，有人选择了背叛。\n　　十五岁的姜玄本还是一个半大孩子，为了母亲妹妹以及族里的女人们，他别无选择！\n　　我不装了！我摊牌了！\n　　我一直在隐藏实力！\n　　我！姜玄！姜氏部族最后一个男人！"}, {"id": "7091150316644600867", "title": "莫若凌霄", "author": "月关", "abstract": "唐从心，一个美术落榜生， 意外来到一方女帝世界，成为一个朝不保夕的没落皇孙。\n但，弃子亦有凌云志，没落皇孙当如龙。 \n这皇帝，祖父做得，祖母做得，我一个弃子也做得。"}, {"id": "7075952796322761739", "title": "高手下山，我有九个无敌师父！", "author": "小殇殇", "abstract": "【热血杀伐+无敌流+师姐+装逼爽文】\n七年前，家族被灭，惨遭羞辱，七年后，叶君临携带诸位师父的通天本领强势归来！\n和我比实力？我大师父武道之主，修为通神！\n和我比医术？我二师父一代圣医，可起死人肉白骨！\n和我比背景？我三师父一国国师，一言断人生死！\n和我比人多？我四师父北凉战神，统领百万雄兵！\n和我比有钱？我五师父商会之主，富可敌国！\n和我比美人？我有七个倾国倾城的师姐，个个都很宠我！\n新书《师弟，求求你饶了我吧！》欢迎阅读！"}, {"id": "6883748331202284558", "title": "惊鸿", "author": "一夕烟雨", "abstract": "『传统玄幻』『非后宫』九州大地有一楼，名为《烟雨楼》，烟雨楼主李庆之，有着绝代天骄之称，黑夜之中执掌生死，然而，世人所不知的是，烟雨楼背后还有一人，方才是烟雨楼真正的创始人，以纨绔子弟的身份为掩饰，拨弄风云，布局天下！"}, {"id": "6838086444733434884", "title": "玄幻，我顿悟了混沌体", "author": "叶大刀", "abstract": "萧云的系统只会一个功能——顿悟！体质平凡？顿悟混沌体！功法难修？顿悟圆满境界！神通难修？顿悟圆满境界！没有什么是顿悟不能解决的，如果有，那就顿悟十次，百次……"}, {"id": "7064405896540982309", "title": "武碎星河", "author": "妖夜", "abstract": "【新书《葬星棺》已发】\n神明在星空俯瞰，恶魔在地狱咆哮。\n这是一个万族争雄，神魔乱舞的奇幻世界。\n一个寒门少年持刀而行，逆流而上，他要成为这个世界的王！\n【本书改编动画《武碎星河》正在热映】"}, {"id": "7218822722090961958", "title": "萤火之城", "author": "童童", "abstract": "一段不曾走过的旅途，重新定义了生命的概念。一场从未有过的挑战和进化，开启对生命和情感的思考。“萤火之城”，自由与秩序的对立，自然与科技的统一，这里，窥见未来文明的一角。"}, {"id": "7137359676424850443", "title": "娇养玫瑰", "author": "美绿哔哔", "abstract": "［已签约出版]\n棠梨十六岁时一袭昆曲水袖舞的名动帝都，被誉为昆曲小洛神\n人人皆道，除了傅家那位被称为玉面佛子阎罗王的傅九爷\n无人能配得上小洛神\n只可惜，傅家那位天性薄情冷血，甜软乖娇如棠梨若跟了他定会吃苦\n一夕变故，棠梨被送出帝都\n昆曲小洛神的名头也再无人提起。\n直到有一日，\n坊间传闻傅九爷在家中养了位小姑娘\n小姑娘爱穿旗袍，一袭水袖舞的堪比当年的昆曲小洛神\n勾了九爷的心、夺了九爷的魄\n还有知情圈内人传闻那小姑娘还是傅九爷用了不光彩手段从自己侄子手里抢来的\n众人皆好奇小姑娘何许人也\n——\n某次宴会，\n有人亲眼看见传闻中冷情寡欲的傅九爷将一穿着旗袍的小姑娘抱在洗手台上吻的难舍难分\n小姑娘娇气地偏头躲吻，一巴掌拍在阎王爷下巴处，声音软嗲，\n“傅则谌，你还亲！”\n众人屏息，不敢多看\n但乌黑缎发顺着黛青色旗袍瀑下，那张清艳的脸分明就是曾经的昆曲小洛神。\n玉面佛子阎罗王终究是降在了小洛神的旗袍下。\n——“你是我贫瘠生命里，唯一的玫瑰。”"}, {"id": "7111200276232539166", "title": "天灾，我囤几十亿物资在末世求生", "author": "袅袅鱼音", "abstract": "（末世+重生+空间+囤物资）\n　　天灾骤降，世界巨变，先是极热，再是极寒，紧接着地震，大雾，永夜，酸雨接踵而至。\n　　孤身在末世挣扎求生十年的苏念，最后还是死在了倾盆而下的酸雨中。\n　　再次睁眼，苏念发现自己重生了，此时距离末世还有三个月。\n　　当在传家宝里发现一个巨大的随身空间后，苏念给自己定下了重生后的第一个小目标——花光21个亿，用物资把空间填满！\n　　从此，苏念开始了囤货模式。\n　　米面粮油？买！\n　　鸡鸭鱼肉？买！\n　　衣帽鞋袜？买！\n　　肉脯凤爪小火锅，薯片辣条螺蛳粉，一个都不能少！\n　　（天灾末世求生文，男主绝对出乎预料！）"}, {"id": "7096667097870109733", "title": "心肝宠", "author": "九棂", "abstract": "（顶级豪门+女主现代江南风美人+男主疯批+前期女主攻略+后期男主强势宠+双洁+好结局HE）\n为了肚子里的孩子，鹿之绫被迫嫁给疯批大佬，所有人都猜她活不到生崽之日。\n为保命她开始攻略，一不小心成了他的心尖宠。\n后来，她准备跑路。\n他的车停在悬崖之上，摇摇欲坠，他虚踩油门，笑得漫不经心，“我好像没听清，你是说……离婚？嗯？”\n后来，他轻抚她的脸，声线性感而残忍，“乖乖留在我身边，逃跑的人要受惩罚。”\n再后来，他满身血污地走到她面前，体力不支地倒在雨里，卑微如泥，“我到底要怎么做，你才肯留在我身边？”\n最后的最后，他闷声问她，“心肝，今天也不能亲一下？”"}, {"id": "7101803652683140111", "title": "够野", "author": "纠纠猫", "abstract": "实体已上市/同名短剧已上线\n【美艳清醒女销售&腹黑房产总裁】\n男女互撩，极限拉扯，棋逢对手。\n酒吧厕所门口，苏郁向沈衍借了个火，苏郁娴熟地点燃香烟，轻吐了一口烟雾，烟雾缭绕在她冷艳的面容上，那斜视的狐狸眼，看上去妖媚又野性十足。\n倒是让人忍不住心生征服之意。\n沈衍的目光在她身上停留了一会儿，唇角勾起，“够野，我喜欢。”\n苏郁挑眉：“既然喜欢，那不如今晚去我家？”\n\n某天苏郁说：“沈衍，我觉得我们三观不合。”\n黑夜中，沈衍叼着烟，嘴角扬起了一抹不羁的笑容，：“我觉得很合。”\n所有人见到苏郁的第一眼，都会觉得她是一个典型的冷艳美人。\n不，苏郁只是外表冷艳，实际上她内心是一个极致善变的女人。\n只有沈衍懂她，知道她想要什么。\n他知道她的故作矜持，她明他的图谋不轨。"}, {"id": "6823667291557727235", "title": "皇后重生要谋反", "author": "流心蜜糖", "abstract": "本书原名《皇后重生要谋反》\n改编短剧《重生皇后不好惹》\n前世，她用医术替他拉拢人心，让外祖用兵权助他登位，结果最后却换来满门屠杀，惨死收场。\n重活一世，她绝不会再让自己活成一场笑话。\n她要用她五年的记忆，高超的医术，力挽狂澜。\n保幼弟，护祖母，斗白莲，杀渣男。\n她要让所有害她的人血债血偿！\n只是这前世夫君的弟弟怎么缠上了她？\n说好不再入他夜家门的，结果却终是难逃这前世今生的命运！\n前世今生都是1V1，无敌甜宠文，大家一定要看哦！"}, {"id": "7244061177171414054", "title": "你干嘛！开局迪迦，无限能量", "author": "五月竹", "abstract": "【领主争霸+召唤爆兵+无敌暴爽+奥特曼】\n  时隔多年，蓝星又一次进入万界争霸的时代。\n  人类将再一次进行求生试炼，杀怪升级，称霸诸天。\n  可以觉醒的职业有很多，属性者、能力者、种族者、召唤师等等，而最为强大的当属领主职业。\n  顾九歌，竟然获得诸天银河系统，职业被选择为领主，原本的顶级兵种银河怪兽居然被系统改为唯一兵种--奥特曼，迪迦、梦比优斯、贝利亚、赛罗、托雷基亚等奥特曼一个个被召唤出来，让全世界看看光的力量。\n  你相信光吗？"}, {"id": "7599283708138359832", "title": "我是老五，出生就背了1540元", "author": "雪糕会化", "abstract": "我出生的那天，给我家带来了1540元的罚款。为了还这笔债，我半辈子都在拼命讨好所有人。我有4个姐姐，我妈又怀孕了。\n"}, {"id": "7634018392684366873", "title": "魏时长子：我，曹昂，横扫三国", "author": "丰静越", "abstract": "重生建安二年，曹昂于宛城死局中逆天改命。无系统无玄幻，凭现代知识整军屯田、革新制度，蛰伏归曹，辅父定北。官渡扬威、赤壁止损、汉中抗蜀、襄樊破敌，斗曹丕、压司马、灭吴吞蜀，终以长子之身一统九州，开万世太平！\n本书前期蛰伏积蓄力量，中期开始三国各大战役均有亮眼表现。各位看官:请跟随曹昂一起，见证魏时长子的力量！！！"}, {"id": "7640032231766887448", "title": "当S级上将遇到满级代练", "author": "一颗梅子熟了", "abstract": "陈珂清穿越了，成了星际豪门里手无缚鸡之力的“普通人”。\n幸好，全息游戏《仙元大陆》开服了！作为前世代练大神，他摩拳擦掌准备重操旧业，靠技术赚点零花钱。\n结果刚进游戏，就被一个战斗力爆表、还特别爱管人的“大佬”缠上了。\n陆靳川最近很苦恼。\n休假玩个游戏想放松一下，结果遇到了一个看起来软萌好欺负，切开全是黑的小机灵鬼。\n这人明明是个生活玩家，怎么打起架来比军部的刺头还狠？\n更离谱的是，这小家伙的操作让他这个S级精神力上将都觉得……有点上头？\n直到某天，星际宴会上。\n毫无存在感的陈家二少爷，被那位高不可攀的帝国上将堵在了角落。\n陆靳川看着眼前瑟瑟发抖（装的）的青年，挑眉一笑：“游戏里不是挺能打的吗？嗯？”\n白切黑戏精受 x 爹系腹黑攻 | 游戏里大杀四方，现实里甜度超标"}, {"id": "7639564685473221657", "title": "封神：替帝辛翻案后，我成了人皇", "author": "砚临渊", "abstract": "穿越到封神之前，殷玄成了商朝末年的废柴修士——丹田破碎，修为全无，连杂役都能踩他一脚。\n本想躺平等死，却意外激活【翻案系统】：“替帝辛正名，重塑人族气运，奖励人皇传承。”\n他翻遍古籍，发现真相触目惊心：酒池肉林、炮烙之刑，全是天庭为抹杀人族编造的谎言！纣王之名，竟是诸神强加的一口黑锅！\n撕碎神使通缉令，当众揭穿姜子牙篡改史书，一拳轰爆雷部追杀令——废柴逆袭，一路打脸。\n碎了三千年的人皇剑，在他手中重新凝聚。眼看就要登临人皇之位，系统突然弹出血红警告：\n“帝辛并未陨落。你的翻案，早在他三千年前的算计之中。”\n身后，一道苍老的声音幽幽响起：\n“殷玄，你做得不错……现在，该把身体还给我了。”"}, {"id": "7633625266174037054", "title": "开局英甲，升级奖励巨星模板", "author": "小潮Eric", "abstract": "因为一纸资本协议，我被硬塞进英格兰甲级联赛，加盟哈德斯菲尔德镇足球俱乐部，成了队友口中的“关系户”，球迷眼里的“夏国水货”！\n就在被全英格兰媒体嘲讽的当晚，【神级球星模板系统】激活！开局融合巅峰梅西，单场连过十一人破门！\n教练：“我错了，求你别走！”队友：“他就是上帝，把球给他就对了！”\n从今天起，英甲的球门将被我一人承包！赛季升级，奖励C罗模板！制霸英超，奖励大罗模板！\n当整个欧洲足坛为我颤抖，当顶级豪门的千金为我痴狂，我只想问一句：\n“我，一个夏国前锋，现在要捧起世界杯，谁赞成，谁反对？”"}, {"id": "7616572303186349080", "title": "我是捡来的，原来我有顶级家世", "author": "爱吃草头烧饼", "abstract": "新手开书，可能很多文笔还能稚嫩，谢谢大家的支持，背景为平时时空，也与现实有一些出入，请大家不用贴合现实阅读，感谢！   （重生+无系统+单女主+无脑爽文）                                                   重生2003，他只想考个公务员，报答养父的恩情。\n直到有一天，顶级世家找到他：\n“你背上的伤疤，是我们家丢了二十一年的孩子。”\n从筒子楼到燕京权力中枢\n这一世，他有爱人相伴，有兄弟相助。\n那些前世害他的人，一个都跑不掉。"}, {"id": "7543601522781719577", "title": "异能铭录", "author": "念乔乔", "abstract": "【都市异能】【配角群像】【水系崛起】【无后宫】【奇经八脉】\n当少年在18岁生日当天觉醒禀赋之力，是精神失常还是血脉传承？\n在日渐繁华的都市生活之外，是否存在平行世界的异能之辈？\n在学习工作之余，你是否想过改变世界？改变未来？\n在我们生活的现代社会里，仍旧存在着我们不曾发觉的奇妙冒险。"}, {"id": "7641564272476032062", "title": "穿成初恋，驯化嘴硬兵痞", "author": "予妩", "abstract": "馋嘴甜妹 VS 清冷硬汉\n \n苏莳野前世谨小慎微压抑半生，一朝穿书，竟成了狠心辜负少年的负心初恋。\n重活一世她彻底想开，抛开所有束缚随性度日，偏爱美食更偏爱顺眼之人，活得自在又鲜活。\n \n靳戍自幼缺爱寡言，满心热忱惨遭抛弃，入伍从军后性子愈发冷硬寡淡，周身生人勿近，满心温柔尽数藏起。\n \n恰逢分手前夕，苏莳野果断止损奔赴千里，主动靠近暖心相待。\n她性情鲜活软糯，心思灵动满眼欢喜，满心满眼都惦记着身边人；\n他外表冷硬嘴硬别扭，嘴上百般推脱拒绝，一举一动却全是纵容与破例。\n \n颜控手控双重加持，她一眼沦陷步步撩人，慢慢融化他满身冰霜。\n昔日她亲手将他推入孤寂深渊，今生换她奔赴而来，哄软他一身锋芒，从此烟火相伴，岁岁温情，甜度满分。"}, {"id": "7638192830204087358", "title": "地下城蜂王围养世界", "author": "谁看到了我的兔子", "abstract": "【非人流+幕后养成+蜂群进化+地下城扩张】\n蜂是最勤劳的动物，它们采粉，采蜜，交配，打架……总是忙忙碌碌。\n安文看到这句话，心里只有一句：人算动物吗？\n不太像。\n那牛马呢？\n安文不是，不是人更不是牛马，是蜂群的唯一雄蜂，幸运的是蜂后死了，不幸的是靠山也没了。\n重振族群的任务落在肩上， 称号勇者的他决心带着蜂群成为地下城的王者。\n至少得在这第六层安定下来。"}, {"id": "7572556079242939454", "title": "辞职后我在西北碰上了真爱！", "author": "作者耳朵橙", "abstract": "尤霜在实习结束以后不知道后面可以继续做什么，通过一个契机了解到了千里之外有个荒原的小城叫原城，尤霜决定去散散心开拓一下眼界，但是与试飞员邓立境发生的一系列故事"}]}</script>
-
 <script>
 var D=JSON.parse(document.getElementById("nv").textContent);
 var TABS=["rank","trend","hook","world","character","outline","summary"];
 var T="rank";
+var names={rank:"📋 榜单分析",trend:"📊 市场趋势",hook:"🪝 开局钩子",world:"🌍 世界观",character:"👤 人物设计",outline:"📝 大纲生成",summary:"📄 汇总大纲"};
 
-function initTabs(){
-  var names={rank:"📋 榜单分析",trend:"📊 市场趋势",hook:"🪝 开局钩子",world:"🌍 世界观",character:"👤 人物设计",outline:"📝 大纲生成",summary:"📄 汇总大纲"};
+function M(){
   var h='';
   TABS.forEach(function(t,i){
     h+='<button class="ti'+(i===0?' ac':'')+'" onclick="S(\''+t+'\')">'+names[t]+'</button>';
   });
   document.getElementById("tabBar").innerHTML=h;
-  M();
-}
-
-function S(t){T=t;document.querySelectorAll(".ti").forEach(function(x,i){x.classList.toggle("ac",TABS[i]===t)});M()}
-function M(){
-  if(T==="rank")R();else if(T==="trend")Tr();
-  else if(T==="hook")Hk();else if(T==="world")Wd();
-  else if(T==="character")Ch();else if(T==="outline")O();
+  if(T==="rank")R();
+  else if(T==="trend")Tr();
+  else if(T==="hook")Hk();
+  else if(T==="world")Wd();
+  else if(T==="character")Ch();
+  else if(T==="outline")O();
   else if(T==="summary")SMT();
+}
+function S(t){T=t;
+document.querySelectorAll(".ti").forEach(function(x,i){x.classList.toggle("ac",TABS[i]===t)});M()}
+function E(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+
+// ═══ ANALYSIS ═══
+function A(title,abstract){
+  var t=(title+" "+abstract).toLowerCase();
+  var ty=[],hk=[],tr=[];
+  // types
+  if(/重生|前世|再来/i.test(t))ty.push("重生逆袭");
+  else if(/穿越|回到|穿成|穿书|醒来/i.test(t))ty.push("穿越");
+  else if(/修仙|仙尊|金丹|元婴|渡劫|飞升|仙帝|仙界/i.test(t))ty.push("修仙");
+  else if(/总裁|豪门|首富|财阀|千金/i.test(t))ty.push("都市豪门");
+  else if(/系统|签到|抽奖|金手指/i.test(t))ty.push("系统文");
+  else if(/种田|农门|田园|耕/i.test(t))ty.push("种田");
+  else if(/末世|丧尸|末日|天灾|灾变/i.test(t))ty.push("末日");
+  else if(/星际|宇宙|银河|星舰|虫族/i.test(t))ty.push("星际科幻");
+  else if(/悬疑|推理|侦探|凶手|案件/i.test(t))ty.push("悬疑推理");
+  else if(/权谋|朝堂|夺嫡|摄政|将军|战/i.test(t))ty.push("权谋战争");
+  else if(/游戏|网游|电竞|副本|boss/i.test(t))ty.push("游戏");
+  else if(/校园|学霸|学渣|校花|高考/i.test(t))ty.push("校园");
+  else if(/赘婿|入赘|上门|倒插/i.test(t))ty.push("赘婿逆袭");
+  else if(/团宠|宠爱|宠溺|甜/i.test(t))ty.push("甜宠");
+  else ty.push("都市生活");
+  // hooks
+  if(/重生|前世|新的一世|再来|上辈子/i.test(t))hk.push("重生");
+  if(/穿越|穿成|穿书|醒来.*世界|来到.*世界/i.test(t))hk.push("穿越");
+  if(/复仇|报复|杀|仇|恨/i.test(t))hk.push("复仇");
+  if(/系统|签到|抽奖|任务|金手指/i.test(t))hk.push("金手指");
+  if(/打脸|逆袭|翻身|碾压/i.test(t))hk.push("打脸逆袭");
+  if(/扮猪|低调|隐藏实力|隐藏身份/i.test(t))hk.push("扮猪吃虎");
+  if(/替身|马甲|身份.*替|假.*身份/i.test(t))hk.push("替身/马甲");
+  if(/退婚|休妻|和离|离婚|分手/i.test(t))hk.push("退婚打脸");
+  // tropes
+  if(/赘婿|入赘|上门|穷小子|富家女/i.test(t))tr.push("赘婿");
+  if(/神医|医圣|回春|医术/i.test(t))tr.push("神医");
+  if(/兵王|军王|特种兵|退役/i.test(t))tr.push("兵王");
+  if(/师尊|徒弟|师父|弟子/i.test(t))tr.push("师徒");
+  if(/女帝|女皇|女王|摄政/i.test(t))tr.push("女强");
+  if(/萌宝|宝宝|带娃|孩子/i.test(t))tr.push("萌宝");
+  if(/替嫁|代嫁|替身.*嫁/i.test(t))tr.push("替嫁");
+  if(/团宠|全家|被宠|团.*宠/i.test(t))tr.push("团宠");
+  if(/锦鲤|福星|好运/i.test(t))tr.push("锦鲤福星");
+  if(t.match(/爆|爽|舒/)){tr.push("轻松爽文");}
+  // emotion
+  var em="强烈冲突";
+  if(/甜|宠|温柔|暖/i.test(t))em="温馨甜蜜";
+  else if(/爽|爆|碾压/i.test(t))em="爽感碾压";
+  else if(/悲|虐|泪|惨|痛/i.test(t))em="虐心情节";
+  else if(/热|热血|战斗|激/i.test(t))em="热血激燃";
+  else if(/诡|悬疑|诡异|怪/i.test(t))em="诡谲悬疑";
+  // pace
+  var pc="节奏紧凑";
+  var ch=(title+"").length;
+  if(ch>15)pc="快速推进";else if(ch<7)pc="慢热铺陈";
+  return {ty:ty[0],hk:hk,tr:tr,em:em,pc:pc};
 }
 
 // ═══ RANK ═══
 var CR="hot";
 function R(){
-  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="bt bs" style="background:'+(CR==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'hot\';R()">🔥 热门</button><button class="bt bs" style="background:'+(CR==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'new\';R()">🆕 新书</button><button class="bt bs" style="background:'+(CR==="peak"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'">🏔 巅峰</button></div>';
+  var h='';
+  // rank tabs
+  h+='<div style="display:flex;gap:8px;margin-bottom:16px">';
+  var bgs={hot:"linear-gradient(135deg,#6666ff,#8844ff)",new:"linear-gradient(135deg,#6666ff,#8844ff)",peak:"linear-gradient(135deg,#6666ff,#8844ff)"};
+  ["hot","new","peak"].forEach(function(k){
+    var bg=(CR===k?bgs[k]:"rgba(255,255,255,.08)");
+    var icons={hot:"🔥 热门",new:"🆕 新书",peak:"🏔 巅峰"};
+    h+='<button class="bt bs" style="background:'+bg+'" onclick="CR=\''+k+'\';R()">'+icons[k]+'</button>';
+  });
+  h+='</div>';
   (D[CR]||[]).forEach(function(b,i){
-    var a=A(b.title,b.abstract);h+='<div class="bk" onclick="X(this)"><h4>'+(i+1)+'. '+E(b.title)+'</h4><div class="mt">✍ '+E(b.author)+'</div><div class="ab">'+E(b.abstract||"")+'</div><div class="an">';
+    var a=A(b.title,b.abstract);
+    h+='<div class="bk" onclick="X(this)"><h4>'+(i+1)+'. '+E(b.title)+'</h4>';
+    h+='<div class="mt">✍ '+E(b.author)+'</div>';
+    h+='<div class="ab">'+E(b.abstract||"")+'</div><div class="an">';
     if(a.ty)h+='<div class="ln">🎯 类型：<b>'+a.ty+'</b></div>';
-    if(a.hk.length)h+='<div class="ln">🪝 钩子：'+a.hk.map(function(x){return'<span class="tg">'+x+'</span>'}).join(" ")+'</div>';
-    if(a.tr.length)h+='<div class="ln">🎭 套路：'+a.tr.map(function(x){return'<span class="tg2">'+x+'</span>'}).join(" ")+'</div>';
+    if(a.hk.length){
+      var tg='';
+      a.hk.forEach(function(x){tg+='<span class="tg">'+x+'</span>';});
+      h+='<div class="ln">🪝 钩子：'+tg+'</div>';
+    }
+    if(a.tr.length){
+      var tg2='';
+      a.tr.forEach(function(x){tg2+='<span class="tg2">'+x+'</span>';});
+      h+='<div class="ln">🎭 套路：'+tg2+'</div>';
+    }
     h+='<div class="ln">💭 '+a.em+' | ⚡ '+a.pc+'</div>';
     h+='</div></div>';
-  });document.getElementById("main").innerHTML=h;
+  });
+  document.getElementById("main").innerHTML=h;
 }
-function X(e){e.querySelector(".ab").classList.toggle("xp");e.querySelector(".an").classList.toggle("sh")}
-
-function A(tl,ab){
-  var r={ty:"",hk:[],tr:[],em:"",pc:""};var tx=tl+(ab||"");if(!tx)return r;
-  var tys=[["重生","重生逆袭"],["穿越","穿越架空"],["修仙|修真|仙尊","修仙玄幻"],["宫斗|宅斗","宫斗宅斗"],["总裁|豪门","总裁豪门"],["种田|基建","种田基建"],["悬疑|推理","悬疑推理"],["末世|末日","末世求生"],["星际|宇宙|科幻","星际科幻"],["都市|现代","都市言情"],["神医|医术","神医流"],["战神|兵王","战神兵王"],["赘婿|上门","赘婿逆袭"],["弃子|弃少","弃子逆袭"],["科举|权谋","科举权谋"]];
-  tys.forEach(function(x){if(new RegExp(x[0]).test(tx)&&!r.ty)r.ty=x[1]});if(!r.ty)r.ty="多元融合";
-  var hks=[["一夜之间.*死|灭门|满门|砍头|抄家","灭门开局"],["重生.*归来|重生.*睁|回到.*年前","重生归来"],["穿越|穿成|醒来.*古代","穿越异世"],["退婚|退亲|休书","退婚打脸"],["系统|绑定|叮","系统降临"],["破产|背叛|离婚","落魄开局"],["复仇|报仇|雪恨","复仇主线"]];
-  hks.forEach(function(x){if(new RegExp(x[0]).test(tx))r.hk.push(x[1])});
-  var trs=[["庶妹|庶姐|嫡庶","嫡庶之争"],["打脸|啪啪|丢脸","打脸爽"],["扮猪|隐藏.*实力","扮猪吃虎"],["追妻.*火葬|后悔.*挽回","追妻火葬场"],["团宠|全民.*宠","团宠"],["金手指|空间|灵泉|传承","金手指"],["逆袭|翻身|翻盘","逆袭爽文"]];
-  trs.forEach(function(x){if(new RegExp(x[0]).test(tx))r.tr.push(x[1])});
-  if(/虐|泪|痛/.test(tx))r.em="虐心向";else if(/甜|宠|暖/.test(tx))r.em="甜宠向";else if(/爽|打脸/.test(tx))r.em="爽文向";else r.em="综合向";
-  if(r.hk.length>=3)r.pc="极速";else if(r.hk.length>=2)r.pc="紧凑";else r.pc="常规";return r;
+function X(e){
+  e.querySelector(".ab").classList.toggle("xp");
+  e.querySelector(".an").classList.toggle("sh");
 }
 
 // ═══ TREND ═══
 function Tr(){
-  var all=[];D.hot.forEach(function(b){all.push({t:b.title,a:b.abstract})});D["new"].forEach(function(b){all.push({t:b.title,a:b.abstract})});if(D.peak)D.peak.forEach(function(b){all.push({t:b.title,a:b.abstract})});
-  var tc={},hc={},rc={};all.forEach(function(b){var a=A(b.t,b.a);tc[a.ty]=(tc[a.ty]||0)+1;a.hk.forEach(function(h){hc[h]=(hc[h]||0)+1});a.tr.forEach(function(rt){rc[rt]=(rc[rt]||0)+1})});
-  var ts=Object.entries(tc).sort(function(a,b){return b[1]-a[1]});
-  var hs=Object.entries(hc).sort(function(a,b){return b[1]-a[1]});
-  var rs=Object.entries(rc).sort(function(a,b){return b[1]-a[1]});
+  var all=[];
+  D.hot.forEach(function(b){all.push({t:b.title,a:b.abstract})});
+  D["new"].forEach(function(b){all.push({t:b.title,a:b.abstract})});
+  if(D.peak)D.peak.forEach(function(b){all.push({t:b.title,a:b.abstract})});
+  var ts={},hs={},trs={},tys={};
+  all.forEach(function(b){
+    var a=A(b.t,b.a);
+    [a.ty].forEach(function(x){if(x)tys[x]=(tys[x]||0)+1});
+    a.hk.forEach(function(x){hs[x]=(hs[x]||0)+1});
+    a.tr.forEach(function(x){trs[x]=(trs[x]||0)+1});
+  });
+  function bar(label,count,total,maxw){var p=count/total;return label+'：'+count+'次 ('+Math.round(p*100)+'%) <span style="color:#58a6ff;float:right">'+'█'.repeat(Math.round(p*maxw))+'</span>'}
+  function top(map,n){
+    var e=Object.entries(map);e.sort(function(a,b){return b[1]-a[1]});return e.slice(0,n);
+  }
   var h='<div class="ca"><h3>📊 番茄小说市场趋势（'+all.length+'本样本）</h3>';
-  h+=BC(ts,ts[0]?ts[0][1]:1,"🎯 热门类型");
-  h+=BC(hs,hs[0]?hs[0][1]:1,"🪝 流行钩子");
-  h+=BC(rs,rs[0]?rs[0][1]:1,"🎭 热门套路");
-  h+='<div style="margin-top:16px;padding:16px;background:rgba(0,0,0,.2);border-radius:10px"><h4 style="color:#aaaaff">💡 建议</h4>';
-  if(ts[0])h+='<div class="ln">1. 最热: <b>'+ts[0][0]+'</b>（红海,需差异化）</div>';
-  if(hs[0])h+='<div class="ln">2. 标配钩子: <b>'+hs[0][0]+'</b>（前3章必出）</div>';
-  if(rs[0])h+='<div class="ln">3. 必备套路: <b>'+rs[0][0]+'</b></div>';
-  h+='<div class="ln">4. 差异化: 融合两种类型元素</div></div></div>';
+  var tt=top(tys,8);var th=top(hs,6);var tr=top(trs,6);
+  if(tt[0]){
+    h+='<div class="ln">1. 最热: <b>'+tt[0][0]+'</b>（红海,需差异化）</div>';
+    if(tt[1])h+='<div class="ln">2. 次热: <b>'+tt[1][0]+'</b></div>';
+  }
+  h+='<div class="br"><h4>🔍 类型分布</h4>';
+  tt.forEach(function(x,i){h+='<div class="ln">'+bar(x[0],x[1],all.length,20)+'</div>'});
+  h+='</div><div class="br"><h4>🪝 钩子模式</h4>';
+  th.forEach(function(x,i){h+='<div class="ln">'+bar(x[0],x[1],all.length,20)+'</div>'});
+  h+='</div><div class="br"><h4>🎭 套路占比</h4>';
+  tr.forEach(function(x,i){h+='<div class="ln">'+bar(x[0],x[1],all.length,20)+'</div>'});
+  h+='</div>';
+  // writing tips
+  h+='<div class="br"><h4>💡 写作建议</h4>';
+  var tips=[];
+  if(tt[0])tips.push('1. 当前最热「'+tt[0][0]+'」赛道内卷严重，建议加入至少2个差异元素（如系统+种田、穿越+悬疑）');
+  if(th[0])tips.push('2. 热门钩子「'+th[0][0]+'」几乎已成标配，尝试逆向思维——「重生但不复仇」能否成立？');
+  if(th[1])tips.push('3. 「'+th[1][0]+'」与「'+th[0][0]+'」组合是经过验证的核爆组合');
+  tips.push('4. 务必在前500字内让读者理解核心矛盾——节奏决定留存');
+  tips.push('5. 书名要带类型特征词（重生、穿越、系统等），这是平台的流量密码');
+  h+=tips.join('<br>')+'</div></div>';
   document.getElementById("main").innerHTML=h;
 }
-function BC(it,mv,tt){var h='<h4 style="color:#aaaaff;margin:16px 0 8px">'+tt+'</h4>';it.slice(0,8).forEach(function(e){var p=Math.round(e[1]/mv*100);h+='<div class="br"><span class="bl">'+e[0]+'</span><div style="flex:1;background:rgba(255,255,255,.04);border-radius:9px"><div class="bf" style="width:'+p+'%"></div></div><span class="bc">'+e[1]+'</span></div>'});return h;}
 
-// ═══ HOOK ENGINE ═══
-var HOOKS=[
-  {id:"conflict",name:"冲突开局",desc:"第1章直接抛出激烈冲突,让读者无法放下",example:"她醒来时,发现自己躺在棺材里。外面有人正在钉钉子。",tmpl:"[主角]在[地点]醒来/出现,发现[突发事件],必须在[时限]内做出选择,否则[后果]",use:"适合爽文/战神/兵王/末世",pace:"第1章前半段出冲突,最迟第1章结尾"},
-  {id:"mystery",name:"悬念开局",desc:"抛出一个谜题或反常现象,让读者产生好奇心",example:"整栋楼的住户都收到了同一封信:三天后,你将忘记最重要的那个人。",tmpl:"[群体/个人]发现了[诡异现象],无人知晓[真相],直到[主角]注意到[关键线索]",use:"适合悬疑/推理/恐怖/科幻",pace:"第1章设谜,第3章前给第一条线索"},
-  {id:"identity",name:"身份反转",desc:"主角身份与处境强烈反差,瞬间建立代入感",example:"全公司都知道新来的实习生穷得叮当响。直到董事长的劳斯莱斯停在她面前。司机下车:小姐。",tmpl:"所有人以为主角是[低微身份],实际上TA是[真实身份],因为[原因]隐藏至今,直到[事件]被迫暴露",use:"适合总裁/赘婿/弃子/重生/马甲流",pace:"第1章结尾暴露身份,或第3章首次打脸"},
-  {id:"scene",name:"场景渲染",desc:"电影般画面感营造氛围,先让读者沉浸",example:"江南梅雨季,青石板路被雨水泡得发亮。她撑着褪色的油纸伞,走向那座废弃十年的老宅。门没锁。",tmpl:"[季节/天气]的[地点],[感官细节],主角[动作],发现[异常]",use:"适合古风/都市/文艺向/重生",pace:"前300字完成氛围渲染,500字内出钩子"},
-  {id:"dialogue",name:"对话切入",desc:"一句震撼的对话开篇,直接拉入情节",example:"'你确定要退婚?'他放下茶杯,笑了:'行。不过,是你退我,不是我退你。'",tmpl:"人物A说出[冲击性话语],人物B[反应],周围人[反应],由此引发[连锁事件]",use:"适合任何类型,尤其爽文和言情",pace:"前200字出对话,第1章结束前展现后果"},
-  {id:"flashback",name:"倒叙开局",desc:"先展现巅峰/绝望时刻,再回溯始末",example:"她跪在金銮殿上,听着太监宣读满门抄斩的圣旨。三个月前,她还是大安朝最受宠的郡主。",tmpl:"展现[高潮/绝望]画面,用[X时间前]拉开时间线,回到真正的起点",use:"适合重生/复仇/权谋/古言",pace:"前500字展现巅峰/绝望,第1章结尾回到起点"},
-  {id:"quote",name:"金句开局",desc:"一句掷地有声的话定义全书基调",example:"世界上只有一种英雄主义,就是看清生活真相后依然热爱它。——但看清真相之后,我选择了复仇。",tmpl:"[名言/金句],但/然而[主角的独特视角],这就是[本书主题]",use:"适合任何类型,尤其文艺向/热血向",pace:"前100字出金句,然后立即进入故事"}
-];
-
+// ═══ HOOK ═══
+var FIGHTS=[{"name": "冲突开场Conflict", "desc": "开局直接展示核心矛盾冲突，让读者立即代入紧张的对抗关系中", "example": "将军府被抄家那日，她正用敌帅的头骨温酒。三千铁甲围府，她在酒香里认出了领兵之人——是她亲手养大的弟弟。", "tmpl": "[主角]的[身份/资源]遭到[对手]的[致命威胁],同时发现[背叛真相]", "use": "玄幻、武侠、权谋、复仇文"}, {"name": "悬念圈套Suspense", "desc": "用反常现象或谜团开篇，留给读者一个必须解开的疑问", "example": "所有人都在等那个箱子打开。押运的锦衣卫说，箱子里装着祥瑞。可打开之后，里面只有一具尸体——穿着当朝太子才配穿的赭黄袍。", "tmpl": "众人以为[常识认知],但揭开后发现[颠覆性的真相],而这个真相指向[更大的谜团]", "use": "悬疑、推理、灵异、盗墓、科幻"}, {"name": "身份反转Identity", "desc": "主角身份与表面处境极端不匹配，强烈的反差产生张力", "example": "圣旨到的时候，贵妃正在冷宫踩缝纫机。传旨太监跪了半个时辰圣旨才念出口——「奉天承运，贵妃不仅无罪，还是先帝临终指定的摄政王。」", "tmpl": "[主角]表面上[卑微处境/身份],实际上[真实身份/能力],当[触发事件]发生时,身份被迫揭晓", "use": "古言、现言、逆袭打脸文"}, {"name": "场景压迫Scene", "desc": "用极具画面感的场景描写营造氛围，让读者身临其境感受危机", "example": "海上的黑烟从清晨烧到正午。岸上没有人哭。男人都死在了三年前的围城战里，女人早学会了把眼泪咽回肚子。但船靠岸时，先下来的是一排铁甲。", "tmpl": "[地点]出现的[异常现象]持续了[时间],人们[反常反应],但当[关键事件]发生时才发现[真正的危机]", "use": "所有类型，尤其适合战争、末日、灾难"}, {"name": "对白冲击Dialogue", "desc": "用一句震撼性对白开篇，瞬间抓住读者注意力", "example": "'本座给你两个选择：死，或者死得好看些。'\n师父说完这话就咽了气。然后三百个仇家上了山门的台阶。我没得选，只好两个都要。", "tmpl": "'[冲击性台词]'-说话者[特殊状态/身份],同时[外部危机]正在逼近", "use": "对话驱动强的小说，轻小说、爆款格式"}, {"name": "倒叙悬念Flashback", "desc": "从结局或高潮时刻倒叙，让读者好奇到底发生了什么", "example": "我死的那天，整个大周都在放烟花。\n那是我亲手改写的诏书，才让他们赢的。\n也正因那封诏书，他们全都犯了欺君之罪——等着秋后问斩吧。", "tmpl": "当[关键事件]发生时,[旁观者反应/现象],而这一切都是[主角]暗中策划的结果", "use": "复仇、重生、反套路文"}, {"name": "名言定理Signature", "desc": "用一句金句/定理开篇定调，彰显特色风格", "example": "我叫沈浪，在精神病院待了三年。\n如果你能背下圆周率小数点后一万两千位，你也可以提前出院。\n这就是今天我站在十八岁考场的原因。", "tmpl": "[独特的自我介绍]+[独特的世界观准则]+[由此引发的开端事件]", "use": "学霸文、系统文、脑洞特色文"}];
 function Hk(){
-  var h='<div class="ca"><h3>🪝 开局钩子引擎 — 前3章定生死</h3>';
-  h+='<p style="color:#888;margin-bottom:16px">网文读者平均3秒决定是否继续。以下7种黄金开局模板,每种都经过市场验证。</p>';
-  h+='<div style="margin-bottom:16px"><span style="color:#aaa">示范：</span><select id="hks" onchange="GKH()">';
-  HOOKS.forEach(function(ht){h+='<option value="'+ht.id+'">'+ht.name+'</option>'});
-  h+='</select></div><div id="hkOut" class="ob"></div></div>';
-
-  h+='<div class="ca"><h3>⚡ 快速开局生成器</h3>';
-  h+='<div class="ln">世界观：<select id="hkw">';
-  ["古代架空","现代都市","修仙玄幻","末日废土","星际科幻","西方奇幻","悬疑惊悚"].forEach(function(w){h+='<option>'+w+'</option>'});
-  h+='</select></div>';
-  h+='<div class="ln">主角身份：<input id="hkp" placeholder="比如：被退婚的郡主 / 破产的CEO / 觉醒的废柴" style="width:300px"></div>';
-  h+='<div class="ln">核心冲突：<input id="hkc" placeholder="比如：复仇 / 生存 / 证明自己" style="width:300px"></div>';
-  h+='<button class="bt" onclick="GHQ()" style="margin-top:8px">🪄 生成开局</button>';
-  h+='<div id="hkQuick" class="ob" style="margin-top:12px"></div></div>';
+  var h='<h3>🪝 开局钩子引擎</h3><p style="color:#8b949e;margin-bottom:16px">7种黄金开局模板 · 选一种或让AI帮你匹配</p>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">';
+  FIGHTS.forEach(function(f,i){
+    h+='<button class="bt bs" style="background:rgba(255,255,255,.08)" onclick="SH('+i+')">'+f.name+'</button>';
+  });
+  h+='</div><div id="hkShow"><p style="color:#8b949e">👆 选一个模板看详情，或填入主角身份和核心冲突让AI生成开局</p></div>';
+  h+='<h3 style="margin-top:24px">🤖 AI开局生成</h3>';
+  h+='<input id="hki1" placeholder="主角身份（如：被退婚的将军之女）">';
+  h+='<input id="hki2" placeholder="核心冲突（如：夺回身份复仇）">';
+  h+='<button class="btn" onclick="GHK()">⚡ 生成开局</button>';
+  h+='<div id="hkOut"></div>';
   document.getElementById("main").innerHTML=h;
-  setTimeout(function(){GKH()},50);
+}
+function SH(i){
+  var f=FIGHTS[i];
+  var o='<div class="br"><h2>╔══════════════════════════════╗<br>║ 🪝 '+f.name+' ║<br>╚══════════════════════════════╝</h2>';
+  o+='<p>📖 定义: '+f.desc+'</p>';
+  o+='<p>✍️ 示例:</p><pre>'+E(f.example)+'</pre>';
+  o+='<p>🔧 模板:</p><pre>'+f.tmpl+'</pre>';
+  o+='<p>🎯 适合: '+f.use+'</p></div>';
+  document.getElementById("hkShow").innerHTML=o;
+}
+function GHK(){
+  var p=document.getElementById("hki1").value||"普通青年";
+  var c=document.getElementById("hki2").value||"生存与复仇";
+  var o='<div class="br"><h3>🪝 AI生成的开局方案</h3>';
+  var seeds=[
+    {n:"冲突爆发式",d:"当所有人都以为"+p+"已经认命的那一刻，"+p+"做出了一个让全场死寂的动作。这不是冲动的选择——这是蓄谋已久的开始。"},
+    {n:"悬念倒叙式",d:"多年以后，人们还会提起那个改变一切的夜晚。但没有人知道，那天晚上"+p+"在黑暗中看见的不是绝望，而是一个等待了三年的答案。"},
+    {n:"反常反套路式",d:"按照常理，"+p+"应该在此时退缩。但"+p+"笑了。熟悉的人都知道，这个笑容意味着有人要倒霉了——而且不是一般的倒霉。"},
+    {n:"金句定格式",d:""+p+"有三条原则。第一：不主动惹事。第二：惹了就要惹到底。第三：把"+c+"这件事做到极致。今天的事，三条原则都占了。"}
+  ];
+  seeds.forEach(function(s){o+='<p><b>『'+s.n+'』</b><br>'+s.d+'</p>';});
+  o+='<p style="color:#58a6ff;margin-top:12px">💡 选一个最契合你世界观的方向，融合具体设定细化</p></div>';
+  document.getElementById("hkOut").innerHTML=o;
 }
 
-function GKH(){
-  var id=document.getElementById("hks").value;
-  var ht=HOOKS.find(function(h){return h.id===id});if(!ht)return;
-  var o="╔══════════════════════════════╗\n║ 🪝 "+ht.name+" ║\n╚══════════════════════════════╝\n\n";
-  o+="📖 定义:\n  "+ht.desc+"\n\n✍️ 示例:\n  \""+ht.example+"\"\n\n🔧 模板:\n  "+ht.tmpl+"\n\n🎯 适合:\n  "+ht.use+"\n\n⏱ 节奏:\n  "+ht.pace+"\n\n━━ 📝 落地步骤 ━━\n";
-  o+="  1. 用1句话写出核心冲突\n  2. 挑选1个感官细节(声音/画面/气味)\n  3. 写3句开场,第1句就要抓住眼球\n  4. 检查:前500字内是否出了钩子?\n  5. 检查:第1章结尾是否有翻页动力?\n";
-  document.getElementById("hkOut").textContent=o;
-}
-
-function GHQ(){
-  var world=document.getElementById("hkw").value;
-  var protag=document.getElementById("hkp").value||"一个普通的主角";
-  var conflict=document.getElementById("hkc").value||"改变命运";
-  var ht=HOOKS[Math.floor(Math.random()*HOOKS.length)];
-  var o="⚡ 随机生成 · "+world+" · "+conflict+"\n"+"═".repeat(45)+"\n\n";
-  o+="【"+ht.name+"】\n"+world+"。\n\n"+protag+"。\n\n那天，一切都变了。\n不是因为"+conflict+"，\n而是因为——（填入你的惊人转折）\n\n";
-  o+="【冲突开局】\n"+world+"。\n\n"+protag+"睁开眼的第一秒，就看见了一把刀。\n握刀的人说：\""+conflict+"。这是你欠的。\"\n\n";
-  o+="【身份反转】\n"+world+"。\n\n所有人都知道"+protag+"什么都不是。\n直到"+conflict+"的那一天，\n他们才知道自己错得有多离谱。\n\n";
-  o+="【悬念开局】\n"+world+"。\n\n"+protag+"收到了第"+(Math.floor(Math.random()*20)+3)+"封同样的信。\n每封信只有一行字：\""+conflict+"。\"\n寄件人——三年前就已经死了。\n\n";
-  o+="💡 技巧:\n  • 前3句话必须出钩子\n  • 第1章结尾留悬念\n  • 不要在第1章倾倒过多设定\n  • 让读者先「感受」再「理解」\n";
-  document.getElementById("hkQuick").textContent=o;
-}
-
-// ═══ WORLD BUILDING ═══
-var WORLDS={
-  "古代架空":{time:"架空王朝，可参考唐宋明清混搭",geo:"都城+边关+江湖 三大区域,每区3-5个关键地点",power:"皇权+世家+江湖 三方势力博弈",rules:"科举/官制/军制/礼法 四大体系",history:"前朝覆灭→本朝建立→XX年前关键事件→当前局势",special:"可用'灵气''武道''机关术'等架空元素"},
-  "修仙玄幻":{time:"太古→上古→中古→近古→当代,万年时间线",geo:"下界(凡间)→中界(灵界)→上界(仙界),每界分东西南北中五域",power:"宗门/散修/世家/皇朝/异族 五方势力",rules:"炼气→筑基→金丹→元婴→化神→合体→大乘→渡劫 八境",history:"远古大战→天道崩塌→万族并起→人族崛起→当前格局",special:"秘境/传承/天材地宝/气运/因果"},
-  "现代都市":{time:"当代，可模糊年份增加持久性",geo:"核心城市+关键场所(公司/家/常去的店)",power:"商业巨头/政界/地下势力/娱乐圈 四层社会结构",rules:"商业规则+社会潜规则+法律边界",history:"主角背景→行业变迁→关键关系史",special:"神医/兵王/鉴宝等专业技能降维打击"},
-  "末日废土":{time:"灾难爆发→混乱期→秩序重建→当前",geo:"基地+荒野废墟+变异区,分安全区/危险区/禁区",power:"基地派系/流浪者/变异者/旧世界残余",rules:"生存法则+异能体系+资源分配",history:"灾变原因→大崩溃→基地建立→格局",special:"异能/变异/科技遗物/文明碎片"},
-  "星际科幻":{time:"近未来→星际殖民→银河帝国",geo:"母星→殖民地→外域→未知星域",power:"帝国/联邦/星盗/外星文明/AI势力",rules:"科技分级+航行法则+外交规则",history:"人类出走→星际战争→帝国建立→当前",special:"机甲/基因改造/AI觉醒/外星遗迹/虫族"}
-};
-
+// ═══ WORLD ═══
+var WORLDS=[{"name": "古代王朝", "timeline": "太祖开国(约500年前)→中期盛世(300年前)→末代衰落(50年前)→当前:帝弱臣强、边患四起", "geo": "中州(王都)+四境(北疆冰原/南疆密林/西域戈壁/东海列岛)+秘境(上古遗迹)", "factions": "皇族(名存实亡)+世家门阀(三大家族)+江湖宗门(正道七派/魔教三宗)+异族(北狄/南蛮)", "rules": "灵气复苏(龙脉)→官阶九品(武力+功勋)→世家垄断修炼资源→科举选拔人才", "history": "百年前一场'天裂'事件导致龙脉断裂，灵气外泄，从此修炼者暴增，但也催生了无数妖魔"}, {"name": "修仙世界", "timeline": "混沌初开→远古仙魔大战→上古宗门鼎立→中古大劫→近古末法→当代:灵气稀薄时代", "geo": "九重天(三十三重天)→人界(四洲四海)→地府幽冥→秘境洞天", "factions": "正道联盟(道/佛/儒)+魔道四宗+散修联盟+妖族天庭+龙族遗民", "rules": "境界:炼气→筑基→金丹→元婴→化神→渡劫→大乘→飞升;灵石为通用货币;天道规则压制", "history": "万年前天人两界通道关闭，仙凡永隔;三千年前最后一位飞升者留下预言:末法将尽,大争之世将至"}, {"name": "现代都市", "timeline": "改革开放(40年前)→互联网崛起(20年前)→移动互联(10年前)→AI元年(当前)→暗面:古武/异能世界", "geo": "一线城市(金融中心)+产业带(制造业)+科技园区+暗面:地下黑市/隐世宗门", "factions": "商业巨头(家族企业)+古武世家(隐世传承)+神秘组织(国际暗面)+新贵力量(科技/金融新锐)", "rules": "金钱+权力+武力三重衡量;古武境界:明劲→暗劲→化劲;科技侧的基因改造/AI觉醒", "history": "二十年前一场'暗夜之战'让古武界元气大伤，老一辈高手隐退，新一代格局未定"}, {"name": "末日废土", "timeline": "灾变爆发(3年前)→文明崩溃(2年前)→幸存者基地建立(1年前)→暗流涌动(当前)", "geo": "破碎的城市废墟+变异荒野+幸存者基地(壁垒型城市)+地下避难所+禁区(高辐射/变异兽领地)", "factions": "军方残部(秩序派)+掠夺者联盟(混乱派)+科技公司(神秘势力)+变异者聚落+纯人类至上组织", "rules": "晶核能源(变异兽→晶核→能源/进化);能力等级:F→E→D→C→B→A→S;物资稀缺迫使道德抉择", "history": "'天启病毒'爆发，90%人类变异或死亡，幸存者中发现极少数觉醒者能吸收晶核进化"}, {"name": "星际科幻", "timeline": "星际殖民时代(1000年前)→银河帝国鼎盛(500年前)→帝国分裂(200年前)→联邦vs帝国冷战(当前)", "geo": "银河系四象限+虫洞枢纽星系+边缘星域(无法地带)+外星文明领地", "factions": "人类联邦(民主联盟)+银河帝国(君主制)+自由星域(海盗/佣兵)+虫族威胁+远古文明遗迹", "rules": "精神力等级:alpha→beta→gamma→omega;曲率引擎航行;AI受限:觉醒AI禁令;基因改造分级", "history": "五十年前'第一次星际战争'以帝国惨败告终，但远古遗迹的发现让双方都看到了超越彼此的可能性"}];
 function Wd(){
-  var h='<div class="ca"><h3>🌍 世界观搭建器</h3><p style="color:#888;margin-bottom:16px">好的世界观让读者沉浸,坏的世界观让人出戏。</p>';
-  h+='<div style="margin-bottom:16px"><span style="color:#aaa">类型：</span><select id="ww" onchange="GWW()">';
-  Object.keys(WORLDS).forEach(function(k){h+='<option>'+k+'</option>'});
-  h+='<option>自定义</option></select></div>';
-  h+='<div id="wwOut"></div></div>';
-  h+='<div class="ca"><h3>🛠 自定义世界观</h3>';
-  h+='<textarea id="wwCustom" placeholder="描述你的世界观构想...比如：一个以音乐为修炼体系的异世界"></textarea>';
-  h+='<button class="bt" onclick="GWC()" style="margin-top:8px">🌍 生成框架</button>';
-  h+='<div id="wwGen" class="ob" style="margin-top:12px"></div></div>';
+  var h='<h3>🌍 世界观搭建器</h3>';
+  h+='<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">';
+  WORLDS.forEach(function(w,i){
+    h+='<button class="bt bs" style="background:rgba(255,255,255,.08)" onclick="SW('+i+')">'+w.name+'</button>';
+  });
+  h+='</div><div id="wdShow"><p style="color:#8b949e">👆 选一个世界观框架查看详情</p></div>';
+  h+='<h3 style="margin-top:24px">🎨 自定义生成</h3>';
+  h+='<input id="wdi1" placeholder="世界观名称（如：灵气复苏时代）">';
+  h+='<input id="wdi2" placeholder="核心设定（如：全球变异、基因进化）">';
+  h+='<button class="btn" onclick="GWC()">⚡ 生成世界观</button>';
+  h+='<div id="wdOut"></div>';
   document.getElementById("main").innerHTML=h;
-  setTimeout(function(){GWW()},50);
 }
-
-function GWW(){
-  var w=document.getElementById("ww").value;
-  if(w==="自定义"){document.getElementById("wwOut").innerHTML='<p style="color:#888">选择类型后自动填充,或在下方自定义</p>';return}
-  var wt=WORLDS[w];
-  var o='<div class="ob">📅 时间线\n  '+wt.time+'\n\n🗺 地理\n  '+wt.geo+'\n\n⚔ 势力\n  '+wt.power+'\n\n📜 规则\n  '+wt.rules+'\n\n📖 历史\n  '+wt.history+'\n\n✨ 特色\n  '+wt.special+'\n\n━━ 搭建步骤 ━━\n  1. 先确定1条核心规则\n  2. 画简易地图,标出5个关键地点\n  3. 定义3个势力的目标和手段\n  4. 写5条世界历史事件(每条约50字)\n  5. 检查:这个世界能不能给主角制造麻烦?\n</div>';
-  document.getElementById("wwOut").innerHTML=o;
+function SW(i){
+  var w=WORLDS[i];
+  var o='<div class="br"><h2>🌍 '+w.name+'</h2>';
+  o+='<p><b>📅 历史时间线：</b><br>'+w.timeline+'</p>';
+  o+='<p><b>🗺️ 地理格局：</b><br>'+w.geo+'</p>';
+  o+='<p><b>⚔️ 势力派系：</b><br>'+w.factions+'</p>';
+  o+='<p><b>📜 世界规则：</b><br>'+w.rules+'</p>';
+  o+='<p><b>📖 重大事件：</b><br>'+w.history+'</p></div>';
+  document.getElementById("wdShow").innerHTML=o;
 }
-
 function GWC(){
-  var idea=document.getElementById("wwCustom").value||"一个待探索的世界";
-  var o="🌍 "+idea.substring(0,30)+"… 世界观\n"+"═".repeat(50)+"\n\n";
-  o+="📅 时间线\n  • 远古：[关键事件]\n  • 转折：[改变世界的事件]\n  • 当前：[故事时代]\n\n";
-  o+="🗺 地理\n  • 核心区域：[3-5个关键地点]\n  • 外围区域：[冒险区]\n  • 未知区域：[后期解锁]\n\n";
-  o+="⚔ 势力\n  • A：[名称+目标+手段]\n  • B：[名称+目标+手段]\n  • C：[名称+目标+手段]\n\n";
-  o+="📜 规则\n  • 核心规则：[最独特的法则]\n  • 经济体系：[货币/资源]\n  • 社会阶层：[等级+流动]\n  • 道德/法律\n\n";
-  o+="📖 历史\n  • [X年前]：[大事]\n  • [Y年前]：[影响主角的事]\n  • [现在]：[引发开端的事]\n\n";
-  o+="⚠ 世界观通过故事展现,别在第1章倾倒设定";
-  document.getElementById("wwGen").textContent=o;
+  var n=document.getElementById("wdi1").value||"混沌末世";
+  var c=document.getElementById("wdi2").value||"文明崩塌";
+  var o='<div class="br"><h3>🌍 '+n+' — 世界观</h3>';
+  o+='<p><b>📅 时间线：</b>和平时代→'+c+'（第一阶段）→觉醒时代→大争之世→涅槃重生（终局）</p>';
+  o+='<p><b>🗺️ 地理格局：</b>核心安全区+外围缓冲区+荒野禁区+传说中的起源之地</p>';
+  o+='<p><b>⚔️ 势力分布：</b>旧秩序守军(保守派)+新生力量(变革派)+神秘组织(操纵者)+混沌势力(破坏者)</p>';
+  o+='<p><b>📜 核心规则：</b>1.'+c+'是世界的底层逻辑 2.力量来源于认知还是暴力？ 3.每个人都在面临道德抉择</p>';
+  o+='<p><b>📖 历史事件：</b>五十年前一场未解的事件('+c+'的前兆)，十年后天选之人预言出现，当前:世界格局即将崩溃</p></div>';
+  document.getElementById("wdOut").innerHTML=o;
 }
 
 // ═══ CHARACTER ═══
-function Ch(){
-  var h='<div class="ca"><h3>👤 人物设计器</h3><p style="color:#888;margin-bottom:16px">读者记住的是人物,不是情节。</p>';
-  h+='<div class="grid2">';
-  h+='<div class="card-mini" onclick="GCC(\'protag\')"><h5>🎯 主角设计卡</h5><p>外显目标+内在需求+致命缺陷+成长弧</p></div>';
-  h+='<div class="card-mini" onclick="GCC(\'villain\')"><h5>😈 反派设计卡</h5><p>动机+手段+魅力点+与主角的镜像</p></div>';
-  h+='<div class="card-mini" onclick="GCC(\'support\')"><h5>🤝 配角设计卡</h5><p>功能定位+独立故事线+关系</p></div>';
-  h+='<div class="card-mini" onclick="GCC(\'relation\')"><h5>🕸 关系网设计</h5><p>人物关系图谱+冲突矩阵</p></div>';
-  h+='</div><div id="chOut" class="ob" style="margin-top:16px"></div></div>';
-
-  h+='<div class="ca"><h3>⚡ 快速角色生成器</h3>';
-  h+='<div class="ln">定位：<select id="chType"><option>主角</option><option>反派</option><option>导师</option><option>恋人</option><option>竞争对手</option></select> | 世界观：<select id="chWorld"><option>古代架空</option><option>修仙玄幻</option><option>现代都市</option><option>末日废土</option><option>星际科幻</option></select></div>';
-  h+='<button class="bt" onclick="GCG()" style="margin-top:8px">👤 生成</button><div id="chGen" class="ob" style="margin-top:12px"></div></div>';
-  document.getElementById("main").innerHTML=h;
-  setTimeout(function(){GCC('protag')},50);
-}
-
-function GCC(type){
-  var cards={
-    protag:"╔══════════════════════════════╗\n║ 🎯 主角设计卡 ║\n╚══════════════════════════════╝\n\n📛 姓名：________ 年龄：________\n\n🎯 外显目标（想要什么）：\n  [具体可量化的目标]\n  [复仇/夺回身份/证明自己/拯救某人]\n\n💔 内在需求（真正缺什么）：\n  [外显目标背后的情感空洞]\n  [被认可/安全感/归属感/自我价值]\n\n⚠ 致命缺陷：\n  [阻碍主角达成目标的性格缺陷]\n  [过于自负/不敢信任/逃避亲密/固执]\n\n📈 成长弧线：\n  起点 → 中点 → 终点\n  [弱/迷茫]→[成长但有缺陷]→[克服缺陷]\n\n💡 记忆标签（让读者记住）：\n  [口头禅/习惯动作/特殊技能/反差萌]\n\n🔄 重大选择（3次）：\n  1. 第___章,选择____,代价____\n  2. 第___章,选择____,代价____\n  3. 第___章,选择____,代价____\n\n📝 一句话简介：\n  这是一个关于[谁]为了[什么]\n  而[做什么],学会[什么]的故事。",
-    villain:"╔══════════════════════════════╗\n║ 😈 反派设计卡 ║\n╚══════════════════════════════╝\n\n📛 姓名：________\n\n🎯 动机（为什么这么做）：\n  [不是单纯坏,要有合理逻辑]\n  [保护在意的人/扭曲正义/被背叛后黑化]\n\n🪞 与主角的镜像：\n  主角想要：[___]\n  反派也想要：[___]\n  但手段不同：[___]\n\n💪 优势：[资源/能力/信息差]\n⚠ 致命弱点：[性格缺陷/隐藏的秘密]\n😊 魅力点：[令人动容的特质]\n\n🔄 三次关键出场：\n  1. 伏笔暗示：第___章\n  2. 正式亮相：第___章\n  3. 终极对决：第___章\n\n📝 价值观：[用一句话概括他的世界观]",
-    support:"╔══════════════════════════════╗\n║ 🤝 配角设计卡 ║\n╚══════════════════════════════╝\n\n📛 姓名：________\n\n🎭 功能定位：\n  □ 导师/引路人 □ 恋人/伴侣\n  □ 竞争对手 □ 好友/死党\n  □ 搞笑担当 □ 牺牲角色\n\n📖 独立故事线：\n  [配角自己的目标和困境]\n  [不能只是主角的附属品]\n\n🤝 与主角的关系：\n  初识：[怎么认识的]\n  发展：[关系如何变化]\n  高潮：[关系的关键转折]\n\n💡 记忆点：[1-2个独特特征]\n\n⚠ 退场时机：不要在___章前退场",
-    relation:"╔══════════════════════════════╗\n║ 🕸 人物关系网 ║\n╚══════════════════════════════╝\n\n         [反派]\n        ╱  ╲\n   [配角A]  [主角]──[爱人]\n        ╲  ╱\n         [导师]\n\n📊 冲突矩阵\n 主角←→反派：[核心冲突线]\n 主角←→爱人：[情感线]\n 主角←→导师：[成长线]\n 主角←→配角A：[辅助线]\n\n🔗 关系变化时间线：\n  1-50章：建立关系\n  51-200章：深化/矛盾\n  201-400章：危机/转折\n  401章+：升华/和解/告别\n\n💡 每对角色都应有独立关系发展线"
-  };
-  document.getElementById("chOut").textContent=cards[type]||"";
-}
-
+var charPool=[
+  "沈墨","林雪","古辰","陆清","云染","叶辰","苏离","楚风","洛星河","萧景御","姬云裳","慕汐颜",
+  "顾渊","季阑","白洛","殷岚","谢容与","崔时晏","花辞树","温予迟","苏子衿","秦怀瑾","江晚晴","半壶烟"
+];
+var goalPool=["复仇","守护","揭秘","变强","自由","归家","成神","逆袭","寻人","灭世"];
+var flawPool=["固执","傲慢","仁慈","多疑","冷漠","自卑","冲动","贪婪","怯弱","执念"];
+var arcPool=["从被动接受到主动出击","从个人恩怨到守护苍生","从追逐强者到成为强者","从逃避宿命到拥抱命运","从依赖他人到独当一面"];
 function GCG(){
-  var role=document.getElementById("chType").value;
-  var world=document.getElementById("chWorld").value;
-  var names=["苏瑾","沈墨","林七夜","顾倾城","陆沉舟","姜禾","萧烬","云棠","江月白","叶星辰","裴九思","秦昭","洛清明","花未眠","牧尘"];
-  var name=names[Math.floor(Math.random()*names.length)];
-  var flaws=["太容易相信别人","控制欲太强","不敢面对过去","过于追求完美","缺乏安全感","习惯性逃避","嘴硬心软","争强好胜","自卑又自负"];
-  var flaw=flaws[Math.floor(Math.random()*flaws.length)];
-  var arcs=["自卑→自信","逃避→面对","孤独→被爱","复仇→原谅","自私→奉献","迷茫→坚定"];
-  var arc=arcs[Math.floor(Math.random()*arcs.length)];
-  var goals=["复仇","证明自己","保护重要的人","寻找真相","改变世界","活下去","夺回属于自己的一切"];
-  var goal=goals[Math.floor(Math.random()*goals.length)];
-  var needs=["被认可","安全感","归属感","自由","爱与接纳","掌控命运"];
-  var need=needs[Math.floor(Math.random()*needs.length)];
-  var traits=["左撇子,紧张转戒指","不吃香菜,没人知道为什么","有写满符号的笔记本","能在最意想不到的地方睡着"];
-  var trait=traits[Math.floor(Math.random()*traits.length)];
-  var descs=["被命运捉弄却从不认输","表面冷漠内心炽热","在黑暗中寻找光","用笑容掩盖伤疤"];
-  var desc=descs[Math.floor(Math.random()*descs.length)];
-
-  var o="👤 "+role+" · "+world+" · "+name+"\n"+"═".repeat(40)+"\n\n";
-  o+="📛 姓名: "+name+"\n";
-  o+="🎯 外显目标: "+goal+"\n";
-  o+="💔 内在需求: "+need+"\n";
-  o+="⚠ 致命缺陷: "+flaw+"\n";
-  o+="📈 成长弧: "+arc+"\n";
-  o+="💡 记忆点: ["+trait+"]\n";
-  o+="🔗 关键关系: [导师:___] [敌人:___] [爱人:___] [挚友:___]\n\n";
-  o+="📝 人物小传:\n  "+name+"是一个"+desc+"的人。\n  为了"+goal+",愿意付出任何代价。\n  但从来没有人问过TA真正想要的是什么。\n";
-  document.getElementById("chGen").textContent=o;
+  var n=charPool[Math.floor(Math.random()*charPool.length)];
+  var g=goalPool[Math.floor(Math.random()*goalPool.length)];
+  var f=flawPool[Math.floor(Math.random()*flawPool.length)];
+  var a=arcPool[Math.floor(Math.random()*arcPool.length)];
+  return {name:n,goal:g,flaw:f,arc:a};
+}
+function Ch(){
+  var h='<h3>👤 人物设计器</h3>';
+  h+='<p style="color:#8b949e;margin-bottom:16px">随机生成主角、反派、配角卡牌</p>';
+  h+='<button class="btn" onclick="GenChars()">🎲 随机生成全套人物</button>';
+  h+='<div id="charOut" style="margin-top:16px">';
+  h+='<p style="color:#8b949e">点击上方按钮生成人物卡</p></div>';
+  h+='<h3 style="margin-top:24px">✍️ 自定义人物</h3>';
+  h+='<input id="chi1" placeholder="人物姓名"><input id="chi2" placeholder="核心目标">';
+  h+='<input id="chi3" placeholder="性格缺陷"><textarea id="chi4" placeholder="人物背景（可留空）"></textarea>';
+  h+='<button class="btn" onclick="Genc()">➕ 添加自定义人物</button>';
+  h+='<div id="cOut"></div>';
+  document.getElementById("main").innerHTML=h;
+}
+function GenChars(){
+  var p=GCG();var ant=GCG();var sup=GCG();
+  var cnames=charPool.filter(function(n){return n!==p.name&&n!==ant.name&&n!==sup.name});
+  var rn=Math.random;
+  function card(n,g,f,a,l){
+    return '<div class="br"><h4>'+l+'</h4><p><b>姓名：</b>'+n+' | <b>目标：</b>'+g+'</p><p><b>缺陷：</b>'+f+'</p><p><b>成长弧：</b>'+a+'</p><p><b>记忆点：</b>'+["神秘纹身/疤痕","特殊习惯/口癖","标志器物（戒指/剑/吊坠）","口头禅","特殊能力触发时产生的异象"][Math.floor(rn()*5)]+'</p></div>';
+  }
+  var o=card(p.name,p.goal,p.flaw,p.arc,'🦸 主角')+card(ant.name,ant.goal,ant.flaw,ant.arc,'👹 反派')+card(sup.name,sup.goal,sup.flaw,sup.arc,'👥 配角');
+  o+='<div class="br"><h4>🔗 关系网络</h4><p>'+p.name+' ←→ '+ant.name+'（敌对/竞争）</p><p>'+p.name+' ←→ '+sup.name+'（盟友/导师/好友）</p><p>'+ant.name+' ←→ '+sup.name+'（利用/牵制）</p></div>';
+  document.getElementById("charOut").innerHTML=o;
+}
+function Genc(){
+  var n=document.getElementById("chi1").value||"未命名";
+  var g=document.getElementById("chi2").value||"未知目标";
+  var f=document.getElementById("chi3").value||"待定";
+  var bg=document.getElementById("chi4").value||"";
+  var o='<div class="br"><h4>🦸 '+E(n)+'</h4>';
+  o+='<p><b>目标：</b>'+E(g)+' | <b>缺陷：</b>'+E(f)+'</p>';
+  if(bg)o+='<p><b>背景：</b>'+E(bg)+'</p>';
+  o+='</div>';
+  document.getElementById("cOut").innerHTML=o;
 }
 
 // ═══ OUTLINE ═══
-var OT={
-  "重生逆袭":{ch:1200,ph:[{n:"第一幕·绝望深渊",c:"1-5章",d:"灭门/背叛/死亡 — 一记重拳",k:"前3章完成死亡+重生"},{n:"第二幕·重生布局",c:"6-50章",d:"利用记忆暗中介入",k:"每10章一次小高潮"},{n:"第三幕·身份展露",c:"51-200章",d:"实力暴露马甲掉落",k:"配角轮被打脸"},{n:"第四幕·势力扩张",c:"201-500章",d:"建立势力正面对抗",k:"引入大世界观"},{n:"第五幕·真相揭露",c:"501-800章",d:"前世谜团浮出",k:"每200章一个伏笔"},{n:"第六幕·终极对决",c:"801-1100章",d:"决战BOSS",k:"多线收束"},{n:"第七幕·终章",c:"1101-1200章",d:"结局番外",k:"各角色收线"}],tp:["成长曲线要清晰","每50章一次大情感波动","配角有独立故事线"]},
-  "穿越架空":{ch:1000,ph:[{n:"第一幕·异世降临",c:"1-10章",d:"穿越+世界观",k:"前3章理解处境"},{n:"第二幕·生存适应",c:"11-80章",d:"知识降维打击",k:"每章观念冲突"},{n:"第三幕·崭露头角",c:"81-250章",d:"改变世界获关注",k:"科举经商等"},{n:"第四幕·危机",c:"251-600章",d:"卷入权力漩涡",k:"多条暗线"},{n:"第五幕·力挽狂澜",c:"601-900章",d:"成为关键人物",k:"正面大对决"},{n:"第六幕·新时代",c:"901-1000章",d:"结局",k:"各角色交代"}],tp:["尽快建立穿越优势","每100章升级地图","知识碾压造爽点"]},
-  "修仙玄幻":{ch:2000,ph:[{n:"第一幕·凡人起步",c:"1-30章",d:"传承入修仙",k:"5章转变"},{n:"第二幕·宗门崛起",c:"31-200章",d:"外门逆袭",k:"竞争"},{n:"第三幕·纵横天下",c:"201-600章",d:"离开宗门",k:"200章换地图"},{n:"第四幕·巅峰之战",c:"601-1200章",d:"跨域大战",k:"多方博弈"},{n:"第五幕·超脱",c:"1201-1800章",d:"飞升",k:"留够篇幅"},{n:"第六幕·终章",c:"1801-2000章",d:"至高",k:"因果了结"}],tp:["境界体系清晰","每100章升级","反派别一次用完"]},
-  "总裁豪门":{ch:800,ph:[{n:"第一幕·命运相遇",c:"1-20章",d:"相遇契约",k:"5章完成三重"},{n:"第二幕·豪门生活",c:"21-100章",d:"家族刁难",k:"每10章护一次"},{n:"第三幕·感情升温",c:"101-300章",d:"假戏真做",k:"甜中带虐"},{n:"第四幕·危机",c:"301-500章",d:"秘密前女友",k:"虐的高潮"},{n:"第五幕·追妻",c:"501-700章",d:"挽回",k:"名场面"},{n:"第六幕·圆满",c:"701-800章",d:"HE",k:"婚礼宝宝"}],tp:["男强女成长","越虐越勇","全城轰动"]}
-};
-
 function O(){
-  var h='<div class="ca"><h3>📝 大纲生成器</h3><p style="color:#888;margin-bottom:8px">基于热门小说结构自动生成</p><select id="ot" onchange="GO()">';
-  Object.keys(OT).forEach(function(k){h+='<option>'+k+'</option>'});
-  h+='</select><div id="oo" class="ob"></div></div>';
-
-  h+='<div class="ca"><h3>🛠 自定义大纲</h3><div class="ln">章数: <input id="cc" type="number" value="800" min="100" max="5000" style="width:70px"> | 类型: <select id="ct">';
-  ["重生逆袭","穿越架空","修仙玄幻","总裁豪门","悬疑推理","都市言情","种田基建","战神兵王"].forEach(function(t){h+='<option>'+t+'</option>'});
-  h+='</select></div><button class="bt" onclick="GCO()" style="margin-top:8px">🪄 生成</button>';
-  h+='<div id="co" class="ob" style="margin-top:12px"></div></div>';
-
-  h+='<div class="ca"><h3>📋 写小说全流程速查</h3><div class="grid3">';
-  h+='<div class="card-mini" onclick="S(\'hook\')"><h5>第1步：定开局</h5><p>选钩子类型,写3句开场,前500字出钩子</p></div>';
-  h+='<div class="card-mini" onclick="S(\'world\')"><h5>第2步：搭世界观</h5><p>确定时间/地图/势力/规则/历史</p></div>';
-  h+='<div class="card-mini" onclick="S(\'character\')"><h5>第3步：设计人物</h5><p>填主角卡+反派卡,画关系网</p></div>';
-  h+='<div class="card-mini" onclick="S(\'outline\')"><h5>第4步：排大纲</h5><p>选模板,分章数,标节拍</p></div>';
-  h+='<div class="card-mini"><h5>第5步：写正文</h5><p>每章结尾留钩子,不要回头看</p></div>';
-  h+='<div class="card-mini" onclick="S(\'trend\')"><h5>第6步：看市场</h5><p>对照热门榜单,检查是否符合趋势</p></div>';
-  h+='</div></div>';
+  var h='<h3>📝 大纲生成器</h3>';
+  h+='<p style="color:#8b949e;margin-bottom:16px">选择模板或自定义章节数</p>';
+  h+='<select id="otpl" style="margin-bottom:10px">';
+  h+='<option value="">-- 自定义 --</option>';
+  h+='<option value="reborn">重生逆袭（1200章）</option>';
+  h+='<option value="trans">穿越异界（1000章）</option>';
+  h+='<option value="cult">修仙成长（2000章）</option>';
+  h+='<option value="ceo">都市豪门（800章）</option></select>';
+  h+='<input id="och" placeholder="自定义总章数（如：500）">';
+  h+='<button class="btn" onclick="GCO()">⚡ 生成大纲</button>';
+  h+='<div id="oOut"></div>';
   document.getElementById("main").innerHTML=h;
-  setTimeout(function(){GO()},50);
 }
-
-function GO(){
-  var t=OT[document.getElementById("ot").value];if(!t)return;
-  var o="╔════════════════════════╗\n║ 📖 "+document.getElementById("ot").value+"（约"+t.ch+"章）║\n╚════════════════════════╝\n";
-  t.ph.forEach(function(p){o+="\n"+p.n+" 【"+p.c+"】\n  "+p.d+"\n  🔑 "+p.k+"\n"});
-  o+="\n━━ ✍️ ━━\n";t.tp.forEach(function(tp){o+="  • "+tp+"\n"});
-  document.getElementById("oo").textContent=o;
-}
-
 function GCO(){
-  var ch=parseInt(document.getElementById("cc").value)||800;
-  var tp=document.getElementById("ct").value;
-  var ps=[];if(ch>=1200)ps=[{p:.02,n:"开篇钩子"},{p:.08,n:"第一卷·开局"},{p:.15,n:"第二卷·发展"},{p:.25,n:"第三卷·高潮"},{p:.30,n:"第四卷·转折"},{p:.15,n:"第五卷·收束"},{p:.05,n:"终章+番外"}];
-  else if(ch>=600)ps=[{p:.03,n:"开篇钩子"},{p:.12,n:"第一卷·开局"},{p:.25,n:"第二卷·发展"},{p:.35,n:"第三卷·高潮"},{p:.20,n:"第四卷·收束"},{p:.05,n:"终章"}];
-  else ps=[{p:.05,n:"开篇"},{p:.20,n:"第一卷·发展"},{p:.40,n:"第二卷·高潮"},{p:.25,n:"第三卷·收束"},{p:.10,n:"终章"}];
-  var o="📖 "+tp+" · "+ch+"章\n"+"═".repeat(40)+"\n\n";var st=1;
-  ps.forEach(function(p){var cnt=Math.round(ch*p.p);var ed=Math.min(st+cnt-1,ch);o+=p.n+" 【"+st+"-"+ed+"章】("+(ed-st+1)+"章)\n";var bi=Math.max(3,Math.floor((ed-st+1)/8));
-  if(/重生/.test(tp))o+="  • 第"+st+"章:死亡重生  • "+(st+bi)+":打脸  • "+(st+bi*2)+":暴露  • "+(st+bi*3)+":胜利  • "+(st+bi*4)+":新敌  • "+(st+bi*5)+":真相  • "+(st+bi*6)+":对决  • "+(st+bi*7)+":结局\n";
-  else if(/总裁/.test(tp))o+="  • 第"+st+"章:相遇  • "+(st+bi)+":契约  • "+(st+bi*2)+":心动  • "+(st+bi*3)+":误会  • "+(st+bi*4)+":追妻  • "+(st+bi*5)+":轰动  • "+(st+bi*6)+":真相  • "+(st+bi*7)+":HE\n";
-  else if(/修仙/.test(tp))o+="  • 第"+st+"章:传承  • "+(st+bi)+":宗门  • "+(st+bi*2)+":大比  • "+(st+bi*3)+":地图  • "+(st+bi*4)+":大战  • "+(st+bi*5)+":至高  • "+(st+bi*6)+":飞升  • "+(st+bi*7)+":终章\n";
-  else if(/穿越/.test(tp))o+="  • 第"+st+"章:穿越  • "+(st+bi)+":破局  • "+(st+bi*2)+":权贵  • "+(st+bi*3)+":漩涡  • "+(st+bi*4)+":危机  • "+(st+bi*5)+":逆转  • "+(st+bi*6)+":时代  • "+(st+bi*7)+":结局\n";
-  else o+="  • 第"+st+"章:开篇  • "+(st+bi)+":小高潮  • "+(st+bi*2)+":转折  • "+(st+bi*3)+":高潮  • "+(st+bi*4)+":危机  • "+(st+bi*5)+":逆袭  • "+(st+bi*6)+":对决  • "+(st+bi*7)+":结局\n";
-  st=ed+1});document.getElementById("co").textContent=o;
+  var tpl=document.getElementById("otpl").value;
+  var ch=parseInt(document.getElementById("och").value)||({reborn:1200,trans:1000,cult:2000,ceo:800}[tpl]||800);
+  var acts=["第一卷：开端（1-"+Math.round(ch*0.15)+"章）— 建立世界观+核心矛盾浮现",
+            "第二卷：成长（"+Math.round(ch*0.15+1)+"-"+Math.round(ch*0.35)+"章）— 能力提升+势力建立",
+            "第三卷：转折（"+Math.round(ch*0.35+1)+"-"+Math.round(ch*0.55)+"章）— 重大变故+身份揭示",
+            "第四卷：高潮（"+Math.round(ch*0.55+1)+"-"+Math.round(ch*0.75)+"章）— 终局对抗+所有线索汇聚",
+            "第五卷：落幕（"+Math.round(ch*0.75+1)+"-"+Math.round(ch*0.9)+"章）— 关键决斗/选择",
+            "第六卷：涅槃（"+Math.round(ch*0.9+1)+"-"+Math.round(ch*0.98)+"章）— 终极反转+真相大白",
+            "第七卷：新生（"+Math.round(ch*0.98+1)+"-"+ch+"章）— 结局+后记"];
+  var beats=["🎪 开篇钩子：前三章必须完成世界观铺陈和核心矛盾的引爆",
+             "🔑 转折点1：约20%处完成第一次能力/身份升级，读者开始产生期待",
+             "💔 至暗时刻：约40%处主角必须经历一场'看似必败'的挫折",
+             "🔥 翻盘点：约50%处主角获得关键突破——能力、盟友或信息",
+             "⚠️ 陷阱反转：约65%处揭示前期埋下的伏笔，颠覆读者认知",
+             "⚔️ 决战爆发：约80%处最终对决——不仅是力量的较量，更是信仰与选择的体现",
+             "🌈 余韵结局：最后3-5章留给情感归宿、世界的新秩序和读者回味的空间",
+             "🪝 续集钩子：最后一段埋一个若隐若现的新危机或未解之谜"];
+  var o='<div class="br"><h3>📝 '+ch+'章大纲（7卷结构）</h3>'+acts.map(function(a){return'<p>📖 '+a+'</p>'}).join('')+'<h4 style="margin-top:12px">🎯 关键情节节点</h4>'+beats.map(function(b){return'<p>'+b+'</p>'}).join('')+'</div>';
+  document.getElementById("oOut").innerHTML=o;
 }
 
-function E(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-
-// ═══ SUMMARY OUTLINE ═══
+// ═══ SUMMARY ═══
 function SMT(){
-  var h='<div class="ca"><h3>📄 汇总大纲生成器</h3>';
-  h+='<p style="color:#888;margin-bottom:16px">一键生成完整小说方案：开局钩子 + 世界观 + 主角 + 大纲 + 写作建议</p>';
-
-  h+='<div class="sr"><div class="sb"><div class="nu">1</div><div class="lb">选类型</div></div><div class="sb"><div class="nu">2</div><div class="lb">填想法</div></div><div class="sb"><div class="nu">3</div><div class="lb">点生成</div></div></div>';
-
-  h+='<div class="ln">小说类型：<select id="smType">';
-  ["重生逆袭","穿越架空","修仙玄幻","总裁豪门","都市言情","悬疑推理","种田基建","战神兵王","星际科幻","末日废土"].forEach(function(t){h+='<option>'+t+'</option>'});
-  h+='</select></div>';
-
-  h+='<div class="ln">世界观背景：<select id="smWorld"><option>古代架空</option><option>现代都市</option><option>修仙玄幻</option><option>末日废土</option><option>星际科幻</option></select></div>';
-  h+='<div class="ln">核心冲突：<input id="smConflict" placeholder="比如：复仇 / 证明自己 / 夺回身份 / 拯救世界" style="width:300px"></div>';
-  h+='<div class="ln">主角设定（一句话）：<input id="smProtag" placeholder="比如：被退婚的将军之女重生复仇 / 穿越成废柴的996程序员" style="width:300px"></div>';
-  h+='<div class="ln">书名（可选）：<input id="smTitle" placeholder="留空则自动生成"></div>';
-
-  h+='<button class="bt" onclick="GSUM()" style="margin-top:12px;font-size:1.1em;padding:14px 40px">🪄 一键生成完整方案</button>';
-  h+='<div id="smOut" class="ob" style="margin-top:16px"></div></div>';
+  var h='<h3>📄 汇总大纲生成器</h3>';
+  h+='<p style="color:#8b949e;margin-bottom:16px">一键生成完整小说创作方案（开局+世界观+人物+大纲）</p>';
+  h+='<input id="smt1" placeholder="主角身份（如：被退婚的将军之女重生归来）">';
+  h+='<input id="smt2" placeholder="核心冲突（如：夺回身份复仇，却发现背后有天大阴谋）">';
+  h+='<label style="font-size:.85em;color:#8b949e;display:block;margin:8px 0">📖 目标总章数：</label>';
+  h+='<input id="smt3" placeholder="800（默认）" type="number" value="800">';
+  h+='<button class="btn" onclick="GSUM()">⚡ 生成完整方案</button>';
+  h+='<div id="sumOut"></div>';
   document.getElementById("main").innerHTML=h;
 }
-
 function GSUM(){
-  var type=document.getElementById("smType").value;
-  var world=document.getElementById("smWorld").value;
-  var conflict=document.getElementById("smConflict").value||"逆袭";
-  var protag=document.getElementById("smProtag").value||"一个在逆境中崛起的主角";
-  var title=document.getElementById("smTitle").value;
+  var p=document.getElementById("smt1").value||"被退婚的将军之女重生归来";
+  var c=document.getElementById("smt2").value||"夺回身份复仇";
+  var ch=parseInt(document.getElementById("smt3").value)||800;
+  var o='<div class="br" style="border:2px solid rgba(88,166,255,.3);background:rgba(88,166,255,.05)">';
+  o+='<h2 style="text-align:center;font-size:1.3em">📖 《'+p+'》创作方案</h2>';
+  // Hook
+  o+='<h3>🪝 黄金开局（前500字）</h3>';
+  o+='<pre>当所有人都以为'+p.split('的')[0]+'认命了的时候，她做了一个决定——不是复仇，而是让那些害过她的人，亲手把一切还回来。
 
-  // Auto generate title if empty
-  if(!title){
-    var titles={};
-    titles["重生逆袭"]=["重生之","涅槃","归来","逆命","重生后我","一世倾城"];
-    titles["穿越架空"]=["穿越之","异世","降临","我在异世界","穿越成了"];
-    titles["修仙玄幻"]=["仙途","大道","修真","飞升","万古","修仙"];
-    titles["总裁豪门"]=["总裁的","豪门","契约","霸总","替身新娘"];
-    titles["都市言情"]=["都市","遇见","你是我的","余生","念念不忘"];
-    var pool=titles[type]||["逆袭","崛起","巅峰","传奇"];
-    title=pool[Math.floor(Math.random()*pool.length)]+conflict;
-    if(title.length>15)title=title.substring(0,15);
-  }
-
-  // 1. Generate hook
-  var ht=HOOKS[Math.floor(Math.random()*HOOKS.length)];
-  var hookOpening="";
-  if(ht.id==="conflict")hookOpening=protag+"睁眼的第一秒，一切已天翻地覆。\n  "+conflict+"——这是唯一的出路。";
-  else if(ht.id==="mystery")hookOpening=protag+"收到了一样东西。\n  没人知道这意味着什么。直到"+conflict+"的真相开始浮现。";
-  else if(ht.id==="identity")hookOpening="所有人都以为"+protag+"不过如此。\n  直到"+conflict+"的那一刻，他们才知道自己错得有多离谱。";
-  else if(ht.id==="flashback")hookOpening=protag+"站在命运的十字路口。\n  三个月前，一切还不是这样。那时——";
-  else if(ht.id==="dialogue")hookOpening="'"+(conflict.length>8?conflict:'你确定？')+"'——这句话改变了一切。\n  "+protag+"。从那一刻起。";
-  else hookOpening=protag+"。\n  "+conflict+"。\n  故事就此开始。";
-
-  // 2. World summary
-  var wt=WORLDS[world]||WORLDS["古代架空"];
-  var worldSummary="📅 "+wt.time+"\n  🗺 "+wt.geo+"\n  ⚔ "+wt.power;
-
-  // 3. Character
-  var names=["苏瑾","沈墨","林七夜","顾倾城","陆沉舟","姜禾","萧烬","云棠"];
-  var name=names[Math.floor(Math.random()*names.length)];
-  var flaws=["太容易相信别人","控制欲太强","不敢面对过去","嘴硬心软","过于追求完美","习惯性逃避"];
-  var flaw=flaws[Math.floor(Math.random()*flaws.length)];
-  var arcs=["从自卑到自信","从逃避到面对","从孤独到被爱","从复仇到原谅","从迷茫到坚定"];
-  var arc=arcs[Math.floor(Math.random()*arcs.length)];
-
-  // 4. Outline chapters
-  var totalCh=type==="修仙玄幻"?2000:type==="重生逆袭"?1200:type==="穿越架空"?1000:type==="总裁豪门"?800:600;
-  var ps=[];
-  if(totalCh>=1200)ps=[{p:.02,n:"开篇钩子"},{p:.08,n:"第一卷·开局"},{p:.15,n:"第二卷·发展"},{p:.25,n:"第三卷·高潮"},{p:.30,n:"第四卷·转折"},{p:.15,n:"第五卷·收束"},{p:.05,n:"终章"}];
-  else if(totalCh>=600)ps=[{p:.03,n:"开篇钩子"},{p:.12,n:"第一卷·开局"},{p:.25,n:"第二卷·发展"},{p:.35,n:"第三卷·高潮"},{p:.20,n:"第四卷·收束"},{p:.05,n:"终章"}];
-  else ps=[{p:.05,n:"开篇"},{p:.20,n:"第一卷·发展"},{p:.40,n:"第二卷·高潮"},{p:.25,n:"第三卷·收束"},{p:.10,n:"终章"}];
-
-  var outlineStr="";var st=1;
-  ps.forEach(function(p){var cnt=Math.round(totalCh*p.p);var ed=Math.min(st+cnt-1,totalCh);outlineStr+=p.n+" 【第"+st+"-"+ed+"章】\n";var bi=Math.max(3,Math.floor((ed-st+1)/8));
-  if(/重生/.test(type))outlineStr+="  第"+st+"章:重生  "+"第"+(st+bi)+"章:打脸  "+"第"+(st+bi*2)+"章:暴露  "+"第"+(st+bi*3)+"章:胜利\n";
-  else if(/总裁/.test(type))outlineStr+="  第"+st+"章:相遇  "+"第"+(st+bi)+"章:契约  "+"第"+(st+bi*2)+"章:心动  "+"第"+(st+bi*3)+"章:虐点\n";
-  else if(/修仙/.test(type))outlineStr+="  第"+st+"章:传承  "+"第"+(st+bi)+"章:宗门  "+"第"+(st+bi*2)+"章:大比  "+"第"+(st+bi*3)+"章:新图\n";
-  else outlineStr+="  第"+st+"章:开篇  "+"第"+(st+bi)+"章:高潮  "+"第"+(st+bi*2)+"章:转折  "+"第"+(st+bi*3)+"章:收束\n";
-  st=ed+1});
-
-  // 5. Writing tips
-  var tips=[];
-  tips.push("前3章必须抛出钩子——读者只会给你3秒");
-  tips.push("每章结尾留悬念：问句/预告/意外/反转 四选一");
-  tips.push("每10-15章安排一次小高潮(打脸/揭秘/收获)");
-  tips.push("主角的成长弧要清晰:起点状态→中点挣扎→终点蜕变");
-  tips.push("不要在第1章倾倒世界观设定——让读者先感受,再理解");
-  tips.push("每个配角都要有独立动机——不能只是主角的工具人");
-  tips.push("对照番茄热门榜的钩子和类型,确保符合市场趋势");
-
-  // Build final output
-  var o="";
-  o+="╔══════════════════════════════════════════════╗\n";
-  o+="║          📖 《"+title+"》                          ║\n";
-  o+="║          类型："+type.padEnd(30)+"║\n";
-  o+="╚══════════════════════════════════════════════╝\n\n";
-
-  o+="━━━ 🪝 开局钩子（第1章）━━━\n";
-  o+="  风格："+ht.name+"\n";
-  o+="  开篇：\n  "+hookOpening+"\n";
-  o+="  🔑 关键：前500字必须出钩子，第1章结尾留悬念\n\n";
-
-  o+="━━━ 🌍 世界观 ━━━\n";
-  o+="  "+worldSummary.split("\n").join("\n  ")+"\n";
-  o+="  核心规则："+wt.rules.split(";")[0]+"\n\n";
-
-  o+="━━━ 👤 主角 ━━━\n";
-  o+="  姓名："+name+"\n";
-  o+="  设定："+protag+"\n";
-  o+="  外显目标："+conflict+"\n";
-  o+="  致命缺陷："+flaw+"\n";
-  o+="  成长弧："+arc+"\n";
-  o+="  📝 一句话：一个"+protag+"，为了"+conflict+"，学会了"+arc.replace(/从|到/g,"")+"。\n\n";
-
-  o+="━━━ 📝 章节大纲（约"+totalCh+"章）━━━\n";
-  o+=outlineStr+"\n";
-
-  o+="━━━ ✍️ 写作要诀 ━━\n";
-  tips.forEach(function(t,i){o+="  "+(i+1)+". "+t+"\n"});
-
-  o+="\n━━━ 🚀 下一步 ━━\n";
-  o+="  1. 填主角设计卡的空白项（回去看「👤人物设计」Tab）\n";
-  o+="  2. 用「🪝开局钩子」Tab细化第1章\n";
-  o+="  3. 用「🌍世界观」Tab补全世界细节\n";
-  o+="  4. 用「📝大纲生成」Tab调整章节节奏\n";
-  o+="  5. 打开番茄小说「📋榜单」对照市场\n";
-  o+="  6. 开始写第1章——不要回头看！\n";
-
-  document.getElementById("smOut").textContent=o;
+重生那天，她睁眼时看见了铜镜里的自己。十五岁。距离被退婚还有三年，距离满门被灭还有五年。她笑了——这一次，她要让棋局反过来。</pre>';
+  // World
+  o+='<h3>🌍 世界观</h3>';
+  o+='<p>📅 <b>时间线：</b>王朝鼎盛→边患四起→暗流涌动→重生介入→格局巨变</p>';
+  o+='<p>🗺️ <b>地理：</b>王都(权力中心)+北疆(军事重镇)+江南(经济命脉)+西域(神秘势力)</p>';
+  o+='<p>⚔️ <b>势力：</b>皇室(名存实亡)+三大世家(掌控朝政)+江湖势力(暗棋)+北狄(外患)</p>';
+  o+='<p>📜 <b>规则：</b>文武兼修(文官势力+武将战力)、九品等级、世家垄断、科举为唯一上升通道</p>';
+  // Character
+  var cg=GCG();
+  o+='<h3>👤 主角卡</h3>';
+  o+='<p><b>姓名：</b>'+cg.name+' | <b>身份：</b>'+p+'</p>';
+  o+='<p><b>核心目标：</b>'+c+' → 发现真相后的升级目标：改变整个时代的命运</p>';
+  o+='<p><b>性格缺陷：</b>'+cg.flaw+'</p>';
+  o+='<p><b>成长弧：</b>'+cg.arc+'</p>';
+  // Outline
+  o+='<h3>📝 '+ch+'章大纲（7卷结构）</h3>';
+  var vols=["卷一·归来（1-"+Math.round(ch*0.12)+"）重生+布局+初露锋芒",
+  "卷二·暗涌（"+Math.round(ch*0.12+1)+"-"+Math.round(ch*0.3)+"）势力建立+暗线浮现",
+  "卷三·风暴（"+Math.round(ch*0.3+1)+"-"+Math.round(ch*0.5)+"）身份揭示+关键背叛",
+  "卷四·决战（"+Math.round(ch*0.5+1)+"-"+Math.round(ch*0.7)+"）多方势力碰撞+终极抉择",
+  "卷五·破局（"+Math.round(ch*0.7+1)+"-"+Math.round(ch*0.85)+"）真相大白+复仇完成",
+  "卷六·新天（"+Math.round(ch*0.85+1)+"-"+Math.round(ch*0.95)+"）重建秩序+情感归宿",
+  "卷七·尾声（"+Math.round(ch*0.95+1)+"-"+ch+"）后记+新世界面貌"];
+  vols.forEach(function(v){o+='<p>📖 '+v+'</p>'});
+  o+='<h4>🎯 8个关键情节节点</h4>';
+  ["第1章：重生睁眼，最后的机会","第50章：第一次用前世记忆改变命运","第120章：发现退婚背后的政治阴谋","第200章：至暗时刻——盟友背叛、计划崩盘","第320章：翻盘点——获得前世不知道的关键信息","第480章：所有伏笔汇聚，真相浮出水面","第650章：最终决战——不仅是复仇，是扭转天下格局","第790-800章：余韵与新世界的黎明"].forEach(function(b,i){
+    o+='<p>'+b+'</p>';
+  });
+  o+='<h3>💡 写作建议</h3>';
+  o+='<p>1. 前三章必须完成：重生+前世创伤+今生首次行动 —— 读者需要立即感受到"这次不一样"</p>';
+  o+='<p>2. 中期避免单线复仇——每解决一个敌人，就揭开一层更大的阴谋</p>';
+  o+='<p>3. 情感线建议：每150章左右一个情感高潮/转折，保持节奏感</p>';
+  o+='<p>4. 番茄平台要诀：每章结尾留"钩子"——一个问题、一个悬念、一个新信息</p>';
+  o+='</div>';
+  document.getElementById("sumOut").innerHTML=o;
 }
-initTabs();
-</script></body></html>
+
+M();
+</script>
+</body>
+</html>
