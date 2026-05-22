@@ -85,9 +85,9 @@ function M(){
 }
 
 // ═══ RANK ═══
-var CR="peak";
+var CR="hot";
 function R(){
-  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="bt bs" style="background:'+(CR==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'hot\';R()">🔥 热门</button><button class="bt bs" style="background:'+(CR==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'new\';R()">🆕 新书</button>+'<button class="bt bs" style="background:'+(CR==="peak"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'peak\';R()">🏔 巅峰榜</button></div>';
+  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="bt bs" style="background:'+(CR==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'hot\';R()">🔥 热门</button><button class="bt bs" style="background:'+(CR==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'new\';R()">🆕 新书</button><button class="bt bs" style="background:'+(CR==="peak"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'">🏔 巅峰</button></div>';
   (D[CR]||[]).forEach(function(b,i){
     var a=A(b.title,b.abstract);h+='<div class="bk" onclick="X(this)"><h4>'+(i+1)+'. '+E(b.title)+'</h4><div class="mt">✍ '+E(b.author)+'</div><div class="ab">'+E(b.abstract||"")+'</div><div class="an">';
     if(a.ty)h+='<div class="ln">🎯 类型：<b>'+a.ty+'</b></div>';
