@@ -87,7 +87,7 @@ function M(){
 // ═══ RANK ═══
 var CR="peak";
 function R(){
-  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="bt bs" style="background:'+(CR==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'hot\';R()">🔥 热门</button><button class="bt bs" style="background:'+(CR==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'new\';R()">🆕 新书</button></div>';
+  var h='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="bt bs" style="background:'+(CR==="hot"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'hot\';R()">🔥 热门</button><button class="bt bs" style="background:'+(CR==="new"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'new\';R()">🆕 新书</button>+'<button class="bt bs" style="background:'+(CR==="peak"?"linear-gradient(135deg,#6666ff,#8844ff)":"rgba(255,255,255,.08)")+'" onclick="CR=\'peak\';R()">🏔 巅峰榜</button></div>';
   (D[CR]||[]).forEach(function(b,i){
     var a=A(b.title,b.abstract);h+='<div class="bk" onclick="X(this)"><h4>'+(i+1)+'. '+E(b.title)+'</h4><div class="mt">✍ '+E(b.author)+'</div><div class="ab">'+E(b.abstract||"")+'</div><div class="an">';
     if(a.ty)h+='<div class="ln">🎯 类型：<b>'+a.ty+'</b></div>';
@@ -113,7 +113,7 @@ function A(tl,ab){
 
 // ═══ TREND ═══
 function Tr(){
-  var all=[];D.hot.forEach(function(b){all.push({t:b.title,a:b.abstract})});D["new"].forEach(function(b){all.push({t:b.title,a:b.abstract})});
+  var all=[];D.hot.forEach(function(b){all.push({t:b.title,a:b.abstract})});D["new"].forEach(function(b){all.push({t:b.title,a:b.abstract})});if(D.peak)D.peak.forEach(function(b){all.push({t:b.title,a:b.abstract})});
   var tc={},hc={},rc={};all.forEach(function(b){var a=A(b.t,b.a);tc[a.ty]=(tc[a.ty]||0)+1;a.hk.forEach(function(h){hc[h]=(hc[h]||0)+1});a.tr.forEach(function(rt){rc[rt]=(rc[rt]||0)+1})});
   var ts=Object.entries(tc).sort(function(a,b){return b[1]-a[1]});
   var hs=Object.entries(hc).sort(function(a,b){return b[1]-a[1]});
